@@ -1,0 +1,20 @@
+{
+  "name": "top-offers",
+  "version": "0.0.1",
+  "description": "very simple webapi to support webapi for Android Application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "\u0016\u0016https://github.com/simeonpp/top-offers/tree/master"
+  },
+  "author": "Simeon Petkov",
+  "license": "MIT",
+  "dependencies": {
+    "hapi": "^16.1.0",
+    "mysql": "^2.13.0",
+    "promise-mysql": "^3.0.0"
+  }
+}
