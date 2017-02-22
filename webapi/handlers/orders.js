@@ -7,10 +7,11 @@ module.exports = {
         console.log('featching my orders...');
         let headers = helpers.parseRequestHeader(request);
 
-        let query = `SELECT o.id, o.quantity, o.singlePrice, o.totalPrice, o.dateOrdered, o.status, p.title as productTitle, p.imageIdentifier as productImageIdentifier` +
-                        `, p.description as productDescription, u.firstName as productSellerFirstName, u.lastName as productSellerLastName, u.address as productSellerAddress,` +
-                        `u.phone as productSellerPhone, u.username as productSellerUsername ` +
+        let query = `SELECT o.id, o.quantity, o.singlePrice, o.totalPrice, o.dateOrdered, o.status, p.title as productTitle, p.imageIdentifier as productImageIdentifier, p.description as productDescription` +
+                        `, u.firstName as productSellerFirstName, u.lastName as productSellerLastName, u.address as productSellerAddress,u.phone as productSellerPhone, u.username as productSellerUsername,` +
+                        `ub.firstName as buyerFirstName, ub.lastName as buyerLastName, ub.address as buyerAddress, ub.phone as productSellerPhone, ub.username as buyerUsername ` +
                     `FROM orders o ` +
+                    `INNER JOIN users ub ON o.buyerId = ub.id ` + 
                     `INNER JOIN products p ON p.id = o.productId ` +
                     `INNER JOIN users u on u.id = p.sellerId `;
 
@@ -30,10 +31,11 @@ module.exports = {
         let headers = helpers.parseRequestHeader(request);
         let orderId = request.params.orderId;
 
-        let query = `SELECT o.id, o.quantity, o.singlePrice, o.totalPrice, o.dateOrdered, o.status, p.title as productTitle, p.imageIdentifier as productImageIdentifier` +
-                        `, p.description as productDescription, u.firstName as productSellerFirstName, u.lastName as productSellerLastName, u.address as productSellerAddress,` +
-                        `u.phone as productSellerPhone, u.username as productSellerUsername ` +
+        let query = `SELECT o.id, o.quantity, o.singlePrice, o.totalPrice, o.dateOrdered, o.status, p.title as productTitle, p.imageIdentifier as productImageIdentifier, p.description as productDescription` +
+                        `, u.firstName as productSellerFirstName, u.lastName as productSellerLastName, u.address as productSellerAddress,u.phone as productSellerPhone, u.username as productSellerUsername,` +
+                        `ub.firstName as buyerFirstName, ub.lastName as buyerLastName, ub.address as buyerAddress, ub.phone as productSellerPhone, ub.username as buyerUsername ` +
                     `FROM orders o ` +
+                    `INNER JOIN users ub ON o.buyerId = ub.id ` +
                     `INNER JOIN products p ON p.id = o.productId ` +
                     `INNER JOIN users u on u.id = p.sellerId `;
 
@@ -57,18 +59,29 @@ module.exports = {
     create: function(request, reply) {
         console.log('creating new order');
         let headers = helpers.parseRequestHeader(request);
-        let productId = request.payload.productId;
-        let quantity = request.payload.quantity;
 
         if (headers.role === 'buyer') {
-            let productQuery = 'SELECT * FROM products WHERE id = ${productId}';
+            let productId = request.payload.productId;
+            let quantity = request.payload.quantity;
+
+            let productQuery = `SELECT * FROM products WHERE id = ${productId}`;
             connection.query(productQuery)
                 .then(function(dataResult) {
                     if (dataResult.length > 0) {
                         let product = dataResult[0];
                         let orderQuery = 'INSERT INTO orders (productId, buyerId, quantity, singlePrice, totalPrice) ' +
-                                          'VALUES (${product.id}, ${headers.id}, ${quantity}, ${product.price}, ${product.price * quantity});';
+                                          `VALUES (${product.id}, ${headers.id}, ${quantity}, ${product.price}, ${product.price * quantity});`;
                         return connection.query(orderQuery);
+                    } else {
+                        return;
+                    }
+                })
+                .then(function(orderQuery) {
+                    console.log(orderQuery && orderQuery.affectedRows  === 1);
+                    if (orderQuery) {
+                        reply({
+                            success: true
+                        });
                     } else {
                         reply({
                             error: {
@@ -76,13 +89,7 @@ module.exports = {
                                 message: 'Product not found'
                             }
                         });
-                        return;
                     }
-                })
-                .then(function(orderQuery) {
-                    reply({
-                        success: true
-                    });
                 });
         } else {
             reply({
