@@ -3,7 +3,7 @@ var connection = require('../dataProvider').getConnection();
 var helpers = require('../helpers.js');
 
 module.exports = {
-    getAllMy: function (request, reply) {
+    getAllMy: function(request, reply) {
         console.log('featching my orders...');
         let headers = helpers.parseRequestHeader(request);
 
@@ -23,9 +23,9 @@ module.exports = {
         connection.query(query)
             .then(function(dataResult) {
                 reply(dataResult);
-            })
+            });
     },
-    getById: function (request, reply) {
+    getById: function(request, reply) {
         console.log('get order by id...');
         let headers = helpers.parseRequestHeader(request);
         let orderId = request.params.orderId;
@@ -44,7 +44,7 @@ module.exports = {
             console.log('as buyer');
             query += `WHERE o.buyerId = ${headers.id} AND o.id = ${orderId}`
         }
-        
+
         connection.query(query)
             .then(function(dataResult) {
                 if (dataResult.length === 1) {
@@ -54,7 +54,7 @@ module.exports = {
                 }
             })
     },
-    create: function (request, reply) {
+    create: function(request, reply) {
         console.log('creating new order');
         let headers = helpers.parseRequestHeader(request);
         let productId = request.payload.productId;
@@ -75,18 +75,22 @@ module.exports = {
                                 type: 'order.productNotFound',
                                 message: 'Product not found'
                             }
-                        })
+                        });
+                        return;
                     }
                 })
-                .then(function())
-            
+                .then(function(orderQuery) {
+                    reply({
+                        success: true
+                    });
+                });
         } else {
             reply({
                 error: {
                     type: 'order.noPermissions',
                     message: 'You have no permissions to make an order'
                 }
-            })
+            });
         }
-    },
+    }
 };
