@@ -6,4 +6,4 @@ module.exports = {
     login: loginRoutes,
     products: productsRoutes,
     orders: ordersRoutes
-}
+};

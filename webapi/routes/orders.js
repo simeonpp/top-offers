@@ -10,21 +10,21 @@ module.exports = {
         server.route({
             method: 'GET',
             path: ordersUrl,
-            handler: handler 
+            handler: handler
         });
     },
     getById: function(server, handler) {
         server.route({
             method: 'GET',
             path: orderWithIdUrl,
-            handler: handler 
+            handler: handler
         });
     },
     create: function(server, handler) {
         server.route({
             method: 'POST',
             path: orderUrl,
-            handler: handler 
+            handler: handler
         });
     }
 };

@@ -3,7 +3,7 @@ var connection = require('../dataProvider').getConnection();
 var helpers = require('../helpers.js');
 
 module.exports = {
-    getAll: function (request, reply) {
+    getAll: function(request, reply) {
         console.log('featching products...');
         let headers = helpers.parseRequestHeader(request);
 
@@ -11,15 +11,15 @@ module.exports = {
         if (headers.role === 'seller') {
             query = `SELECT * FROM products WHERE products.sellerId = ${headers.id}`;
         } else {
-            query = `SELECT * FROM products`
+            query = 'SELECT * FROM products';
         }
 
         connection.query(query)
             .then(function(dataResult) {
                 reply(dataResult);
-            })
+            });
     },
-    getById: function (request, reply) {
+    getById: function(request, reply) {
         console.log('get product by id...');
         let headers = helpers.parseRequestHeader(request);
         let productId = request.params.productId;
@@ -30,7 +30,7 @@ module.exports = {
         } else {
             query = `SELECT * FROM products p WHERE p.id = ${productId}`;
         }
-        
+
         connection.query(query)
             .then(function(dataResult) {
                 if (dataResult.length === 1) {
@@ -38,9 +38,9 @@ module.exports = {
                 } else {
                     reply({});
                 }
-            })
+            });
     },
-    create: function (request, reply) {
+    create: function(request, reply) {
         console.log('creating new product');
         let headers = helpers.parseRequestHeader(request);
         let title = request.payload.title;
@@ -49,7 +49,7 @@ module.exports = {
         let imageIdentifier = null;
         let description = request.payload.description;
 
-        let query = `INSERT INTO products (sellerId, title, price, quantity, imageIdentifier, description) ` +
+        let query = 'INSERT INTO products (sellerId, title, price, quantity, imageIdentifier, description) ' +
                     `VALUES (${headers.id}, '${title}', ${price}, ${quantity}, '${imageIdentifier}', '${description}');`;
         connection.query(query)
             .then(function(dataResult) {
@@ -61,9 +61,9 @@ module.exports = {
                     imageIdentifier,
                     description
                 });
-            })
+            });
     },
-    delete: function (request, reply) {
+    delete: function(request, reply) {
         console.log('deleting existing product...');
         let headers = helpers.parseRequestHeader(request);
         let productId = request.params.productId;
@@ -81,9 +81,9 @@ module.exports = {
                         }
                     });
                 }
-            })
+            });
     },
-    edit: function (request, reply) {
+    edit: function(request, reply) {
         console.log('editing new products');
         let headers = helpers.parseRequestHeader(request);
         let productId = request.params.productId;
@@ -94,7 +94,7 @@ module.exports = {
         let imageIdentifier = null;
         let description = request.payload.description;
 
-        let query = `UPDATE products ` +
+        let query = 'UPDATE products ' +
                     `SET title='${title}', price = ${price}, quantity = ${quantity}, imageIdentifier = '${imageIdentifier}', description = '${description}' ` +
                     `WHERE id = ${productId} AND sellerId = ${headers.id}`;
         connection.query(query)
@@ -109,6 +109,6 @@ module.exports = {
                         }
                     });
                 }
-            })
-    },
+            });
+    }
 };

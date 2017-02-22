@@ -1,7 +1,7 @@
 'use strict';
 var connection = require('../dataProvider').getConnection();
 
-module.exports = function (request, reply) {
+module.exports = function(request, reply) {
     var username = request.payload.username;
     var password = request.payload.password;
 
@@ -30,8 +30,8 @@ module.exports = function (request, reply) {
                 result.error = {
                     type: 'login.invalidCredentials',
                     message: 'Ivanlid credentials'
-                }
+                };
             }
             reply(result);
-        })
+        });
 };

@@ -10,35 +10,35 @@ module.exports = {
         server.route({
             method: 'GET',
             path: productsUrl,
-            handler: handler 
+            handler: handler
         });
     },
     getById: function(server, handler) {
         server.route({
             method: 'GET',
             path: productWithIdUrl,
-            handler: handler 
+            handler: handler
         });
     },
     create: function(server, handler) {
         server.route({
             method: 'POST',
             path: productUrl,
-            handler: handler 
+            handler: handler
         });
     },
     delete: function(server, handler) {
         server.route({
             method: 'DELETE',
             path: productWithIdUrl,
-            handler: handler 
+            handler: handler
         });
     },
     edit: function(server, handler) {
         server.route({
             method: 'PUT',
             path: productWithIdUrl,
-            handler: handler 
+            handler: handler
         });
     }
 };

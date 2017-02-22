@@ -3,7 +3,6 @@ var config = require('./config');
 var dataProvider = require('./dataProvider');
 var routes = require('./routes');
 
-var mysql = require('promise-mysql');
 const Hapi = require('hapi');
 
 // Init DataProvider connection

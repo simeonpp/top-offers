@@ -22,6 +22,6 @@ let init = new Promise(function(resolve, reject) {
 });
 
 module.exports = {
-  init: init,
-  getConnection: () => { return connection }
-}
+    init: init,
+    getConnection: () => { return connection; }
+};
