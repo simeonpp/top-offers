@@ -1,0 +1,166 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Telerik/TopOffers",
+		"_postman_id": "14aeac03-41fe-a0bb-6f86-773b7dd24027",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:8000/api/login",
+			"request": {
+				"url": "localhost:8000/api/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"ivan\",\n\t\"password\": \"123\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8000/api/products",
+			"request": {
+				"url": "localhost:8000/api/products",
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-cookie",
+						"value": "{\"id\":1,\"username\":\"ivan\",\"role\":\"seller\"}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8000/api/product/1",
+			"request": {
+				"url": "localhost:8000/api/product/3",
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-cookie",
+						"value": "{\"id\":1,\"username\":\"ivan\",\"role\":\"seller\"}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8000/api/product",
+			"request": {
+				"url": "localhost:8000/api/product",
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-cookie",
+						"value": "{\"id\":1,\"username\":\"ivan\",\"role\":\"seller\"}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"FADFSDFSD\",\n\t\"price\": 10.25,\n\t\"quantity\": 5,\n\t\"description\": \"ee\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8000/api/product/7",
+			"request": {
+				"url": "localhost:8000/api/product/5",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-cookie",
+						"value": "{\"id\":1,\"username\":\"ivan\",\"role\":\"seller\"}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8000/api/product/5",
+			"request": {
+				"url": "localhost:8000/api/product/5",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-cookie",
+						"value": "{\"id\":1,\"username\":\"ivan\",\"role\":\"seller\"}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"kiro\",\n\t\"price\": 1,\n\t\"quantity\": 1,\n\t\"description\": \"2razbi2%\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8000/api/orders",
+			"request": {
+				"url": "localhost:8000/api/orders",
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-cookie",
+						"value": "{\"id\":1,\"username\":\"ivan\",\"role\":\"seller\"}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8000/api/orders/1",
+			"request": {
+				"url": "localhost:8000/api/order/2",
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-cookie",
+						"value": "{\"id\":1,\"username\":\"ivan\",\"role\":\"seller\"}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
