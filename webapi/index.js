@@ -25,6 +25,9 @@ dataProvider.init
         routes.orders.getAllMy(server, handlers.orders.getAllMy);
         routes.orders.getById(server, handlers.orders.getById);
         routes.orders.create(server, handlers.orders.create);
+            // profile
+        routes.profile.get(server, handlers.profile.get);
+        routes.profile.edit(server, handlers.profile.edit);
 
         // Start server
         server.start((err) => {
