@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 22, 2017 at 06:10 AM
+-- Generation Time: Feb 22, 2017 at 11:10 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.8
 
@@ -43,7 +43,10 @@ CREATE TABLE `orders` (
 
 INSERT INTO `orders` (`id`, `productId`, `buyerId`, `quantity`, `singlePrice`, `totalPrice`, `dateOrdered`, `status`) VALUES
 (1, 1, 2, 1, '5', '10', '2017-02-21 23:53:23', 'pending'),
-(2, 2, 2, 2, '10', '20', '2017-02-22 00:30:58', 'pending');
+(2, 2, 2, 2, '10', '20', '2017-02-22 00:30:58', 'pending'),
+(3, 3, 2, 3, '10', '30', '2017-02-23 00:01:35', 'pending'),
+(4, 4, 2, 3, '10', '30', '2017-02-23 00:02:53', 'pending'),
+(5, 1, 2, 3, '10', '30', '2017-02-23 00:03:29', 'pending');
 
 -- --------------------------------------------------------
 
@@ -67,10 +70,10 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `sellerId`, `title`, `price`, `quantity`, `imageIdentifier`, `description`, `dateAdded`) VALUES
-(1, 1, 'Product 1', '10', 2, NULL, 'asdasd', '2017-02-21 22:22:35'),
-(2, 1, 'Product 2', '15', 1, NULL, 'dfsdfsf', '2017-02-21 22:22:42'),
-(3, 1, 'asd', '10', 1, NULL, 'www', '2017-02-21 22:22:35'),
-(4, 2, 'wwww', '10', 5, 'null', 'weqweqweqweqew', '0000-00-00 00:00:00');
+(1, 1, 'Phone Android', '10', 2, NULL, 'Android v1 Phone', '2017-02-21 22:22:35'),
+(2, 1, 'Phone iOS', '15', 1, NULL, 'iOS v1 Phone', '2017-02-21 22:22:42'),
+(3, 3, 'TV Android', '20', 1, NULL, 'Android v1 TV', '2017-02-21 22:22:35'),
+(4, 3, 'TV iOS', '25', 5, 'null', 'iOS v1 TV', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -95,7 +98,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `password`, `role`, `firstName`, `lastName`, `address`, `phone`) VALUES
 (1, 'ivan', '123', 'seller', 'Ivan', 'Ivanov', 'bul. Ivan Vazov #11, Sofia, Bulgaria, 1000', '+359 888 88 88 88'),
-(2, 'kolio', '123', 'buyer', 'Kolio', 'Kolev', 'bul. Ivan Vazov #10, Sofia, Bulgaria, 1000', '+359 899 99 99');
+(2, 'kolio', '123', 'buyer', 'Kolio', 'Kolev', 'bul. Ivan Vazov #10, Sofia, Bulgaria, 1000', '+359 899 99 99'),
+(3, 'misho', '123', 'seller', 'Misho', 'Mishev', 'bul. Hristo Botev #60, Sofia, Bulgaria, 1000', '+359 877 77 77');
 
 --
 -- Indexes for dumped tables
@@ -131,7 +135,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `products`
 --
@@ -141,7 +145,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- Constraints for dumped tables
 --

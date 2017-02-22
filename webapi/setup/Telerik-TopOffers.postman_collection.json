@@ -148,7 +148,7 @@
 		{
 			"name": "localhost:8000/api/orders/1",
 			"request": {
-				"url": "localhost:8000/api/order/2",
+				"url": "localhost:8000/api/order/1",
 				"method": "GET",
 				"header": [
 					{
@@ -158,6 +158,73 @@
 					}
 				],
 				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8000/api/order",
+			"request": {
+				"url": "localhost:8000/api/order",
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-cookie",
+						"value": "{\"id\":2,\"username\":\"kolio\",\"role\":\"buyer\"}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"productId\": 1,\n\t\"quantity\": 3\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8000/api/profile",
+			"request": {
+				"url": "localhost:8000/api/profile",
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-cookie",
+						"value": "{\"id\":3,\"username\":\"misho\",\"role\":\"seller\"}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8000/api/profile",
+			"request": {
+				"url": "localhost:8000/api/profile",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-cookie",
+						"value": "{\"id\":3,\"username\":\"misho\",\"role\":\"seller\"}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"password\": \"321\",\n\t\"firstName\": \"www\",\n\t\"lastName\": \"sdfsfs\",\n\t\"address\": \"svbb\",\n\t\"phone\": \"66\"\n}"
+				},
 				"description": ""
 			},
 			"response": []
