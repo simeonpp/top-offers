@@ -13,6 +13,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+// NOTE ================= :
+// This could be our base activity or baseNavigationActivity (with some refactoring), where it could take ROLE, base on which it will build corresponding menu items
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 

@@ -21,6 +21,12 @@
         <item name="android:textSize">50sp</item>
     </style>
 
+    <!-- Common -->
+    <style name="input">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <!-- Login -->
     <style name="LoginPageTitle">
         <item name="android:layout_marginBottom">30dp</item>
         <item name="android:textSize">20sp</item>
@@ -29,7 +35,7 @@
 
     <style name="LoginPageLogin">
         <item name="android:layout_marginBottom">10dp</item>
-        <item name="android:textSize">17dp</item>
+        <item name="android:textSize">17sp</item>
         <item name="android:gravity">center</item>
     </style>
 
