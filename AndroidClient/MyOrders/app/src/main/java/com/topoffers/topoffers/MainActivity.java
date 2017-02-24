@@ -1,4 +1,4 @@
-package com.example.dsm2001.myorders;
+package com.topoffers.topoffers;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
