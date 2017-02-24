@@ -1,8 +1,13 @@
 <resources>
-    <string name="app_name">MyOrders</string>
+    <string name="app_name">Top Offers</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="tv_login_page_title">Welcome to Top Offers.</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="submit">Submit</string>
+    <string name="login">Login</string>
 </resources>

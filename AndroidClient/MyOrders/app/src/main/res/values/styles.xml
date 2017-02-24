@@ -18,7 +18,19 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="BigText">
-        <item name="android:textSize">50dp</item>
+        <item name="android:textSize">50sp</item>
+    </style>
+
+    <style name="LoginPageTitle">
+        <item name="android:layout_marginBottom">30dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="LoginPageLogin">
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:textSize">17dp</item>
+        <item name="android:gravity">center</item>
     </style>
 
 </resources>
