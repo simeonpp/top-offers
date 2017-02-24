@@ -5,11 +5,11 @@ import android.os.Bundle;
 
 import com.topoffers.topoffers.R;
 
-public class ProductsListActivity extends AppCompatActivity {
+public class SellerProductsListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_products_list);
+        setContentView(R.layout.activity_seller_products_list);
     }
 }

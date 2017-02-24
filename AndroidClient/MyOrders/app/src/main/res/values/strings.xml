@@ -5,9 +5,17 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <!-- Login -->
     <string name="tv_login_page_title">Welcome to Top Offers.</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="submit">Submit</string>
     <string name="login">Login</string>
+
+    <!-- Seller -->
+    <string name="seller_products_list_title">Seller products list</string>
+
+    <!-- Buyer -->
+    <string name="buyers_products_list_title">Buyers products list</string>
 </resources>

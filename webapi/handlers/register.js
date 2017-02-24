@@ -2,6 +2,7 @@
 var connection = require('../dataProvider').getConnection();
 
 module.exports = function(request, reply) {
+    console.log('registering user...');
     var username = request.payload.username;
     var password = request.payload.password;
     var role = request.payload.role;
@@ -15,7 +16,6 @@ module.exports = function(request, reply) {
                 `VALUES ("${username}", "${password}", "${role}", "${firstName}", "${lastName}", "${address}", "${phone}");`;
     connection.query(query)
         .then(function(dataResult) {
-            console.log('registering user...');
             if (dataResult && dataResult.affectedRows === 1) {
                 reply({ success: true });
             } else {

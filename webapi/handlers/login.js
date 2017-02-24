@@ -2,6 +2,7 @@
 var connection = require('../dataProvider').getConnection();
 
 module.exports = function(request, reply) {
+    console.log('login...');
     var username = request.payload.username;
     var password = request.payload.password;
 
@@ -17,7 +18,7 @@ module.exports = function(request, reply) {
                 };
 
                 result = {
-                    succes: true,
+                    success: true,
                     cookie: cookie,
                     username: dataResult[0].username,
                     role: dataResult[0].role,
