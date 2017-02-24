@@ -13,8 +13,9 @@ dataProvider.init
         const server = new Hapi.Server();
         server.connection({ port: config.application.port, host: config.application.host });
 
-        // Register routes
+        // Login & register routes
         routes.login(server, handlers.login);
+        routes.register(server, handlers.register);
             // products
         routes.products.getAll(server, handlers.products.getAll);
         routes.products.getById(server, handlers.products.getById);

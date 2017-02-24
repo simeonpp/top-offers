@@ -18,7 +18,7 @@ module.exports = function(request, reply) {
 
                 result = {
                     succes: true,
-                    cookie: JSON.stringify(cookie),
+                    cookie: cookie,
                     username: dataResult[0].username,
                     role: dataResult[0].role,
                     firstName: dataResult[0].firstName,
