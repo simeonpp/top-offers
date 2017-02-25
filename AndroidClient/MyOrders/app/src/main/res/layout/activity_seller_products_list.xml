@@ -16,4 +16,9 @@
         android:layout_height="wrap_content"
         android:text="@string/seller_products_list_title" />
 
+    <FrameLayout
+        android:id="@+id/logout_container_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

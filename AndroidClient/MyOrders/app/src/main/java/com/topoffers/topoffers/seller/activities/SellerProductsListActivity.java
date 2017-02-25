@@ -10,6 +10,7 @@ import com.topoffers.topoffers.R;
 import com.topoffers.topoffers.TopOffersApplication;
 import com.topoffers.topoffers.common.activities.BaseActivity;
 import com.topoffers.topoffers.common.activities.BaseAuthenticatedActivity;
+import com.topoffers.topoffers.common.fragments.LogoutFragment;
 import com.topoffers.topoffers.common.helpers.AuthenticationHelpers;
 import com.topoffers.topoffers.common.models.AuthenticationCookie;
 
@@ -20,9 +21,14 @@ public class SellerProductsListActivity extends BaseAuthenticatedActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seller_products_list);
 
-        AuthenticationCookie cookie = AuthenticationHelpers.getAuthenticationCookie();
-        Toast
-                .makeText(this, cookie.getUsername() + " - " + cookie.getId() + " - " + cookie.getRole(), Toast.LENGTH_LONG)
-                .show();
+        this.initLogoutFragment();
+    }
+
+    private void initLogoutFragment() {
+        LogoutFragment logoutFragment = LogoutFragment.createFragment();
+        this.getSupportFragmentManager()
+            .beginTransaction()
+            .add(R.id.logout_container_fragment, logoutFragment)
+            .commit();
     }
 }

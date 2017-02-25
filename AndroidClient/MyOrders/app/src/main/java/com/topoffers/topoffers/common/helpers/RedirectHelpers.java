@@ -7,7 +7,6 @@ import com.topoffers.topoffers.buyer.activities.BuyerProductsListActivity;
 import com.topoffers.topoffers.common.models.AuthenticationCookie;
 import com.topoffers.topoffers.seller.activities.SellerProductsListActivity;
 
-import java.util.List;
 import java.util.Objects;
 
 public class RedirectHelpers {

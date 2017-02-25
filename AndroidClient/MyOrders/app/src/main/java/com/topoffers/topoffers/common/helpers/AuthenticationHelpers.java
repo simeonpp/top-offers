@@ -39,4 +39,13 @@ public class AuthenticationHelpers {
             return cookies.get(0);
         }
     }
+
+    public static void logout(Context context) {
+        // Remove authentication cookies
+        SugarRecord.deleteAll(AuthenticationCookie.class);
+
+        // Redirect go login screen
+        Intent intent = new Intent(context, LoginActivity.class);
+        context.startActivity(intent);
+    }
 }

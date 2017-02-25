@@ -32,4 +32,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <!-- Logout fragment -->
+    <string name="logout">Logout</string>
 </resources>

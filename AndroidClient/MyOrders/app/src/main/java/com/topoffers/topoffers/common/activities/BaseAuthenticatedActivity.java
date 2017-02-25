@@ -7,7 +7,7 @@ import com.orm.SugarRecord;
 import com.topoffers.topoffers.common.helpers.AuthenticationHelpers;
 import com.topoffers.topoffers.common.models.AuthenticationCookie;
 
-public class BaseAuthenticatedActivity extends BaseActivity {
+public abstract class BaseAuthenticatedActivity extends BaseActivity {
     protected AuthenticationCookie authenticationCookie;
 
     @Override
