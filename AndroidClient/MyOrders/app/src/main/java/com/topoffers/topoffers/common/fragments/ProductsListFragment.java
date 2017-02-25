@@ -16,12 +16,14 @@ import android.widget.TextView;
 import com.topoffers.data.base.IData;
 import com.topoffers.data.models.Headers;
 import com.topoffers.topoffers.R;
+import com.topoffers.topoffers.common.adapters.ProductListAdapter;
 import com.topoffers.topoffers.common.helpers.AuthenticationHelpers;
 import com.topoffers.topoffers.common.models.AuthenticationCookie;
 import com.topoffers.topoffers.common.models.Product;
 
 import java.security.DigestException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -37,11 +39,11 @@ public class ProductsListFragment extends Fragment {
     private IData<Product> productData;
 
     private AuthenticationCookie cookie;
-    private ArrayList<Product> products;
+    private ArrayList<Product> mainProducts;
 
     public ProductsListFragment() {
         // Required empty public constructor
-        products = new ArrayList<>();
+        mainProducts = new ArrayList<>();
     }
 
     public static ProductsListFragment create(IData<Product> productData, AuthenticationCookie cookie) {
@@ -68,7 +70,7 @@ public class ProductsListFragment extends Fragment {
 
     private void initProductsList() {
         ListView lvProducts = (ListView) root.findViewById(R.id.lv_products);
-        ArrayAdapter<Product> productsAdapter = this.getProductsAdapter();
+        ArrayAdapter<Product> productsAdapter = new ProductListAdapter(this.getContext());
 
         lvProducts.setAdapter(productsAdapter);
 
@@ -76,43 +78,15 @@ public class ProductsListFragment extends Fragment {
         lvProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Product clickedProduct = products.get(position);
+                Product clickedProduct = mainProducts.get(position);
 
-                DialogFragment dialogFragment = DialogFragment.create(context, clickedProduct.getTitle(), 5);
+                DialogFragment dialogFragment = DialogFragment.create(context, clickedProduct.getTitle(), 0);
                 dialogFragment.show();
             }
         });
 
         // Perform HTTP Request
         this.loadProducts(productsAdapter);
-    }
-
-    private ArrayAdapter<Product> getProductsAdapter() {
-        ArrayAdapter<Product> productsAdapter = new ArrayAdapter<Product>(root.getContext(), -1, products) {
-            @NonNull
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View view = convertView;
-                if (view == null) {
-                    LayoutInflater inflater = LayoutInflater.from(this.getContext());
-                    view = inflater.inflate(R.layout.item_product, parent, false);
-                }
-
-                Product currentProduct = this.getItem(position);
-
-                TextView tvTitle = (TextView) view.findViewById(R.id.tv_product_title);
-                tvTitle.setText(currentProduct.getTitle());
-
-                TextView tvPrice = (TextView) view.findViewById(R.id.tv_product_price);
-                double productPrice = currentProduct.getPrice();
-                String productPriceAsString = String.valueOf(productPrice);
-                tvPrice.setText(productPriceAsString);
-
-                return view;
-            }
-        };
-
-        return  productsAdapter;
     }
 
     private void loadProducts(final ArrayAdapter<Product> productsAdapter) {
@@ -125,8 +99,11 @@ public class ProductsListFragment extends Fragment {
             .subscribe(new Consumer<Product[]>() {
                 @Override
                 public void accept(Product[] products) throws Exception {
+                    mainProducts = new ArrayList<Product>(Arrays.asList(products));
+
                     productsAdapter.clear();
                     productsAdapter.addAll(products);
+
                     loadingFragment.hide();
                 }
             });
