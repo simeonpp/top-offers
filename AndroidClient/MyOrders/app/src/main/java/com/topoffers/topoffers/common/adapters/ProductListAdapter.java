@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.topoffers.data.services.ImagesHttpData;
 import com.topoffers.topoffers.R;
 import com.topoffers.topoffers.common.models.Product;
 
@@ -17,7 +18,6 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
 
     public ProductListAdapter(Context context) {
         super(context, -1);
-//        this.imageHttpData = new ImagesHttpData();
     }
 
     @NonNull
