@@ -53,11 +53,11 @@ public class HttpRestData<T> implements IData<T> {
     }
 
     @Override
-    public Observable<T> getById(final Object id) { // id can be string or integer
+    public Observable<T> getById(final Object id, final Headers headers) { // id can be string or integer
         return Observable.create(new ObservableOnSubscribe<T>() {
             @Override
             public void subscribe(ObservableEmitter<T> e) throws Exception {
-                Request request = buildGetRequest(url + "/" + id);
+                Request request = buildGetRequest(url + "/" + id, headers);
                 Response response = httpClient.newCall(request).execute();
 
                 T object = parseSingle(response.body().string());

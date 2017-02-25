@@ -2,10 +2,12 @@ package com.topoffers.topoffers;
 
 import android.app.Application;
 
+import com.topoffers.topoffers.buyer.activities.BuyerProductDetailsActivity;
 import com.topoffers.topoffers.buyer.activities.BuyerProductsListActivity;
 import com.topoffers.topoffers.config.ConfigModule;
 import com.topoffers.topoffers.config.DataModule;
 import com.topoffers.topoffers.login.LoginActivity;
+import com.topoffers.topoffers.seller.activities.SellerProductDetailsActivity;
 import com.topoffers.topoffers.seller.activities.SellerProductsListActivity;
 
 import dagger.Component;
@@ -27,7 +29,11 @@ public class TopOffersApplication extends Application {
     @Component(modules = {ConfigModule.class, DataModule.class})
     public interface ApplicationComponent {
         void inject(LoginActivity loginActivity);
+
         void inject(SellerProductsListActivity sellerProductsListActivity);
+        void inject(SellerProductDetailsActivity sellerProductDetailsActivity);
+
         void inject(BuyerProductsListActivity buyerProductsListActivity);
+        void inject(BuyerProductDetailsActivity buyerProductDetailsActivity);
     }
 }

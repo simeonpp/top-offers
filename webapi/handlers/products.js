@@ -24,11 +24,13 @@ module.exports = {
         let headers = helpers.parseRequestHeader(request);
         let productId = request.params.productId;
 
-        let query;
+        let query = 'SELECT p.id, p.title, p.price, p.quantity, p.imageIdentifier, p.description, p.dateAdded, u.username as sellerUsername, u.firstName as sellerFirstName, u.lastName as sellerLastName ' +
+                    'FROM products p ' +
+                    'INNER JOIN users u ON u.id = p.sellerId ';
         if (headers.role === 'seller') {
-            query = `SELECT * FROM products p WHERE p.id = ${productId} AND p.sellerId = ${headers.id}`;
+            query += `WHERE p.id = ${productId} AND p.sellerId = ${headers.id}`;
         } else {
-            query = `SELECT * FROM products p WHERE p.id = ${productId}`;
+            query += `WHERE p.id = ${productId}`;
         }
 
         connection.query(query)

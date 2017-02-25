@@ -10,9 +10,6 @@ import com.topoffers.topoffers.seller.activities.SellerProductsListActivity;
 import java.util.Objects;
 
 public class RedirectHelpers {
-    private void RedirectHelpers() {
-    }
-
     public static Intent baseRedirect(Context context, AuthenticationCookie cookie) {
         Intent intent;
         if (cookie != null) {

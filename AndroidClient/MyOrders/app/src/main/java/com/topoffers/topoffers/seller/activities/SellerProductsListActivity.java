@@ -24,7 +24,7 @@ public class SellerProductsListActivity extends BaseAuthenticatedActivity {
         setContentView(R.layout.activity_seller_products_list);
 
         this.initTitle();
-        this.initProductsList();
+        this.initProductsListFragment();
         this.initLogoutFragment();
     }
 
@@ -40,8 +40,8 @@ public class SellerProductsListActivity extends BaseAuthenticatedActivity {
         tvTitle.setText(title);
     }
 
-    private void initProductsList() {
-        ProductsListFragment productListFragment = ProductsListFragment.create(this.productData, this.authenticationCookie);
+    private void initProductsListFragment() {
+        ProductsListFragment productListFragment = ProductsListFragment.create(this.productData, this.authenticationCookie, SellerProductDetailsActivity.class);
         this.getSupportFragmentManager()
             .beginTransaction()
             .replace(R.id.fragment_seller_products_list, productListFragment)

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_seller_product_details"
+    android:id="@+id/activity_buyer_product_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -9,15 +9,15 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="com.topoffers.topoffers.seller.activities.SellerProductDetailsActivity">
+    tools:context="com.topoffers.topoffers.buyer.activities.BuyerProductDetailsActivity">
 
     <FrameLayout
-        android:id="@+id/fragment_seller_product_details"
+        android:id="@+id/fragment_buyer_product_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <FrameLayout
-        android:id="@+id/fragment_seller_product_extras"
+        android:id="@+id/fragment_buyer_product_extras"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

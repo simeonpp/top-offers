@@ -26,7 +26,7 @@ public class BuyerProductsListActivity extends BaseAuthenticatedActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buyer_products_list);
 
-        this.initProductsList();
+        this.initProductsListFragment();
         this.initLogoutFragment();
     }
 
@@ -36,8 +36,8 @@ public class BuyerProductsListActivity extends BaseAuthenticatedActivity {
         ((TopOffersApplication) getApplication()).getComponent().inject(this);
     }
 
-    private void initProductsList() {
-        ProductsListFragment productListFragment = ProductsListFragment.create(this.productData, this.authenticationCookie);
+    private void initProductsListFragment() {
+        ProductsListFragment productListFragment = ProductsListFragment.create(this.productData, this.authenticationCookie, BuyerProductDetailsActivity.class);
         this.getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_seller_products_list, productListFragment)

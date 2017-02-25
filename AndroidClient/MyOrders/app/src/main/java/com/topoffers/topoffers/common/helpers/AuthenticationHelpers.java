@@ -17,9 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AuthenticationHelpers {
-    private void AuthenticationHelpers() {
-    }
-
     public static Intent checkAuthentication(Context context) {
         AuthenticationCookie cookie = getAuthenticationCookie();
         return checkAuthentication(context, cookie);

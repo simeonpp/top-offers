@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.topoffers.data.services.ImagesHttpData;
 import com.topoffers.topoffers.R;
+import com.topoffers.topoffers.common.helpers.Utils;
 import com.topoffers.topoffers.common.models.Product;
 
 import io.reactivex.functions.Consumer;
@@ -42,10 +43,7 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
 
         // Set price
         TextView tvPrice = (TextView) view.findViewById(R.id.tv_product_price);
-        double productPrice = currentProduct.getPrice();
-        String productPriceAsString = String.valueOf(productPrice);
-        String price = String.format("Price: %s", productPriceAsString);
-        tvPrice.setText(price);
+        tvPrice.setText(Utils.convertDoublePriceToStringPriceWithTag(currentProduct.getPrice()));
 
         // Set seller username
         TextView tvSellerUsername = (TextView) view.findViewById(R.id.tv_product_seller_username);

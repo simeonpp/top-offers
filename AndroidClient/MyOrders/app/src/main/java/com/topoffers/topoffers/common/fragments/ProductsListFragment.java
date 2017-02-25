@@ -2,6 +2,7 @@ package com.topoffers.topoffers.common.fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -35,10 +36,9 @@ import io.reactivex.functions.Consumer;
  */
 public class ProductsListFragment extends Fragment {
     private View root;
-
     private IData<Product> productData;
-
     private AuthenticationCookie cookie;
+    private Class classToNavigateOnclick;
     private ArrayList<Product> mainProducts;
 
     public ProductsListFragment() {
@@ -46,10 +46,11 @@ public class ProductsListFragment extends Fragment {
         mainProducts = new ArrayList<>();
     }
 
-    public static ProductsListFragment create(IData<Product> productData, AuthenticationCookie cookie) {
+    public static ProductsListFragment create(IData<Product> productData, AuthenticationCookie cookie, Class classToNavigateOnclick) {
         ProductsListFragment productsListFragment = new ProductsListFragment();
         productsListFragment.setProductData(productData);
         productsListFragment.setCookie(cookie);
+        productsListFragment.setClassToNavigateOnclick(classToNavigateOnclick);
         return productsListFragment;
     };
 
@@ -59,6 +60,10 @@ public class ProductsListFragment extends Fragment {
 
     public void setCookie(AuthenticationCookie cookie) {
         this.cookie = cookie;
+    }
+
+    public void setClassToNavigateOnclick(Class classToNavigateOnclick) {
+        this.classToNavigateOnclick = classToNavigateOnclick;
     }
 
     @Override
@@ -80,8 +85,9 @@ public class ProductsListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Product clickedProduct = mainProducts.get(position);
 
-                DialogFragment dialogFragment = DialogFragment.create(context, clickedProduct.getTitle(), 0);
-                dialogFragment.show();
+                Intent intent = new Intent(context, classToNavigateOnclick);
+                intent.putExtra(ProductDetailsFragment.INTENT_PRODUCT_KEY, clickedProduct.getId());
+                context.startActivity(intent);
             }
         });
 
