@@ -1,6 +1,5 @@
 package com.topoffers.topoffers.seller.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -10,11 +9,10 @@ import com.topoffers.topoffers.TopOffersApplication;
 import com.topoffers.topoffers.common.activities.BaseAuthenticatedActivity;
 import com.topoffers.topoffers.common.fragments.OrdersListFragment;
 import com.topoffers.topoffers.common.models.Order;
-import com.topoffers.topoffers.common.models.Product;
 
 import javax.inject.Inject;
 
-public class SellerOrderHistory extends BaseAuthenticatedActivity {
+public class SellerOrderHistoryListActivity extends BaseAuthenticatedActivity {
     public static final String INTENT_ORDER_PRODUCT_ID = "intent_order_product_id";
 
     @Inject
@@ -42,7 +40,7 @@ public class SellerOrderHistory extends BaseAuthenticatedActivity {
     }
 
     private void initOrdersListFragment() {
-        OrdersListFragment ordersListFragment = OrdersListFragment.create(this.orderData, this.authenticationCookie, SellerOrderHistory.class);
+        OrdersListFragment ordersListFragment = OrdersListFragment.create(this.orderData, this.authenticationCookie, SellerOrderHistoryDetailsActivity.class);
         this.getSupportFragmentManager()
             .beginTransaction()
             .replace(R.id.fragment_seller_orders_list, ordersListFragment)

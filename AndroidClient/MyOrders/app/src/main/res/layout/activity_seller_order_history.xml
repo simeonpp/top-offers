@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="com.topoffers.topoffers.seller.activities.SellerOrderHistory">
+    tools:context="com.topoffers.topoffers.seller.activities.SellerOrderHistoryListActivity">
 
     <TextView
         android:id="@+id/tv_seller_orders_list_title"

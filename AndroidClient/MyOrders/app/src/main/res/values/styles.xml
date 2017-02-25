@@ -96,4 +96,9 @@
         <item name="android:textColor">#A50000</item>
     </style>
 
+    <!-- Order Details -->
+    <style name="OrderDetailsImageWrap">
+        <item name="android:layout_marginBottom">20dp</item>
+    </style>
+
 </resources>

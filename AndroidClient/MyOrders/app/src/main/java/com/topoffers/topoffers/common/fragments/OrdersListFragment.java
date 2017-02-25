@@ -1,6 +1,7 @@
 package com.topoffers.topoffers.common.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -77,7 +78,9 @@ public class OrdersListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Order clickedOrder = mainOrders.get(position);
 
-                (DialogFragment.create(context, clickedOrder.getProductTitle(), 0)).show();
+                Intent intent = new Intent(context, classToNavigateOnItemClick);
+                intent.putExtra(OrderDetailsFragment.INTENT_ORDER_KEY, clickedOrder.getId());
+                context.startActivity(intent);
             }
         });
 

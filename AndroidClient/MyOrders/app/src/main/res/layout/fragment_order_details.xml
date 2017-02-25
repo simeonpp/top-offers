@@ -1,0 +1,20 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="com.topoffers.topoffers.common.fragments.OrderDetailsFragment">
+
+    <TextView
+        android:id="@+id/tv_order_details_product_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Title"/>
+
+    <ImageView
+        android:id="@+id/iv_order_details_image"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        style="@style/OrderDetailsImageWrap"/>
+
+</LinearLayout>
