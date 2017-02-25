@@ -11,14 +11,16 @@
     android:orientation="vertical"
     tools:context="com.topoffers.topoffers.seller.activities.SellerProductsListActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/seller_products_list_title" />
-
     <FrameLayout
         android:id="@+id/logout_container_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_seller_products_list_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/seller_products_list_title"
+        style="@style/Title" />
 
 </LinearLayout>

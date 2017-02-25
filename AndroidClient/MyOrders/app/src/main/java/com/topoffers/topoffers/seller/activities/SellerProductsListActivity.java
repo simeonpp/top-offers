@@ -2,6 +2,7 @@ package com.topoffers.topoffers.seller.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.orm.SugarContext;
@@ -21,7 +22,14 @@ public class SellerProductsListActivity extends BaseAuthenticatedActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seller_products_list);
 
+        this.initTitle();
         this.initLogoutFragment();
+    }
+
+    private void initTitle() {
+        TextView tvTitle = (TextView) this.findViewById(R.id.tv_seller_products_list_title);
+        String title = String.format("%s's products for sale", this.loginResult.getFirstName());
+        tvTitle.setText(title);
     }
 
     private void initLogoutFragment() {

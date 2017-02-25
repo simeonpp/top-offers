@@ -6,6 +6,7 @@ import android.content.Intent;
 import com.orm.SugarRecord;
 import com.topoffers.topoffers.buyer.activities.BuyerProductsListActivity;
 import com.topoffers.topoffers.common.models.AuthenticationCookie;
+import com.topoffers.topoffers.common.models.LoginResult;
 import com.topoffers.topoffers.login.LoginActivity;
 import com.topoffers.topoffers.seller.activities.SellerProductsListActivity;
 
@@ -47,5 +48,14 @@ public class AuthenticationHelpers {
         // Redirect go login screen
         Intent intent = new Intent(context, LoginActivity.class);
         context.startActivity(intent);
+    }
+
+    public static LoginResult getLoginResult() {
+        List<LoginResult> loginResults = SugarRecord.listAll(LoginResult.class);
+        if (loginResults.size() == 0) {
+            return new LoginResult();
+        } else {
+            return loginResults.get(0);
+        }
     }
 }

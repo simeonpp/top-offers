@@ -50,34 +50,8 @@ public class LoginActivity extends BaseActivity {
 
     private void addSubmitButtonListener() {
         Button submitButton = (Button) this.findViewById(R.id.btn_login_submit);
-        // Have some problem with jack options and dagger, will sort it out later
-
-//        submitButton.setOnClickListener(v -> {
-//            String username = ((EditText) this.findViewById(R.id.et_login_username)).getText().toString();
-//            String password = ((EditText) this.findViewById(R.id.et_login_password)).getText().toString();
-//
-//            LoginRequest loginRequest = new LoginRequest(username, password);
-//
-//            loginData.custom(RequestWithBodyType.POST, loginRequest)
-//                .subscribe(loginResult -> {
-//                    if (loginResult.getError() == null) {
-//                        String role = loginResult.getCookie().getRole();
-//                        Intent intent;
-//                        if (Objects.equals(role, "seller")) {
-//                            intent = new Intent(this, SellerProductsListActivity.class);
-//                        } else {
-//                            intent = new Intent(this, BuyerProductsListActivity.class);
-//                        }
-//                        startActivity(intent);
-//                    } else {
-//                        Toast
-//                            .makeText(this, loginResult.getError().getMessage(), Toast.LENGTH_LONG)
-//                            .show();
-//                    }
-//                });
-//        });
-
         final Context context = this;
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +73,10 @@ public class LoginActivity extends BaseActivity {
                                 AuthenticationCookie authenticationCookie = loginResult.getCookie();
                                 SugarRecord.deleteAll(AuthenticationCookie.class); // delete any current records
                                 SugarRecord.save(authenticationCookie);
+
+                                // Save login response to device SQLLite DB
+                                SugarRecord.deleteAll(LoginResult.class); // delete any current records
+                                SugarRecord.save(loginResult);
 
                                 // Redirect to corresponding page
                                 Intent intent = RedirectHelpers.baseRedirect(context, authenticationCookie);

@@ -4,7 +4,7 @@ import com.orm.SugarRecord;
 
 import java.io.Serializable;
 
-public class LoginResult implements Serializable {
+public class LoginResult extends SugarRecord implements Serializable {
     private boolean success;
     private AuthenticationCookie cookie;
     private String username;
@@ -14,6 +14,10 @@ public class LoginResult implements Serializable {
     private String address;
     private String phone;
     private Error error;
+
+    // Sugar need default constructor
+    public LoginResult() {
+    }
 
     public LoginResult(boolean success, AuthenticationCookie cookie, String username, String role, String firstName, String lastName, String address, String phone, Error error) {
         this.success = success;
