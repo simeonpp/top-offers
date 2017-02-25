@@ -12,16 +12,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.topoffers.data.base.IData;
-import com.topoffers.data.models.Header;
 import com.topoffers.data.models.Headers;
 import com.topoffers.topoffers.R;
 import com.topoffers.topoffers.common.helpers.AuthenticationHelpers;
 import com.topoffers.topoffers.common.models.AuthenticationCookie;
 import com.topoffers.topoffers.common.models.Product;
 
+import java.security.DigestException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,9 +78,8 @@ public class ProductsListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Product clickedProduct = products.get(position);
 
-                Toast
-                    .makeText(context, clickedProduct.getTitle(), Toast.LENGTH_SHORT)
-                    .show();
+                DialogFragment dialogFragment = DialogFragment.create(context, clickedProduct.getTitle(), 5);
+                dialogFragment.show();
             }
         });
 

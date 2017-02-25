@@ -17,6 +17,7 @@ import com.topoffers.topoffers.R;
 import com.topoffers.topoffers.TopOffersApplication;
 import com.topoffers.topoffers.buyer.activities.BuyerProductsListActivity;
 import com.topoffers.topoffers.common.activities.BaseActivity;
+import com.topoffers.topoffers.common.fragments.DialogFragment;
 import com.topoffers.topoffers.common.helpers.RedirectHelpers;
 import com.topoffers.topoffers.common.models.AuthenticationCookie;
 import com.topoffers.topoffers.common.models.LoginRequest;
@@ -63,11 +64,12 @@ public class LoginActivity extends BaseActivity {
                     .subscribe(new Consumer<LoginResult>() {
                         @Override
                         public void accept(LoginResult loginResult) throws Exception {
+                            DialogFragment dialogFragment;
+
                             if (loginResult.getError() == null) {
                                 String welcomeString = String.format("Welcome %s", loginResult.getFirstName());
-                                Toast
-                                    .makeText(context, welcomeString, Toast.LENGTH_LONG)
-                                    .show();
+                                dialogFragment = DialogFragment.create(context, welcomeString, 1);
+                                dialogFragment.show();
 
                                 // Save cookie to device SQLite DB
                                 AuthenticationCookie authenticationCookie = loginResult.getCookie();
@@ -82,10 +84,8 @@ public class LoginActivity extends BaseActivity {
                                 Intent intent = RedirectHelpers.baseRedirect(context, authenticationCookie);
                                 startActivity(intent);
                             } else {
-                                // Toast will be exported to Wrap component
-                                Toast
-                                    .makeText(context, loginResult.getError().getMessage(), Toast.LENGTH_LONG)
-                                    .show();
+                                dialogFragment = DialogFragment.create(context, loginResult.getError().getMessage(), 1);
+                                dialogFragment.show();
                             }
                         }
                     });

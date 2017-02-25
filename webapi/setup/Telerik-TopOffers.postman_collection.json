@@ -10,7 +10,7 @@
 		{
 			"name": "localhost:8000/api/login",
 			"request": {
-				"url": "localhost:8000/api/login",
+				"url": "http://192.168.0.103:8000/api/login",
 				"method": "POST",
 				"header": [
 					{
@@ -30,7 +30,7 @@
 		{
 			"name": "localhost:8000/api/register",
 			"request": {
-				"url": "localhost:8000/api/register",
+				"url": "http://192.168.0.103:8000/api/register",
 				"method": "POST",
 				"header": [
 					{
@@ -50,7 +50,7 @@
 		{
 			"name": "localhost:8000/api/products",
 			"request": {
-				"url": "localhost:8000/api/products",
+				"url": "http://192.168.0.103:8000/api/products",
 				"method": "GET",
 				"header": [
 					{
@@ -67,7 +67,7 @@
 		{
 			"name": "localhost:8000/api/product/1",
 			"request": {
-				"url": "localhost:8000/api/product/3",
+				"url": "http://192.168.0.103:8000/api/products/1",
 				"method": "GET",
 				"header": [
 					{
@@ -84,7 +84,7 @@
 		{
 			"name": "localhost:8000/api/product",
 			"request": {
-				"url": "localhost:8000/api/product",
+				"url": "http://192.168.0.103:8000/api/products",
 				"method": "POST",
 				"header": [
 					{
@@ -109,7 +109,7 @@
 		{
 			"name": "localhost:8000/api/product/7",
 			"request": {
-				"url": "localhost:8000/api/product/5",
+				"url": "http://192.168.0.103:8000/api/products/5",
 				"method": "DELETE",
 				"header": [
 					{
@@ -126,7 +126,7 @@
 		{
 			"name": "localhost:8000/api/product/5",
 			"request": {
-				"url": "localhost:8000/api/product/5",
+				"url": "http://192.168.0.103:8000/api/products/6",
 				"method": "PUT",
 				"header": [
 					{
@@ -151,7 +151,7 @@
 		{
 			"name": "localhost:8000/api/orders",
 			"request": {
-				"url": "localhost:8000/api/orders",
+				"url": "http://192.168.0.103:8000/api/orders",
 				"method": "GET",
 				"header": [
 					{
@@ -168,7 +168,7 @@
 		{
 			"name": "localhost:8000/api/orders/1",
 			"request": {
-				"url": "localhost:8000/api/order/1",
+				"url": "http://192.168.0.103:8000/api/orders/1",
 				"method": "GET",
 				"header": [
 					{
@@ -185,7 +185,7 @@
 		{
 			"name": "localhost:8000/api/order",
 			"request": {
-				"url": "localhost:8000/api/order",
+				"url": "http://192.168.0.103:8000/api/orders",
 				"method": "POST",
 				"header": [
 					{
@@ -210,7 +210,7 @@
 		{
 			"name": "localhost:8000/api/profile",
 			"request": {
-				"url": "localhost:8000/api/profile",
+				"url": "http://192.168.0.103:8000/api/profile",
 				"method": "GET",
 				"header": [
 					{
@@ -227,7 +227,7 @@
 		{
 			"name": "localhost:8000/api/profile",
 			"request": {
-				"url": "localhost:8000/api/profile",
+				"url": "http://192.168.0.103:8000/api/profile",
 				"method": "PUT",
 				"header": [
 					{
