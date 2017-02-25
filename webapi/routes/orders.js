@@ -2,8 +2,7 @@
 
 var applicationConfig = require('../config.js').application;
 var ordersUrl = applicationConfig.apiUrl + 'orders';
-var orderUrl = applicationConfig.apiUrl + 'order';
-var orderWithIdUrl = applicationConfig.apiUrl + 'order/{orderId}';
+var orderWithIdUrl = ordersUrl + '/{orderId}';
 
 module.exports = {
     getAllMy: function(server, handler) {
@@ -23,7 +22,7 @@ module.exports = {
     create: function(server, handler) {
         server.route({
             method: 'POST',
-            path: orderUrl,
+            path: ordersUrl,
             handler: handler
         });
     }

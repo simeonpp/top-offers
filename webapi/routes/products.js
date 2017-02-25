@@ -2,8 +2,7 @@
 
 var applicationConfig = require('../config.js').application;
 var productsUrl = applicationConfig.apiUrl + 'products';
-var productUrl = applicationConfig.apiUrl + 'product';
-var productWithIdUrl = applicationConfig.apiUrl + 'product/{productId}';
+var productWithIdUrl = productsUrl + '/{productId}';
 
 module.exports = {
     getAll: function(server, handler) {
@@ -23,7 +22,7 @@ module.exports = {
     create: function(server, handler) {
         server.route({
             method: 'POST',
-            path: productUrl,
+            path: productsUrl,
             handler: handler
         });
     },

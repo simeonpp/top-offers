@@ -1,21 +1,22 @@
 package com.topoffers.topoffers.seller.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.orm.SugarContext;
-import com.orm.SugarRecord;
+import com.topoffers.data.base.IData;
 import com.topoffers.topoffers.R;
 import com.topoffers.topoffers.TopOffersApplication;
-import com.topoffers.topoffers.common.activities.BaseActivity;
 import com.topoffers.topoffers.common.activities.BaseAuthenticatedActivity;
 import com.topoffers.topoffers.common.fragments.LogoutFragment;
-import com.topoffers.topoffers.common.helpers.AuthenticationHelpers;
-import com.topoffers.topoffers.common.models.AuthenticationCookie;
+import com.topoffers.topoffers.common.fragments.ProductsListFragment;
+import com.topoffers.topoffers.common.models.Product;
+
+import javax.inject.Inject;
 
 public class SellerProductsListActivity extends BaseAuthenticatedActivity {
+
+    @Inject
+    public IData<Product> productData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,13 +24,28 @@ public class SellerProductsListActivity extends BaseAuthenticatedActivity {
         setContentView(R.layout.activity_seller_products_list);
 
         this.initTitle();
+        this.initProductsList();
         this.initLogoutFragment();
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        ((TopOffersApplication) getApplication()).getComponent().inject(this);
     }
 
     private void initTitle() {
         TextView tvTitle = (TextView) this.findViewById(R.id.tv_seller_products_list_title);
         String title = String.format("%s's products for sale", this.loginResult.getFirstName());
         tvTitle.setText(title);
+    }
+
+    private void initProductsList() {
+        ProductsListFragment productListFragment = ProductsListFragment.create(this.productData, this.authenticationCookie);
+        this.getSupportFragmentManager()
+            .beginTransaction()
+            .replace(R.id.fragment_seller_products_list, productListFragment)
+            .commit();
     }
 
     private void initLogoutFragment() {

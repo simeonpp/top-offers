@@ -5,6 +5,7 @@ import android.app.Application;
 import com.topoffers.topoffers.config.ConfigModule;
 import com.topoffers.topoffers.config.DataModule;
 import com.topoffers.topoffers.login.LoginActivity;
+import com.topoffers.topoffers.seller.activities.SellerProductsListActivity;
 
 import dagger.Component;
 
@@ -25,5 +26,6 @@ public class TopOffersApplication extends Application {
     @Component(modules = {ConfigModule.class, DataModule.class})
     public interface ApplicationComponent {
         void inject(LoginActivity loginActivity);
+        void inject(SellerProductsListActivity sellerProductsListActivity);
     }
 }

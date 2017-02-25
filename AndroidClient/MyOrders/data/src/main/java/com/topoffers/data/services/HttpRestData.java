@@ -5,6 +5,11 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.topoffers.data.base.IData;
 import com.topoffers.data.base.RequestWithBodyType;
+import com.topoffers.data.models.Header;
+import com.topoffers.data.models.Headers;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -31,12 +36,12 @@ public class HttpRestData<T> implements IData<T> {
         this.httpClient = new OkHttpClient();
     }
 
-    public Observable<T[]> getAll() {
+    public Observable<T[]> getAll(final Headers headers) {
         return Observable
                 .create(new ObservableOnSubscribe<T[]>() {
                     @Override
                     public void subscribe(ObservableEmitter<T[]> e) throws Exception {
-                        Request request = buildGetRequest(url + "s");
+                        Request request = buildGetRequest(url, headers);
                         Response response = httpClient.newCall(request).execute();
 
                         T[] objects = parseArray(response.body().string());
@@ -96,10 +101,18 @@ public class HttpRestData<T> implements IData<T> {
     }
 
     private Request buildGetRequest(String url) {
-        return
-            new Request.Builder()
-                    .url(url)
-                    .build();
+        return  buildGetRequest(url, new Headers(new ArrayList<Header>()));
+    }
+
+    private Request buildGetRequest(String url, Headers headers) {
+        Request.Builder builder = new Request.Builder()
+            .url(url);
+
+        for (Header header : headers.getHeaders()) {
+            builder.addHeader(header.getKey(), header.getValue());
+        }
+
+        return builder.build();
     }
 
     private Request buildRequestWithBody(T object, String url) {

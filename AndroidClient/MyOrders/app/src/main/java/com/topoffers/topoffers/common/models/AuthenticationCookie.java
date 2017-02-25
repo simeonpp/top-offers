@@ -2,7 +2,9 @@ package com.topoffers.topoffers.common.models;
 
 import com.orm.SugarRecord;
 
-public class AuthenticationCookie extends SugarRecord {
+import java.io.Serializable;
+
+public class AuthenticationCookie extends SugarRecord implements Serializable {
     private String username;
     private String role;
 

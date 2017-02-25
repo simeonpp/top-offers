@@ -23,4 +23,9 @@
         android:text="@string/seller_products_list_title"
         style="@style/Title" />
 
+    <FrameLayout
+        android:id="@+id/fragment_seller_products_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>
