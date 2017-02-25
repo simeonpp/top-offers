@@ -38,6 +38,9 @@
 
     <!-- Product Details -->
     <string name="product_details">Product details</string>
+    <string name="edit_product_btn_text">Edit product</string>
+    <string name="delete_product_btn_text">Delete product</string>
+    <string name="order_history_btn_text">View order history</string>
 
     <!-- Create new product -->
     <string name="create_new_product">Create new product</string>
@@ -47,7 +50,6 @@
     <string name="description">Description</string>
     <string name="create_product_button_text">Create product</string>
     <string name="create_new_product_button_text">Create new product</string>
+    <string name="title_activity_seller_order_history">SellerOrderHistory</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

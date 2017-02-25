@@ -74,7 +74,9 @@ module.exports = {
         connection.query(query)
             .then(function(dataResult) {
                 if (dataResult && dataResult.affectedRows === 1) {
-                    reply({ success: true });
+                    reply({
+                        id: productId
+                    });
                 } else {
                     reply({
                         error: {
@@ -102,7 +104,14 @@ module.exports = {
         connection.query(query)
             .then(function(dataResult) {
                 if (dataResult && dataResult.affectedRows === 1) {
-                    reply({ success: true });
+                    reply({ 
+                        id: productId,
+                        title,
+                        price,
+                        quantity,
+                        imageIdentifier,
+                        description
+                    });
                 } else {
                     reply({
                         error: {

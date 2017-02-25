@@ -8,5 +8,7 @@ public interface IData<T> {
     Observable<T[]> getAll(Headers headers);
     Observable<T> getById(Object id, Headers headers); // id can be string or integer
     Observable<T> add(T object, Headers headers);
+    Observable<T> edit(Object id, T object, Headers headers);
+    Observable<T> delete(Object id, Headers headers);
     Observable<T> custom(RequestWithBodyType requestType, Object object);
 }

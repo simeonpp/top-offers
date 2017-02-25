@@ -72,6 +72,10 @@
         <item name="android:layout_marginBottom">20dp</item>
     </style>
 
+    <style name="ProductDetailsActionButtonWrap">
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
+
     <style name="TempRED">
         <item name="android:textColor">#FF0000</item>
     </style>

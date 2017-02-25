@@ -1,12 +1,26 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context="com.topoffers.topoffers.seller.fragments.SellerProductDetailsExtraFragment">
 
-    <TextView
+    <Button
+        android:id="@+id/btn_edit_product"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Seller extras" />
+        android:layout_height="wrap_content"
+        android:text="@string/edit_product_btn_text" />
 
-</FrameLayout>
+    <Button
+        android:id="@+id/btn_order_history_product"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/order_history_btn_text" />
+
+    <Button
+        android:id="@+id/btn_delete_product"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/delete_product_btn_text" />
+
+</LinearLayout>

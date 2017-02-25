@@ -16,6 +16,7 @@ import com.topoffers.data.base.IData;
 import com.topoffers.data.models.Headers;
 import com.topoffers.topoffers.R;
 import com.topoffers.topoffers.common.fragments.DialogFragment;
+import com.topoffers.topoffers.common.fragments.LoadingFragment;
 import com.topoffers.topoffers.common.helpers.AuthenticationHelpers;
 import com.topoffers.topoffers.common.models.AuthenticationCookie;
 import com.topoffers.topoffers.common.models.Product;
@@ -104,31 +105,78 @@ public class UpdateProductFragment extends Fragment {
                     (DialogFragment.create(context, "Invalid input form", 1)).show();
                 } else {
                     Product product = new Product(title, price, quantity, null, description);
-                    Headers headers = AuthenticationHelpers.getAuthenticationHeaders(cookie);
-
-                    productData.add(product, headers)
-                        .subscribe(new Consumer<Product>() {
-                            @Override
-                            public void accept(Product product) throws Exception {
-                                // Notify user
-                                String notifyMessage = String.format("%s was successfully added.", title);
-                                (DialogFragment.create(context, notifyMessage, 1)).show();
-
-                                // Redirects to products list
-                                Intent intent = new Intent(context, SellerProductsListActivity.class);
-                                context.startActivity(intent);
-                            }
-                        });
+                    handleUpdateProduct(product);
                 }
             }
         });
     }
 
-    private void initEditProduct() {
-        TextView tvTitle = (TextView) root.findViewById(R.id.tv_update_product_title);
-        tvTitle.setText("Update XXXX");
+    private void handleUpdateProduct(Product product) {
+        final Context context = this.getContext();
+        Headers headers = AuthenticationHelpers.getAuthenticationHeaders(cookie);
 
+        if (this.mode ==  UpdateProductType.EDIT) {
+            productData.edit(productId, product, headers)
+                .subscribe(new Consumer<Product>() {
+                    @Override
+                    public void accept(Product product) throws Exception {
+                        // Notify user
+                        String notifyMessage = String.format("%s was successfully edited.", product.getTitle());
+                        (DialogFragment.create(context, notifyMessage, 1)).show();
+
+                        // Redirects to products list
+                        Intent intent = new Intent(context, SellerProductsListActivity.class);
+                        context.startActivity(intent);
+                    }
+                });
+        } else {
+            productData.add(product, headers)
+                .subscribe(new Consumer<Product>() {
+                    @Override
+                    public void accept(Product product) throws Exception {
+                        String notifyMessage = String.format("%s was successfully added.", product.getTitle());
+                        (DialogFragment.create(context, notifyMessage, 1)).show();
+
+                        // Redirects to products list
+                        Intent intent = new Intent(context, SellerProductsListActivity.class);
+                        context.startActivity(intent);
+                    }
+                });
+        }
+    }
+
+    private void initEditProduct() {
         Button btnUpdateProduct = (Button) root.findViewById(R.id.btn_update_product);
         btnUpdateProduct.setText("Update Product");
+
+        final LoadingFragment loadingFragment = LoadingFragment.create(this.getContext(), "Getting product data...");
+        loadingFragment.show();
+
+        Headers headers = AuthenticationHelpers.getAuthenticationHeaders(cookie);
+        productData.getById(this.productId, headers)
+            .subscribe(new Consumer<Product>() {
+                @Override
+                public void accept(Product product) throws Exception {
+                    TextView tvTitle = (TextView) root.findViewById(R.id.tv_update_product_title);
+                    tvTitle.setText("Update " + product.getTitle());
+
+                    EditText etTitle = (EditText) root.findViewById(R.id.et_update_product_title);
+                    etTitle.setText(product.getTitle());
+
+                    EditText etPrice = (EditText) root.findViewById(R.id.et_update_product_price);
+                    etPrice.setText(String.valueOf(product.getPrice()));
+
+                    EditText etQuantity = (EditText) root.findViewById(R.id.et_update_product_quantity);
+                    String quantity = String.valueOf(product.getQuantity());
+                    etQuantity.setText(quantity);
+
+                    EditText etDescription = (EditText) root.findViewById(R.id.et_update_product_description);
+                    etDescription.setText(product.getDescription());
+
+                    loadingFragment.hide();
+                }
+            });
     }
+
+
 }

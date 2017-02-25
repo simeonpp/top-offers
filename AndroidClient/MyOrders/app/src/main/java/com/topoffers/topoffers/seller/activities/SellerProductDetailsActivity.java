@@ -46,7 +46,7 @@ public class SellerProductDetailsActivity extends BaseAuthenticatedActivity {
     }
 
     private void initProductDetailsExtras() {
-        SellerProductDetailsExtraFragment fragment = new SellerProductDetailsExtraFragment();
+        SellerProductDetailsExtraFragment fragment = SellerProductDetailsExtraFragment.create(productId, this.productData, this.authenticationCookie);
         this.getSupportFragmentManager()
             .beginTransaction()
             .replace(R.id.fragment_seller_product_extras, fragment)

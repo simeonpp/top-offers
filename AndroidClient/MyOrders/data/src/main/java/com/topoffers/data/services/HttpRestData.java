@@ -82,6 +82,38 @@ public class HttpRestData<T> implements IData<T> {
     }
 
     @Override
+    public Observable<T> edit(final Object id, final T object, final Headers headers) {
+        return Observable.create(new ObservableOnSubscribe<T>() {
+            @Override
+            public void subscribe(ObservableEmitter<T> e) throws Exception {
+                Request request = buildRequestWithBody(RequestWithBodyType.PUT, object, url + "/" + id, headers);
+                Response response = httpClient.newCall(request).execute();
+
+                T resultObject = parseSingle(response.body().string());
+                e.onNext(resultObject);
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<T> delete(final Object id, final Headers headers) {
+        return Observable.create(new ObservableOnSubscribe<T>() {
+            @Override
+            public void subscribe(ObservableEmitter<T> e) throws Exception {
+                Request request = buildDeleteRequest(url + "/" + id, headers);
+                Response response = httpClient.newCall(request).execute();
+
+                T resultObject = parseSingle(response.body().string());
+                e.onNext(resultObject);
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
     public Observable<T> custom(final RequestWithBodyType requestType, final Object object) {
         return Observable.create(new ObservableOnSubscribe<T>() {
             @Override
@@ -104,12 +136,23 @@ public class HttpRestData<T> implements IData<T> {
     private Request buildGetRequest(String url, Headers headers) {
         Request.Builder requestBuilder = new Request.Builder()
             .url(url);
+        requestBuilder = this.addHeadersToRequestBuilder(requestBuilder, headers);
+        return requestBuilder.build();
+    }
 
+    private Request buildDeleteRequest(String url, Headers headers) {
+        Request.Builder requestBuilder = new Request.Builder()
+                .url(url);
+        requestBuilder = requestBuilder.delete();
+        requestBuilder = this.addHeadersToRequestBuilder(requestBuilder, headers);
+        return requestBuilder.build();
+    }
+
+    private Request.Builder addHeadersToRequestBuilder(Request.Builder requestBuilder, Headers headers) {
         for (Header header : headers.getHeaders()) {
             requestBuilder.addHeader(header.getKey(), header.getValue());
         }
-
-        return requestBuilder.build();
+        return requestBuilder;
     }
 
     private Request buildRequestWithBody(T object, String url) {
@@ -149,9 +192,6 @@ public class HttpRestData<T> implements IData<T> {
                 break;
             case PUT:
                 requestBuilder = requestBuilder.put(requestBody);
-                break;
-            case DELETE:
-                requestBuilder = requestBuilder.delete(requestBody);
                 break;
         }
 
