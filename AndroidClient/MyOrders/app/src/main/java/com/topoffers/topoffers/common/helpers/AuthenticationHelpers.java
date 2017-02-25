@@ -3,13 +3,17 @@ package com.topoffers.topoffers.common.helpers;
 import android.content.Context;
 import android.content.Intent;
 
+import com.google.gson.Gson;
 import com.orm.SugarRecord;
+import com.topoffers.data.models.Header;
+import com.topoffers.data.models.Headers;
 import com.topoffers.topoffers.buyer.activities.BuyerProductsListActivity;
 import com.topoffers.topoffers.common.models.AuthenticationCookie;
 import com.topoffers.topoffers.common.models.LoginResult;
 import com.topoffers.topoffers.login.LoginActivity;
 import com.topoffers.topoffers.seller.activities.SellerProductsListActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AuthenticationHelpers {
@@ -57,5 +61,16 @@ public class AuthenticationHelpers {
         } else {
             return loginResults.get(0);
         }
+    }
+
+    public static Headers getAuthenticationHeaders(AuthenticationCookie authenticationCookie) {
+        Gson gson = new Gson();
+        String cookieStringValue = gson.toJson(authenticationCookie, AuthenticationCookie.class);
+        Header header = new Header("x-cookie", cookieStringValue);
+
+        List<Header> headersList =  new ArrayList<Header>();
+        headersList.add(header);
+        Headers headers = new Headers(headersList);
+        return headers;
     }
 }

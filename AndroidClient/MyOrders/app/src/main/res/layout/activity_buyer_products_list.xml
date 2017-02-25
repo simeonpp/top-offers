@@ -11,13 +11,19 @@
     android:orientation="vertical"
     tools:context="com.topoffers.topoffers.buyer.activities.BuyerProductsListActivity">
 
+    <FrameLayout
+        android:id="@+id/logout_container_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/buyers_products_list_title" />
+        android:text="@string/buyers_products_list_title"
+        style="@style/Title" />
 
     <FrameLayout
-        android:id="@+id/logout_container_fragment"
+        android:id="@+id/fragment_seller_products_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

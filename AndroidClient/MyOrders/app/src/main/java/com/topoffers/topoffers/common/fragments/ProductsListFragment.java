@@ -14,16 +14,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.topoffers.data.base.IData;
 import com.topoffers.data.models.Header;
 import com.topoffers.data.models.Headers;
 import com.topoffers.topoffers.R;
+import com.topoffers.topoffers.common.helpers.AuthenticationHelpers;
 import com.topoffers.topoffers.common.models.AuthenticationCookie;
 import com.topoffers.topoffers.common.models.Product;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -122,13 +121,7 @@ public class ProductsListFragment extends Fragment {
         final LoadingFragment loadingFragment = LoadingFragment.create(this.getContext(), "Getting products...");
         loadingFragment.show();
 
-        Gson gson = new Gson();
-        String cookieStringValue = gson.toJson(this.cookie, AuthenticationCookie.class);
-        Header header = new Header("x-cookie", cookieStringValue);
-
-        List<Header> headersList =  new ArrayList<Header>();
-        headersList.add(header);
-        Headers headers = new Headers(headersList);
+        Headers headers = AuthenticationHelpers.getAuthenticationHeaders(this.cookie);
 
         productData.getAll(headers)
             .subscribe(new Consumer<Product[]>() {

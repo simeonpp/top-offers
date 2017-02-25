@@ -17,7 +17,7 @@
     <string name="seller_products_list_title">Seller products list</string>
 
     <!-- Buyer -->
-    <string name="buyers_products_list_title">Buyers products list</string>
+    <string name="buyers_products_list_title">Products list</string>
     <string name="title_activity_main">Sign in</string>
 
     <!-- Strings related to login -->
