@@ -12,7 +12,10 @@ import android.widget.TextView;
 
 import com.topoffers.data.services.ImagesHttpData;
 import com.topoffers.topoffers.R;
+import com.topoffers.topoffers.common.helpers.Utils;
 import com.topoffers.topoffers.common.models.Order;
+
+import java.text.DecimalFormat;
 
 import io.reactivex.functions.Consumer;
 
@@ -39,13 +42,16 @@ public class OrderListAdapter extends ArrayAdapter<Order> {
         TextView tvTitle = (TextView) view.findViewById(R.id.tv_order_title);
         tvTitle.setText(currentOrder.getProductTitle());
 
-//        // Set price
-//        TextView tvPrice = (TextView) view.findViewById(R.id.tv_product_price);
-//        tvPrice.setText(Utils.convertDoublePriceToStringPriceWithTag(currentProduct.getPrice()));
-//
-//        // Set seller username
-//        TextView tvSellerUsername = (TextView) view.findViewById(R.id.tv_product_seller_username);
-//        tvSellerUsername.setText(String.format("by %s", currentProduct.getSellerUsername()));
+        // Set quantity and single price
+        TextView tvQuantityAndSinglePrice = (TextView) view.findViewById(R.id.tv_order_quantity_and_single_price);
+        String quantityAndSinglePrice = String.format("%s x %s", currentOrder.getQuantity(), Utils.convertDoublePriceToStringPriceWithTag(currentOrder.getSinglePrice()));
+        tvQuantityAndSinglePrice.setText(quantityAndSinglePrice);
+
+        TextView tvTotalPrice = (TextView) view.findViewById(R.id.tv_order_total_price);
+        tvTotalPrice.setText(Utils.convertDoublePriceToStringPriceWithTag(currentOrder.getTotalPrice(), "Total price"));
+
+        TextView tvStatus = (TextView) view.findViewById(R.id.tv_order_status);
+        tvStatus.setText(currentOrder.getStatus());
 
         // Set image
         final ImageView ivImage = (ImageView) view.findViewById(R.id.iv_order_image);

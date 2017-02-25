@@ -21,6 +21,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/OrderListTitle" />
+
+        <TextView
+            android:id="@+id/tv_order_quantity_and_single_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_order_total_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/OrderListTotalPrice"/>
+
+        <TextView
+            android:id="@+id/tv_order_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
     </LinearLayout>
 
 </LinearLayout>
