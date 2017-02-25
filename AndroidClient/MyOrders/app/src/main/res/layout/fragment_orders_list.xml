@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context="com.topoffers.topoffers.common.fragments.ProductsListFragment">
+    tools:context="com.topoffers.topoffers.common.fragments.OrdersListFragment">
 
     <ListView
-        android:id="@+id/lv_products"
+        android:id="@+id/lv_orders"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

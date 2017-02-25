@@ -5,6 +5,7 @@ import com.topoffers.data.services.HttpRestData;
 import com.topoffers.topoffers.common.models.ApiUrl;
 import com.topoffers.topoffers.common.models.LoginRequest;
 import com.topoffers.topoffers.common.models.LoginResult;
+import com.topoffers.topoffers.common.models.Order;
 import com.topoffers.topoffers.common.models.Product;
 
 import javax.inject.Inject;
@@ -23,9 +24,15 @@ public class DataModule {
     }
 
     @Provides
-    ApiUrl<Product> providProductkApiUrl(@Named("apiBaseUrl") String apiBaseUrl) {
+    ApiUrl<Product> provideProductApiUrl(@Named("apiBaseUrl") String apiBaseUrl) {
         ApiUrl<Product> apiUrlProduct = new ApiUrl<>(apiBaseUrl, "products");
         return apiUrlProduct;
+    }
+
+    @Provides
+    ApiUrl<Order> provideOrderApiUrl(@Named("apiBaseUrl") String apiBaseUrl) {
+        ApiUrl<Order> apiUrlOrder = new ApiUrl<>(apiBaseUrl, "orders");
+        return apiUrlOrder;
     }
 
     @Provides
@@ -38,5 +45,11 @@ public class DataModule {
     @Inject
     IData<Product> provideIDataProduct(ApiUrl<Product> apiUrlProduct) {
         return new HttpRestData<Product>(apiUrlProduct.getUrl(), Product.class, Product[].class);
+    }
+
+    @Provides
+    @Inject
+    IData<Order> provideOrder(ApiUrl<Order> apiUrlOrder) {
+        return new HttpRestData<Order>(apiUrlOrder.getUrl(), Order.class, Order[].class);
     }
 }

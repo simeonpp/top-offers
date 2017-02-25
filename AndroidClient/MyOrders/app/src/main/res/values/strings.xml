@@ -15,6 +15,7 @@
 
     <!-- Seller -->
     <string name="seller_products_list_title">Seller products list</string>
+    <string name="seller_orders_list_title">Seller products list</string>
 
     <!-- Buyer -->
     <string name="buyers_products_list_title">Products list</string>
