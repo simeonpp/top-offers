@@ -1,0 +1,20 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="com.topoffers.topoffers.seller.fragments.SellerOrderDetailsExtrasFragment">
+
+    <Button
+        android:id="@+id/btn_order_history_mark_as_send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/mark_as_send"/>
+
+    <Button
+        android:id="@+id/btn_order_history_mark_as_rejected"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/mark_as_rejected"/>
+
+</LinearLayout>

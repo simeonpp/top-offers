@@ -20,6 +20,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <FrameLayout
+            android:id="@+id/fragment_seller_order_details_extras"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/OrderDetailsActionButtonWrap"/>
+
     </LinearLayout>
 
 </ScrollView>

@@ -89,7 +89,7 @@ public class OrdersListFragment extends Fragment {
     }
 
     private void loadOrders(final ArrayAdapter<Order> ordersAdapter) {
-        final LoadingFragment loadingFragment = LoadingFragment.create(this.getContext(), "Getting orders...");
+        final LoadingFragment loadingFragment = LoadingFragment.create(this.getContext(), "Preparing orders...");
         loadingFragment.show();
 
         Headers headers = AuthenticationHelpers.getAuthenticationHeaders(this.cookie);
