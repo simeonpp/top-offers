@@ -44,4 +44,28 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <!-- Product List -->
+    <style name="ProductListWrap">
+        <item name="android:layout_marginBottom">20dp</item>
+    </style>
+
+    <style name="ProductListImageWrap">
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:textSize">5sp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="ProductListTextWrap">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+
+    <style name="ProductListTitle">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginBottom">5dp</item>
+    </style>
+
 </resources>

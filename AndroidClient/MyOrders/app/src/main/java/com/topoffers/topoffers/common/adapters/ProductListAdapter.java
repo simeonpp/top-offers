@@ -44,7 +44,12 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
         TextView tvPrice = (TextView) view.findViewById(R.id.tv_product_price);
         double productPrice = currentProduct.getPrice();
         String productPriceAsString = String.valueOf(productPrice);
-        tvPrice.setText(productPriceAsString);
+        String price = String.format("Price: %s", productPriceAsString);
+        tvPrice.setText(price);
+
+        // Set seller username
+        TextView tvSellerUsername = (TextView) view.findViewById(R.id.tv_product_seller_username);
+        tvSellerUsername.setText(String.format("by %s", currentProduct.getSellerUsername()));
 
         // Set image
         final ImageView ivImage = (ImageView) view.findViewById(R.id.iv_product_image);

@@ -7,11 +7,11 @@ module.exports = {
         console.log('featching products...');
         let headers = helpers.parseRequestHeader(request);
 
-        let query;
+        let query = 'SELECT p.id, p.title, p.price, p.quantity, p.imageIdentifier, p.description, p.dateAdded, u.username as sellerUsername, u.firstName as sellerFirstName, u.lastName as sellerLastName ' +
+                    'FROM products p ' +
+                    'INNER JOIN users u ON u.id = p.sellerId ';
         if (headers.role === 'seller') {
-            query = `SELECT * FROM products WHERE products.sellerId = ${headers.id}`;
-        } else {
-            query = 'SELECT * FROM products';
+            query += `WHERE p.sellerId = ${headers.id}`;
         }
 
         connection.query(query)

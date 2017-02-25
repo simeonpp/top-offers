@@ -10,14 +10,20 @@ public class Product implements Serializable {
     private int quantity;
     private String imageIdentifier;
     private String description;
+    private String sellerUsername;
+    private String sellerFirstName;
+    private String sellerLastName;
 
-    public Product(int id, String title, double price, int quantity, String imageIdentifier, String description) {
+    public Product(int id, String title, double price, int quantity, String imageIdentifier, String description, String sellerUsername, String sellerFirstName, String sellerLastName) {
         this.id = id;
         this.title = title;
         this.price = price;
         this.quantity = quantity;
         this.imageIdentifier = imageIdentifier;
         this.description = description;
+        this.sellerUsername = sellerUsername;
+        this.sellerFirstName = sellerFirstName;
+        this.sellerLastName = sellerLastName;
     }
 
     public int getId() {
@@ -66,5 +72,29 @@ public class Product implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getSellerUsername() {
+        return sellerUsername;
+    }
+
+    public void setSellerUsername(String sellerUsername) {
+        this.sellerUsername = sellerUsername;
+    }
+
+    public String getSellerFirstName() {
+        return sellerFirstName;
+    }
+
+    public void setSellerFirstName(String sellerFirstName) {
+        this.sellerFirstName = sellerFirstName;
+    }
+
+    public String getSellerLastName() {
+        return sellerLastName;
+    }
+
+    public void setSellerLastName(String sellerLastName) {
+        this.sellerLastName = sellerLastName;
     }
 }
