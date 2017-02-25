@@ -44,7 +44,8 @@
         <activity android:name=".seller.activities.SellerProductsListActivity" />
         <activity android:name=".buyer.activities.BuyerProductsListActivity" />
         <activity android:name=".seller.activities.SellerProductDetailsActivity" />
-        <activity android:name=".buyer.activities.BuyerProductDetailsActivity"></activity>
+        <activity android:name=".buyer.activities.BuyerProductDetailsActivity" />
+        <activity android:name=".seller.activities.UpdateProductActivity"></activity>
     </application>
 
 </manifest>

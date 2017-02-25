@@ -38,7 +38,7 @@ public class ProductsListFragment extends Fragment {
     private View root;
     private IData<Product> productData;
     private AuthenticationCookie cookie;
-    private Class classToNavigateOnclick;
+    private Class classToNavigateOnItemClick;
     private ArrayList<Product> mainProducts;
 
     public ProductsListFragment() {
@@ -46,11 +46,11 @@ public class ProductsListFragment extends Fragment {
         mainProducts = new ArrayList<>();
     }
 
-    public static ProductsListFragment create(IData<Product> productData, AuthenticationCookie cookie, Class classToNavigateOnclick) {
+    public static ProductsListFragment create(IData<Product> productData, AuthenticationCookie cookie, Class classToNavigateOnItemClick) {
         ProductsListFragment productsListFragment = new ProductsListFragment();
         productsListFragment.setProductData(productData);
         productsListFragment.setCookie(cookie);
-        productsListFragment.setClassToNavigateOnclick(classToNavigateOnclick);
+        productsListFragment.setClassToNavigateOnItemClick(classToNavigateOnItemClick);
         return productsListFragment;
     };
 
@@ -62,8 +62,8 @@ public class ProductsListFragment extends Fragment {
         this.cookie = cookie;
     }
 
-    public void setClassToNavigateOnclick(Class classToNavigateOnclick) {
-        this.classToNavigateOnclick = classToNavigateOnclick;
+    public void setClassToNavigateOnItemClick(Class classToNavigateOnItemClick) {
+        this.classToNavigateOnItemClick = classToNavigateOnItemClick;
     }
 
     @Override
@@ -85,7 +85,7 @@ public class ProductsListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Product clickedProduct = mainProducts.get(position);
 
-                Intent intent = new Intent(context, classToNavigateOnclick);
+                Intent intent = new Intent(context, classToNavigateOnItemClick);
                 intent.putExtra(ProductDetailsFragment.INTENT_PRODUCT_KEY, clickedProduct.getId());
                 context.startActivity(intent);
             }

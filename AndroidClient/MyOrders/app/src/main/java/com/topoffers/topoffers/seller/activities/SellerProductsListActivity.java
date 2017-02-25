@@ -1,6 +1,10 @@
 package com.topoffers.topoffers.seller.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.topoffers.data.base.IData;
@@ -26,6 +30,7 @@ public class SellerProductsListActivity extends BaseAuthenticatedActivity {
         this.initTitle();
         this.initProductsListFragment();
         this.initLogoutFragment();
+        this.addTempButtonListener();
     }
 
     @Override
@@ -54,5 +59,18 @@ public class SellerProductsListActivity extends BaseAuthenticatedActivity {
             .beginTransaction()
             .add(R.id.logout_container_fragment, logoutFragment)
             .commit();
+    }
+
+    private void addTempButtonListener() {
+        final Context context = this;
+        Button btnCreateNewProduct = (Button) this.findViewById(R.id.btn_temp_add_new_product);
+
+        btnCreateNewProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, UpdateProductActivity.class);
+                context.startActivity(intent);
+            }
+        });
     }
 }

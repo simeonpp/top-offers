@@ -1,7 +1,5 @@
 package com.topoffers.data.services;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.topoffers.data.base.IData;
 import com.topoffers.data.base.RequestWithBodyType;
@@ -9,7 +7,6 @@ import com.topoffers.data.models.Header;
 import com.topoffers.data.models.Headers;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -69,11 +66,11 @@ public class HttpRestData<T> implements IData<T> {
     }
 
     @Override
-    public Observable<T> add(final T object) {
+    public Observable<T> add(final T object, final Headers headers) {
         return Observable.create(new ObservableOnSubscribe<T>() {
             @Override
             public void subscribe(ObservableEmitter<T> e) throws Exception {
-                Request request = buildRequestWithBody(object, url);
+                Request request = buildRequestWithBody(object, url, headers);
                 Response response = httpClient.newCall(request).execute();
 
                 T resultObject = parseSingle(response.body().string());
@@ -105,34 +102,42 @@ public class HttpRestData<T> implements IData<T> {
     }
 
     private Request buildGetRequest(String url, Headers headers) {
-        Request.Builder builder = new Request.Builder()
+        Request.Builder requestBuilder = new Request.Builder()
             .url(url);
 
         for (Header header : headers.getHeaders()) {
-            builder.addHeader(header.getKey(), header.getValue());
+            requestBuilder.addHeader(header.getKey(), header.getValue());
         }
 
-        return builder.build();
+        return requestBuilder.build();
     }
 
     private Request buildRequestWithBody(T object, String url) {
-        return this.buildRequestWithBody(RequestWithBodyType.POST, object, url);
+        return this.buildRequestWithBody(RequestWithBodyType.POST, object, url, new Headers(new ArrayList<Header>()));
     }
 
-    private Request buildRequestWithBody(RequestWithBodyType type, T object, String url) {
+    private Request buildRequestWithBody(T object, String url, Headers headers) {
+        return this.buildRequestWithBody(RequestWithBodyType.POST, object, url, headers);
+    }
+
+    private Request buildRequestWithBody(RequestWithBodyType type, T object, String url, Headers headers) {
         Gson gson = new Gson();
         String jsonBody = gson.toJson(object);
-        return buildRequestWithBody(type, jsonBody, url);
+        return buildRequestWithBody(type, jsonBody, url, headers);
 
     }
 
     private Request buildCustomRequestWithBody(RequestWithBodyType type, Object object, String url) {
-        Gson gson = new Gson();
-        String jsonBody = gson.toJson(object);
-        return buildRequestWithBody(type, jsonBody, url);
+        return buildCustomRequestWithBody(type, object, url, new Headers(new ArrayList<Header>()));
     }
 
-    private Request buildRequestWithBody(RequestWithBodyType type, String jsonBody, String url) {
+    private Request buildCustomRequestWithBody(RequestWithBodyType type, Object object, String url, Headers headers) {
+        Gson gson = new Gson();
+        String jsonBody = gson.toJson(object);
+        return buildRequestWithBody(type, jsonBody, url, headers);
+    }
+
+    private Request buildRequestWithBody(RequestWithBodyType type, String jsonBody, String url, Headers headers) {
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonBody);
 
         Request.Builder requestBuilder = new Request.Builder()
@@ -148,6 +153,10 @@ public class HttpRestData<T> implements IData<T> {
             case DELETE:
                 requestBuilder = requestBuilder.delete(requestBody);
                 break;
+        }
+
+        for (Header header : headers.getHeaders()) {
+            requestBuilder.addHeader(header.getKey(), header.getValue());
         }
 
         Request request = requestBuilder.build();
