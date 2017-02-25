@@ -1,5 +1,7 @@
 package com.topoffers.topoffers.common.models;
 
+import com.orm.SugarRecord;
+
 import java.io.Serializable;
 
 public class LoginResult implements Serializable {

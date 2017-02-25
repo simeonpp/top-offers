@@ -1,22 +1,19 @@
 package com.topoffers.topoffers.common.models;
 
-public class AuthenticationCookie {
-    private int id;
+import com.orm.SugarRecord;
+
+public class AuthenticationCookie extends SugarRecord {
     private String username;
     private String role;
 
-    public AuthenticationCookie(int id, String username, String role) {
-        this.id = id;
+    // Sugar need default constructor
+    public AuthenticationCookie() {
+    }
+
+    public AuthenticationCookie(long id, String username, String role) {
+        this.setId(id);
         this.username = username;
         this.role = role;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getUsername() {

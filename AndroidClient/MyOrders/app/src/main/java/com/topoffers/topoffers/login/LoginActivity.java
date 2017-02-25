@@ -9,12 +9,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.orm.SugarContext;
+import com.orm.SugarRecord;
 import com.topoffers.data.base.IData;
 import com.topoffers.data.base.RequestWithBodyType;
-import com.topoffers.data.services.HttpRestData;
 import com.topoffers.topoffers.R;
 import com.topoffers.topoffers.TopOffersApplication;
 import com.topoffers.topoffers.buyer.activities.BuyerProductsListActivity;
+import com.topoffers.topoffers.common.activities.BaseActivity;
+import com.topoffers.topoffers.common.helpers.RedirectHelpers;
+import com.topoffers.topoffers.common.models.AuthenticationCookie;
 import com.topoffers.topoffers.common.models.LoginRequest;
 import com.topoffers.topoffers.common.models.LoginResult;
 import com.topoffers.topoffers.seller.activities.SellerProductsListActivity;
@@ -25,7 +29,7 @@ import javax.inject.Inject;
 
 import io.reactivex.functions.Consumer;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     @Inject
     public IData<LoginResult> loginData;
@@ -34,9 +38,14 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ((TopOffersApplication) getApplication()).getComponent().inject(this);
 
         this.addSubmitButtonListener();
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        ((TopOffersApplication) getApplication()).getComponent().inject(this);
     }
 
     private void addSubmitButtonListener() {
@@ -86,14 +95,13 @@ public class LoginActivity extends AppCompatActivity {
                                     .makeText(context, welcomeString, Toast.LENGTH_LONG)
                                     .show();
 
+                                // Save cookie to device SQLite DB
+                                AuthenticationCookie authenticationCookie = loginResult.getCookie();
+                                SugarRecord.deleteAll(AuthenticationCookie.class); // delete any current records
+                                SugarRecord.save(authenticationCookie);
+
                                 // Redirect to corresponding page
-                                String role = loginResult.getCookie().getRole();
-                                Intent intent;
-                                if (Objects.equals(role, "seller")) {
-                                    intent = new Intent(context, SellerProductsListActivity.class);
-                                } else {
-                                    intent = new Intent(context, BuyerProductsListActivity.class);
-                                }
+                                Intent intent = RedirectHelpers.baseRedirect(context, authenticationCookie);
                                 startActivity(intent);
                             } else {
                                 // Toast will be exported to Wrap component
