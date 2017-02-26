@@ -1,8 +1,9 @@
 const application = {
-    host: '192.168.232.2',
+    host: '192.168.0.103',
     port: '8000',
     env: 'prod', // [dev, prod],
     apiUrl: '/api/',
+    imagesUrl: '/images/',
     uploadsFolder: './public/uploads/'
 };
 
@@ -10,7 +11,7 @@ const db = {
     host: 'localhost',
     database: 'my_orders',
     user: 'root',
-    password: 'davide',
+    password: '123',
     port: application.env === 'dev' ? '4040' : '3306' // 3306
 };
 

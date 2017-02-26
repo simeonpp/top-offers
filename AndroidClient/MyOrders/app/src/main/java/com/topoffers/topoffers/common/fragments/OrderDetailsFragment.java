@@ -100,6 +100,11 @@ public class OrderDetailsFragment extends Fragment implements IHandleOrderStatus
                     TextView tvTotalPrice = (TextView) root.findViewById(R.id.tv_order_details_total_price);
                     tvTotalPrice.setText(Utils.convertDoublePriceToStringPriceWithTag(order.getTotalPrice(), "Total price"));
 
+                    // Set date ordered
+                    TextView tvDadeOrdered = (TextView) root.findViewById(R.id.tv_order_details_dateOrdered);
+                    String dateOrderedAsString = Utils.convertDateToStringWithTime(order.getDateOrdered());
+                    tvDadeOrdered.setText(Utils.buildDetailsString("Date ordered", dateOrderedAsString));
+
                     // Set status
                     TextView tvStatus = (TextView) root.findViewById(R.id.tv_order_details_status);
                     tvStatus.setText(Utils.buildDetailsString("Status", order.getStatus().toUpperCase()));

@@ -49,6 +49,10 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
         TextView tvSellerUsername = (TextView) view.findViewById(R.id.tv_product_seller_username);
         tvSellerUsername.setText(String.format("by %s", currentProduct.getSellerUsername()));
 
+        // Set date added
+        TextView tvDateAdded = (TextView) view.findViewById(R.id.tv_product_dateAdded);
+        tvDateAdded.setText(String.format("Date added %s", Utils.convertDateToString(currentProduct.getDateAdded())));
+
         // Set image
         final ImageView ivImage = (ImageView) view.findViewById(R.id.iv_product_image);
         if (currentProduct.getImageIdentifier() != null) {

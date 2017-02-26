@@ -25,7 +25,12 @@ module.exports = {
 
         connection.query(query)
             .then(function(dataResult) {
-                reply(dataResult);
+                var parsedDataResult = dataResult.map(function(singleResult) {
+                    var dateOrdered = new Date(singleResult.dateOrdered);
+                    singleResult.dateOrdered = dateOrdered;
+                    return singleResult
+                });
+                reply(parsedDataResult);
             });
     },
     getById: function(request, reply) {
@@ -50,6 +55,8 @@ module.exports = {
         connection.query(query)
             .then(function(dataResult) {
                 if (dataResult.length === 1) {
+                    var dateOrdered = new Date(dataResult[0].dateOrdered);
+                    dataResult[0].dateOrdered = dateOrdered;
                     reply(dataResult[0]);
                 } else {
                     reply({});

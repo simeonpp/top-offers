@@ -10,6 +10,7 @@ public class Product implements Serializable {
     private int quantity;
     private String imageIdentifier;
     private String description;
+    private Date dateAdded;
     private String sellerUsername;
     private String sellerFirstName;
     private String sellerLastName;
@@ -22,13 +23,14 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    public Product(int id, String title, double price, int quantity, String imageIdentifier, String description, String sellerUsername, String sellerFirstName, String sellerLastName) {
+    public Product(int id, String title, double price, int quantity, String imageIdentifier, String description, Date dateAdded, String sellerUsername, String sellerFirstName, String sellerLastName) {
         this.id = id;
         this.title = title;
         this.price = price;
         this.quantity = quantity;
         this.imageIdentifier = imageIdentifier;
         this.description = description;
+        this.dateAdded = dateAdded;
         this.sellerUsername = sellerUsername;
         this.sellerFirstName = sellerFirstName;
         this.sellerLastName = sellerLastName;
@@ -80,6 +82,14 @@ public class Product implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(Date dateAdded) {
+        this.dateAdded = dateAdded;
     }
 
     public String getSellerUsername() {

@@ -1,6 +1,7 @@
 package com.topoffers.topoffers.common.models;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Order implements Serializable {
     private int id;
@@ -8,6 +9,7 @@ public class Order implements Serializable {
     private double singlePrice;
     private double totalPrice;
     private String deliveryAddress;
+    private Date dateOrdered;
     private String status;
     private String productTitle;
     private String productImageIdentifier;
@@ -23,12 +25,13 @@ public class Order implements Serializable {
     private String buyerPhone;
     private String buyerUsername;
 
-    public Order(int id, int quantity, double singlePrice, double totalPrice, String deliveryAddress, String status, String productTitle, String productImageIdentifier, String productDescription, String productSellerFirstName, String productSellerLastName, String productSellerAddress, String productSellerPhone, String productSellerUsername, String buyerFirstName, String buyerLastName, String buyerAddress, String buyerPhone, String buyerUsername) {
+    public Order(int id, int quantity, double singlePrice, double totalPrice, String deliveryAddress, Date dateOrdered, String status, String productTitle, String productImageIdentifier, String productDescription, String productSellerFirstName, String productSellerLastName, String productSellerAddress, String productSellerPhone, String productSellerUsername, String buyerFirstName, String buyerLastName, String buyerAddress, String buyerPhone, String buyerUsername) {
         this.id = id;
         this.quantity = quantity;
         this.singlePrice = singlePrice;
         this.totalPrice = totalPrice;
         this.deliveryAddress = deliveryAddress;
+        this.dateOrdered = dateOrdered;
         this.status = status;
         this.productTitle = productTitle;
         this.productImageIdentifier = productImageIdentifier;
@@ -87,6 +90,14 @@ public class Order implements Serializable {
 
     public void setDeliveryAddress(String deliveryAddress) {
         this.deliveryAddress = deliveryAddress;
+    }
+
+    public Date getDateOrdered() {
+        return dateOrdered;
+    }
+
+    public void setDateOrdered(Date dateOrdered) {
+        this.dateOrdered = dateOrdered;
     }
 
     public String getStatus() {

@@ -1,5 +1,8 @@
 package com.topoffers.topoffers.common.helpers;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public class Utils {
@@ -30,5 +33,15 @@ public class Utils {
         } else {
             return "#A50000";
         }
+    }
+
+    public static String convertDateToString(Date date) {
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        return df.format(date);
+    }
+
+    public static String convertDateToStringWithTime(Date date) {
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        return df.format(date);
     }
 }

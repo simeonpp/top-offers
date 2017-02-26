@@ -62,9 +62,9 @@
     </style>
 
     <style name="ProductListTitle">
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
     </style>
 
     <!-- Product Details -->

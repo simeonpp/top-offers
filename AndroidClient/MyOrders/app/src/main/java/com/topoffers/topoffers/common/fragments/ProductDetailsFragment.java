@@ -100,6 +100,10 @@ public class ProductDetailsFragment extends Fragment {
                     TextView tvSellerFullname = (TextView) root.findViewById(R.id.tv_product_details_seller_fullName);
                     tvSellerFullname.setText(String.format("Seller username: %s %s", product.getSellerFirstName(), product.getSellerLastName()));
 
+                    // Set date added
+                    TextView tvDateAdded = (TextView) root.findViewById(R.id.tv_product_details_dateAdded);
+                    tvDateAdded.setText(String.format("Date added: %s", Utils.convertDateToStringWithTime(product.getDateAdded())));
+
                     // Set description
                     TextView tvDescription = (TextView) root.findViewById(R.id.tv_product_details_description);
                     tvDescription.setText(String.format("Description: %s", product.getDescription()));

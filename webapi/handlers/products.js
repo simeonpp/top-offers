@@ -16,12 +16,18 @@ module.exports = {
                     'FROM products p ' +
                     'INNER JOIN users u ON u.id = p.sellerId ';
         if (headers.role === 'seller') {
-            query += `WHERE p.sellerId = ${headers.id}`;
+            query += `WHERE p.sellerId = ${headers.id} `;
         }
+        query += 'ORDER BY id DESC';
 
         connection.query(query)
             .then(function(dataResult) {
-                reply(dataResult);
+                var parsedDataResult = dataResult.map(function(singleResult) {
+                    var dateAdded = new Date(singleResult.dateAdded);
+                    singleResult.dateAdded = dateAdded;
+                    return singleResult
+                });
+                reply(parsedDataResult);
             });
     },
     getById: function(request, reply) {
@@ -41,6 +47,8 @@ module.exports = {
         connection.query(query)
             .then(function(dataResult) {
                 if (dataResult.length === 1) {
+                    var dateAdded = new Date(dataResult[0].dateAdded);
+                    dataResult[0].dateAdded = dateAdded;
                     reply(dataResult[0]);
                 } else {
                     reply({});
@@ -66,9 +74,7 @@ module.exports = {
                         if (writeFileError) {
                             return reply(writeFileError);
                         } else {
-                            var imageToUpload = fs.readFileSync(files.image[0].path);
-                            var uploadedImage = fs.writeFileSync(applicationConfig.uploadsFolde + imageIdentifier)
-                            // Image upload finishe
+                            // Image upload finished
 
                             // SQL query
                             let headers = helpers.parseRequestHeader(request);
@@ -153,21 +159,4 @@ module.exports = {
                 }
             });
     }
-};
-
-var upload = function(files, reply) {
-    fs.readFile(files.file[0].path, function(err, data) {
-        // checkFileExist();
-        fs.writeFile(applicationConfig.uploadsFolder + files.file[0].originalFilename, data, function(error) {
-            if (error) {
-                return reply(err);
-            } else {
-                console.log('file uploaded');
-                return reply({
-                    success: true,
-                    message: ''
-                });
-            }
-        });
-    });
 };

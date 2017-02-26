@@ -44,7 +44,7 @@ public class OrderListAdapter extends ArrayAdapter<Order> {
 
         // Set quantity and single price
         TextView tvQuantityAndSinglePrice = (TextView) view.findViewById(R.id.tv_order_quantity_and_single_price);
-        String quantityAndSinglePrice = String.format("%s x %s", currentOrder.getQuantity(), Utils.convertDoublePriceToStringPriceWithTag(currentOrder.getSinglePrice()));
+        String quantityAndSinglePrice = String.format("%s x %s", currentOrder.getQuantity(), Utils.convertDoublePriceToStringPriceWithTag(currentOrder.getSinglePrice(), "Single price"));
         tvQuantityAndSinglePrice.setText(quantityAndSinglePrice);
 
         TextView tvTotalPrice = (TextView) view.findViewById(R.id.tv_order_total_price);
