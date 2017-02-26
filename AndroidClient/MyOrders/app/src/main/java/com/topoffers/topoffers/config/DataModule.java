@@ -7,6 +7,8 @@ import com.topoffers.topoffers.common.models.LoginRequest;
 import com.topoffers.topoffers.common.models.LoginResult;
 import com.topoffers.topoffers.common.models.Order;
 import com.topoffers.topoffers.common.models.Product;
+import com.topoffers.topoffers.common.models.RegisterRequest;
+import com.topoffers.topoffers.common.models.RegisterResult;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,10 +25,24 @@ public class DataModule {
         return apiUrlLogin;
     }
 
+    //Added register
+    @Provides
+    ApiUrl<RegisterRequest> provideRegisterApiUrl(@Named("apiBaseUrl") String apiBaseUrl){
+        ApiUrl<RegisterRequest> apiUrlRegister = new ApiUrl<>(apiBaseUrl, "register");
+        return  apiUrlRegister;
+    }
+
     @Provides
     ApiUrl<Product> provideProductApiUrl(@Named("apiBaseUrl") String apiBaseUrl) {
         ApiUrl<Product> apiUrlProduct = new ApiUrl<>(apiBaseUrl, "products");
         return apiUrlProduct;
+    }
+
+    //Added register
+    @Provides
+    @Inject
+    IData<RegisterResult> provideIDataRegisterResult(ApiUrl<RegisterRequest> apiUrlRegister) {
+        return  new HttpRestData<RegisterResult>(apiUrlRegister.getUrl(), RegisterResult.class, RegisterResult[].class);
     }
 
     @Provides

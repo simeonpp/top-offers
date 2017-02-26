@@ -22,6 +22,7 @@ import com.topoffers.topoffers.common.helpers.RedirectHelpers;
 import com.topoffers.topoffers.common.models.AuthenticationCookie;
 import com.topoffers.topoffers.common.models.LoginRequest;
 import com.topoffers.topoffers.common.models.LoginResult;
+import com.topoffers.topoffers.register.RegisterActivity;
 import com.topoffers.topoffers.seller.activities.SellerProductsListActivity;
 
 import java.util.Objects;
@@ -51,7 +52,19 @@ public class LoginActivity extends BaseActivity {
 
     private void addSubmitButtonListener() {
         Button submitButton = (Button) this.findViewById(R.id.btn_login_submit);
+        //Added register
+        Button registerButton = (Button) this.findViewById(R.id.register_button);
         final Context context = this;
+
+        //Added register
+        registerButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent launchActivity= new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(launchActivity);
+            }
+        });
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override

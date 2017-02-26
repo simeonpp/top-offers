@@ -48,6 +48,7 @@
         <activity android:name=".seller.activities.UpdateProductActivity" />
         <activity android:name=".seller.activities.SellerOrderHistoryListActivity" />
         <activity android:name=".seller.activities.SellerOrderHistoryDetailsActivity"></activity>
+        <activity android:name=".register.RegisterActivity"></activity>
     </application>
 
 </manifest>
