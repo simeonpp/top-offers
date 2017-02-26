@@ -20,12 +20,13 @@ dataProvider.init
         routes.products.getAll(server, handlers.products.getAll);
         routes.products.getById(server, handlers.products.getById);
         routes.products.create(server, handlers.products.create);
-        routes.products.delete(server, handlers.products.delete);
         routes.products.edit(server, handlers.products.edit);
+        routes.products.delete(server, handlers.products.delete);
             // orders
         routes.orders.getAllMy(server, handlers.orders.getAllMy);
         routes.orders.getById(server, handlers.orders.getById);
         routes.orders.create(server, handlers.orders.create);
+        routes.orders.edit(server, handlers.orders.edit);
             // profile
         routes.profile.get(server, handlers.profile.get);
         routes.profile.edit(server, handlers.profile.edit);

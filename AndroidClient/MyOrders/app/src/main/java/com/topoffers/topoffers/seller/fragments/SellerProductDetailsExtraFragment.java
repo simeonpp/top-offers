@@ -16,7 +16,7 @@ import com.topoffers.topoffers.common.fragments.DialogFragment;
 import com.topoffers.topoffers.common.helpers.AuthenticationHelpers;
 import com.topoffers.topoffers.common.models.AuthenticationCookie;
 import com.topoffers.topoffers.common.models.Product;
-import com.topoffers.topoffers.seller.activities.SellerOrderHistory;
+import com.topoffers.topoffers.seller.activities.SellerOrderHistoryListActivity;
 import com.topoffers.topoffers.seller.activities.SellerProductsListActivity;
 import com.topoffers.topoffers.seller.activities.UpdateProductActivity;
 import com.topoffers.topoffers.seller.helpers.ActionButtonsFactory;
@@ -74,7 +74,7 @@ public class SellerProductDetailsExtraFragment extends Fragment {
         btnEditProduct.setOnClickListener(ActionButtonsFactory.getActionButtonWithId(context, UpdateProductActivity.class, UpdateProductActivity.INTENT_UPDATE_PRODUCT_ID, productId));
 
         Button btnOrderHistoryProduct =  (Button) root.findViewById(R.id.btn_order_history_product);
-        btnOrderHistoryProduct.setOnClickListener(ActionButtonsFactory.getActionButtonWithId(context, SellerOrderHistory.class, SellerOrderHistory.INTENT_ORDER_PRODUCT_ID, productId));
+        btnOrderHistoryProduct.setOnClickListener(ActionButtonsFactory.getActionButtonWithId(context, SellerOrderHistoryListActivity.class, SellerOrderHistoryListActivity.INTENT_ORDER_PRODUCT_ID, productId));
 
         Button btnDeleteProduct =  (Button) root.findViewById(R.id.btn_delete_product);
         btnDeleteProduct.setOnClickListener(new View.OnClickListener() {

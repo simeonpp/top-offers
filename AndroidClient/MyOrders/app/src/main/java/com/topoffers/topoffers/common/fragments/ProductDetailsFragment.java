@@ -71,6 +71,9 @@ public class ProductDetailsFragment extends Fragment {
         Bundle arguments = this.getArguments();
         final int productId = (int) arguments.getSerializable(INTENT_PRODUCT_KEY);
 
+        final LoadingFragment loadingFragment = LoadingFragment.create(this.getContext(), "Preparing product data...");
+        loadingFragment.show();
+
         productData.getById(productId, headers)
             .subscribe(new Consumer<Product>() {
                 @Override
@@ -110,6 +113,7 @@ public class ProductDetailsFragment extends Fragment {
                                 @Override
                                 public void accept(Bitmap bitmap) throws Exception {
                                     ivImage.setImageBitmap(bitmap);
+                                    loadingFragment.hide();
                                 }
                             });
                     }

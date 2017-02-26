@@ -7,11 +7,9 @@ import com.google.gson.Gson;
 import com.orm.SugarRecord;
 import com.topoffers.data.models.Header;
 import com.topoffers.data.models.Headers;
-import com.topoffers.topoffers.buyer.activities.BuyerProductsListActivity;
 import com.topoffers.topoffers.common.models.AuthenticationCookie;
 import com.topoffers.topoffers.common.models.LoginResult;
 import com.topoffers.topoffers.login.LoginActivity;
-import com.topoffers.topoffers.seller.activities.SellerProductsListActivity;
 
 import java.util.ArrayList;
 import java.util.List;

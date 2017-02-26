@@ -201,7 +201,32 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"productId\": 1,\n\t\"quantity\": 3\n}"
+					"raw": "{\n\t\"productId\": 1,\n\t\"quantity\": 3,\n\t\"deliveryAddress\": \"geo: lat: 123, long: 321\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://192.168.0.103:8000/api/orders/1",
+			"request": {
+				"url": "http://192.168.0.103:8000/api/orders/1",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-cookie",
+						"value": "{\"id\":1,\"username\":\"ivan\",\"role\":\"buyer\"}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"status\": \"notReceived\"\n}"
 				},
 				"description": ""
 			},

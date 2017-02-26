@@ -96,7 +96,7 @@ public class ProductsListFragment extends Fragment {
     }
 
     private void loadProducts(final ArrayAdapter<Product> productsAdapter) {
-        final LoadingFragment loadingFragment = LoadingFragment.create(this.getContext(), "Getting products...");
+        final LoadingFragment loadingFragment = LoadingFragment.create(this.getContext(), "Preparing products...");
         loadingFragment.show();
 
         Headers headers = AuthenticationHelpers.getAuthenticationHeaders(this.cookie);

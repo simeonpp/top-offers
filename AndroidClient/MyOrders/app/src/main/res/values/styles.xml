@@ -80,6 +80,43 @@
         <item name="android:textColor">#FF0000</item>
     </style>
 
+    <!-- Order List -->
+    <style name="OrderListTextWrap">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="OrderListTitle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginBottom">0dp</item>
+    </style>
+
+    <style name="OrderListTotalPrice">
+        <item name="android:textColor">#A50000</item>
+    </style>
+
+    <!-- Order Details -->
+    <style name="OrderDetailsImageWrap">
+        <item name="android:layout_marginBottom">0dp</item>
+    </style>
+
+    <style name="OrderDetailsSubHeading">
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="OrderDetailsTotalPrice">
+        <item name="android:textColor">#A50000</item>
+    </style>
+
+    <style name="OrderDetailsActionButtonWrap">
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
+
     <style name="RegisterText">
         <item name="android:layout_marginBottom">10dp</item>
         <item name="android:textSize">17sp</item>

@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.topoffers.topoffers.buyer.activities.BuyerProductsListActivity;
 import com.topoffers.topoffers.common.models.AuthenticationCookie;
+import com.topoffers.topoffers.seller.activities.SellerOrderHistoryListActivity;
 import com.topoffers.topoffers.seller.activities.SellerProductsListActivity;
 
 import java.util.Objects;
@@ -14,7 +15,7 @@ public class RedirectHelpers {
         Intent intent;
         if (cookie != null) {
             if (Objects.equals(cookie.getRole(), "seller")) {
-                intent = new Intent(context, SellerProductsListActivity.class);
+                intent = new Intent(context, SellerOrderHistoryListActivity.class);
             } else {
                 intent = new Intent(context, BuyerProductsListActivity.class);
             }

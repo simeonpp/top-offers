@@ -15,6 +15,7 @@
 
     <!-- Seller -->
     <string name="seller_products_list_title">Seller products list</string>
+    <string name="seller_orders_list_title">Seller products list</string>
 
     <!-- Buyer -->
     <string name="buyers_products_list_title">Products list</string>
@@ -56,5 +57,10 @@
     <string name="lastname">LastName</string>
     <string name="phone">Phone</string>
     <string name="address">Address</string>
+
+    <!-- Order details -->
+    <string name="order_details">Order details</string>
+    <string name="buyer_details">Buyer details</string>
+    <string name="seller_details">Seller details</string>
 
 </resources>
