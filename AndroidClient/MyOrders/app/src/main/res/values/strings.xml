@@ -51,5 +51,10 @@
     <string name="create_product_button_text">Create product</string>
     <string name="create_new_product_button_text">Create new product</string>
     <string name="title_activity_seller_order_history">SellerOrderHistory</string>
+    <string name="register">Register</string>
+    <string name="firstname">FirstName</string>
+    <string name="lastname">LastName</string>
+    <string name="phone">Phone</string>
+    <string name="address">Address</string>
 
 </resources>

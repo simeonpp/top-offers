@@ -11,6 +11,6 @@ public class ConfigModule {
     @Provides
     @Named("apiBaseUrl")
     String provideBaseUrl() {
-        return "http://192.168.0.103:8000/api/";
+        return "http://192.168.232.2:8000/api/";
     }
 }

@@ -46,7 +46,8 @@
         <activity android:name=".seller.activities.SellerProductDetailsActivity" />
         <activity android:name=".buyer.activities.BuyerProductDetailsActivity" />
         <activity android:name=".seller.activities.UpdateProductActivity" />
-        <activity android:name=".seller.activities.SellerOrderHistory"></activity>
+        <activity android:name=".seller.activities.SellerOrderHistory" />
+        <activity android:name=".register.RegisterActivity"></activity>
     </application>
 
 </manifest>
