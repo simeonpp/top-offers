@@ -14,6 +14,8 @@ import com.topoffers.data.base.IData;
 import com.topoffers.data.base.RequestWithBodyType;
 import com.topoffers.data.services.HttpRestData;
 import com.topoffers.topoffers.R;
+import com.topoffers.topoffers.TopOffersApplication;
+import com.topoffers.topoffers.common.activities.BaseActivity;
 import com.topoffers.topoffers.common.fragments.DialogFragment;
 import com.topoffers.topoffers.common.helpers.RedirectHelpers;
 import com.topoffers.topoffers.common.models.AuthenticationCookie;
@@ -28,16 +30,21 @@ import javax.inject.Inject;
 
 import io.reactivex.functions.Consumer;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends BaseActivity {
 
     @Inject
     public IData<RegisterResult> registerData;
 
     @Override
+    protected void init() {
+        super.init();
+        ((TopOffersApplication) getApplication()).getComponent().inject(this);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        registerData = new HttpRestData<RegisterResult>("http://192.168.232.2:8000/api/register", RegisterResult.class, RegisterResult[].class);
         this.addSubmitButtonListener();
     }
 

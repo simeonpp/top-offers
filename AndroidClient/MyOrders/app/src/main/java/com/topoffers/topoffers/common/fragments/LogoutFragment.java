@@ -22,7 +22,7 @@ public class LogoutFragment extends Fragment {
 
     private View root;
 
-    private LogoutFragment() {
+    public LogoutFragment() {
         // Required empty public constructor
     }
 
