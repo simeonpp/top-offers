@@ -6,6 +6,7 @@ import android.content.Intent;
 import com.topoffers.topoffers.buyer.activities.BuyerProductsListActivity;
 import com.topoffers.topoffers.common.models.AuthenticationCookie;
 import com.topoffers.topoffers.seller.activities.SellerOrderHistoryListActivity;
+import com.topoffers.topoffers.seller.activities.SellerProductsListActivity;
 
 import java.util.Objects;
 

@@ -66,6 +66,16 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:id="@+id/tv_order_details_buyer_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_order_details_buyer_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/seller_details"
@@ -78,6 +88,16 @@
 
     <TextView
         android:id="@+id/tv_order_details_seller_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tv_order_details_seller_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tv_order_details_seller_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

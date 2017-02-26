@@ -25,5 +25,12 @@ module.exports = {
             path: ordersUrl,
             handler: handler
         });
+    },
+    edit: function(server, handler) {
+        server.route({
+            method: 'PUT',
+            path: orderWithIdUrl,
+            handler: handler
+        });
     }
 };

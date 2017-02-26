@@ -88,7 +88,7 @@ module.exports = {
             });
     },
     edit: function(request, reply) {
-        console.log('editing new products');
+        console.log('editing existing products...');
         let headers = helpers.parseRequestHeader(request);
         let productId = request.params.productId;
 

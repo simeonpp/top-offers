@@ -7,18 +7,20 @@ module.exports = {
         console.log('featching my orders...');
         let headers = helpers.parseRequestHeader(request);
 
-        let query = `SELECT o.id, o.quantity, o.singlePrice, o.totalPrice, o.dateOrdered, o.status, p.title as productTitle, p.imageIdentifier as productImageIdentifier, p.description as productDescription` +
+        let query = `SELECT o.id, o.quantity, o.singlePrice, o.totalPrice, o.deliveryAddress, o.dateOrdered, o.status, p.title as productTitle, p.imageIdentifier as productImageIdentifier, p.description as productDescription` +
                         `, u.firstName as productSellerFirstName, u.lastName as productSellerLastName, u.address as productSellerAddress,u.phone as productSellerPhone, u.username as productSellerUsername,` +
-                        `ub.firstName as buyerFirstName, ub.lastName as buyerLastName, ub.address as buyerAddress, ub.phone as productSellerPhone, ub.username as buyerUsername ` +
+                        `ub.firstName as buyerFirstName, ub.lastName as buyerLastName, ub.address as buyerAddress, ub.phone as buyerPhone, ub.username as buyerUsername ` +
                     `FROM orders o ` +
                     `INNER JOIN users ub ON o.buyerId = ub.id ` + 
                     `INNER JOIN products p ON p.id = o.productId ` +
                     `INNER JOIN users u on u.id = p.sellerId `;
 
         if (headers.role === 'seller') {
-            query += `WHERE p.sellerId = ${headers.id}`;
+            query += `WHERE p.sellerId = ${headers.id} `+
+                     'ORDER BY id DESC';
         } else {
-            query += `WHERE o.buyerId = ${headers.id}`
+            query += `WHERE o.buyerId = ${headers.id} `+
+                     'ORDER BY id DESC';
         }
 
         connection.query(query)
@@ -31,19 +33,17 @@ module.exports = {
         let headers = helpers.parseRequestHeader(request);
         let orderId = request.params.orderId;
 
-        let query = `SELECT o.id, o.quantity, o.singlePrice, o.totalPrice, o.dateOrdered, o.status, p.title as productTitle, p.imageIdentifier as productImageIdentifier, p.description as productDescription` +
+        let query = `SELECT o.id, o.quantity, o.singlePrice, o.totalPrice, o.deliveryAddress, o.dateOrdered, o.status, p.title as productTitle, p.imageIdentifier as productImageIdentifier, p.description as productDescription` +
                         `, u.firstName as productSellerFirstName, u.lastName as productSellerLastName, u.address as productSellerAddress,u.phone as productSellerPhone, u.username as productSellerUsername,` +
-                        `ub.firstName as buyerFirstName, ub.lastName as buyerLastName, ub.address as buyerAddress, ub.phone as productSellerPhone, ub.username as buyerUsername ` +
+                        `ub.firstName as buyerFirstName, ub.lastName as buyerLastName, ub.address as buyerAddress, ub.phone as buyerPhone, ub.username as buyerUsername ` +
                     `FROM orders o ` +
                     `INNER JOIN users ub ON o.buyerId = ub.id ` +
                     `INNER JOIN products p ON p.id = o.productId ` +
                     `INNER JOIN users u on u.id = p.sellerId `;
 
         if (headers.role === 'seller') {
-            console.log('as seller');
             query += `WHERE p.sellerId = ${headers.id} AND o.id = ${orderId}`;
         } else {
-            console.log('as buyer');
             query += `WHERE o.buyerId = ${headers.id} AND o.id = ${orderId}`
         }
 
@@ -63,21 +63,21 @@ module.exports = {
         if (headers.role === 'buyer') {
             let productId = request.payload.productId;
             let quantity = request.payload.quantity;
+            let deliveryAddress = request.payload.deliveryAddress;
 
             let productQuery = `SELECT * FROM products WHERE id = ${productId}`;
             connection.query(productQuery)
                 .then(function(dataResult) {
                     if (dataResult.length > 0) {
                         let product = dataResult[0];
-                        let orderQuery = 'INSERT INTO orders (productId, buyerId, quantity, singlePrice, totalPrice) ' +
-                                          `VALUES (${product.id}, ${headers.id}, ${quantity}, ${product.price}, ${product.price * quantity});`;
+                        let orderQuery = 'INSERT INTO orders (productId, buyerId, quantity, singlePrice, totalPrice, deliveryAddress) ' +
+                                          `VALUES (${product.id}, ${headers.id}, ${quantity}, ${product.price}, ${product.price * quantity}, "${deliveryAddress}");`;
                         return connection.query(orderQuery);
                     } else {
                         return;
                     }
                 })
                 .then(function(orderQuery) {
-                    console.log(orderQuery && orderQuery.affectedRows  === 1);
                     if (orderQuery) {
                         reply({
                             success: true
@@ -99,5 +99,49 @@ module.exports = {
                 }
             });
         }
+    },
+    edit: function(request, reply) {
+        console.log('editing existing order...');
+        let headers = helpers.parseRequestHeader(request);
+        let orderId = request.params.orderId;
+
+        let newStatus = request.payload.status;
+
+        let query = 'UPDATE orders ' +
+                        'SET `status` = "' + newStatus + '" ' + 
+                        `WHERE id = ${orderId}`;
+
+        let errorObject = {
+            type: 'order.noPermissions',
+            message: 'You have no permissions to change order status'
+        };
+
+        var checkPermission = function(role, newStatus) {
+            if (role === 'seller') {
+                return newStatus === 'send' || newStatus === 'rejected';
+            } else if (role === 'buyer') {
+                return newStatus === 'received' || newStatus === 'notReceived';
+            } else {
+                return false;
+            }
+        };
+        var hasPermission = checkPermission(headers.role, newStatus);
+
+        if (hasPermission) {
+            connection.query(query)
+                .then(function(dataResult) {
+                    if (dataResult && dataResult.affectedRows === 1) {
+                        reply({
+                            id: orderId,
+                            status: newStatus
+                        });
+                    } else {
+                        reply(errorObject);
+                    }
+                })
+        } else {
+            reply(errorObject);
+        }
+        
     }
 };

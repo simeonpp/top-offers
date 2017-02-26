@@ -7,6 +7,7 @@ public class Order implements Serializable {
     private int quantity;
     private double singlePrice;
     private double totalPrice;
+    private String deliveryAddress;
     private String status;
     private String productTitle;
     private String productImageIdentifier;
@@ -19,13 +20,15 @@ public class Order implements Serializable {
     private String buyerFirstName;
     private String buyerLastName;
     private String buyerAddress;
+    private String buyerPhone;
     private String buyerUsername;
 
-    public Order(int id, int quantity, double singlePrice, double totalPrice, String status, String productTitle, String productImageIdentifier, String productDescription, String productSellerFirstName, String productSellerLastName, String productSellerAddress, String productSellerPhone, String productSellerUsername, String buyerFirstName, String buyerLastName, String buyerAddress, String buyerUsername) {
+    public Order(int id, int quantity, double singlePrice, double totalPrice, String deliveryAddress, String status, String productTitle, String productImageIdentifier, String productDescription, String productSellerFirstName, String productSellerLastName, String productSellerAddress, String productSellerPhone, String productSellerUsername, String buyerFirstName, String buyerLastName, String buyerAddress, String buyerPhone, String buyerUsername) {
         this.id = id;
         this.quantity = quantity;
         this.singlePrice = singlePrice;
         this.totalPrice = totalPrice;
+        this.deliveryAddress = deliveryAddress;
         this.status = status;
         this.productTitle = productTitle;
         this.productImageIdentifier = productImageIdentifier;
@@ -38,6 +41,7 @@ public class Order implements Serializable {
         this.buyerFirstName = buyerFirstName;
         this.buyerLastName = buyerLastName;
         this.buyerAddress = buyerAddress;
+        this.buyerPhone = buyerPhone;
         this.buyerUsername = buyerUsername;
     }
 
@@ -71,6 +75,14 @@ public class Order implements Serializable {
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(String deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
     }
 
     public String getStatus() {
@@ -167,6 +179,14 @@ public class Order implements Serializable {
 
     public void setBuyerAddress(String buyerAddress) {
         this.buyerAddress = buyerAddress;
+    }
+
+    public String getBuyerPhone() {
+        return buyerPhone;
+    }
+
+    public void setBuyerPhone(String buyerPhone) {
+        this.buyerPhone = buyerPhone;
     }
 
     public String getBuyerUsername() {

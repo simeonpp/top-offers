@@ -102,7 +102,7 @@ public class OrderDetailsFragment extends Fragment {
 
                     // Set address
                     TextView tvAddress = (TextView) root.findViewById(R.id.tv_order_details_address);
-                    tvAddress.setText(Utils.buildDetailsString("Address", order.getBuyerAddress()));
+                    tvAddress.setText(Utils.buildDetailsString("Delivery address", order.getDeliveryAddress()));
 
                     // Set buyer fullname
                     TextView tvBuyerFullname = (TextView) root.findViewById(R.id.tv_order_details_buyer_fullname);
@@ -112,13 +112,29 @@ public class OrderDetailsFragment extends Fragment {
                     TextView tvBuyerUsername = (TextView) root.findViewById(R.id.tv_order_details_buyer_username);
                     tvBuyerUsername.setText(Utils.buildDetailsString("Username", order.getBuyerUsername()));
 
-                    // Set buyer fullname
+                    // Set buyer phone
+                    TextView tvBuyerPhone = (TextView) root.findViewById(R.id.tv_order_details_buyer_phone);
+                    tvBuyerPhone.setText(Utils.buildDetailsString("Phone", order.getBuyerPhone()));
+
+                    // Set buyer address
+                    TextView tvBuyerAddress = (TextView) root.findViewById(R.id.tv_order_details_buyer_address);
+                    tvBuyerAddress.setText(Utils.buildDetailsString("Address", order.getBuyerAddress()));
+
+                    // Set seller fullname
                     TextView tvSellerFullname = (TextView) root.findViewById(R.id.tv_order_details_seller_fullname);
                     tvSellerFullname.setText(String.format("Buyer name: %s %s", order.getProductSellerFirstName(), order.getProductSellerLastName()));
 
-                    // Set buyer username
+                    // Set seller username
                     TextView tvSellerUsername = (TextView) root.findViewById(R.id.tv_order_details_seller_username);
                     tvSellerUsername.setText(Utils.buildDetailsString("Username", order.getProductSellerUsername()));
+
+                    // Set seller phone
+                    TextView tvSellerPhone = (TextView) root.findViewById(R.id.tv_order_details_seller_phone);
+                    tvSellerPhone.setText(Utils.buildDetailsString("Phone", order.getProductSellerPhone()));
+
+                    // Set seller address
+                    TextView tvSellerAddress = (TextView) root.findViewById(R.id.tv_order_details_seller_address);
+                    tvSellerAddress.setText(Utils.buildDetailsString("Address", order.getProductSellerAddress()));
 
                     // Set image
                     final ImageView ivImage = (ImageView) root.findViewById(R.id.iv_order_details_image);
