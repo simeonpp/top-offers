@@ -2,7 +2,8 @@ const application = {
     host: '192.168.0.103',
     port: '8000',
     env: 'prod', // [dev, prod],
-    apiUrl: '/api/'
+    apiUrl: '/api/',
+    uploadsFolder: './public/uploads/'
 };
 
 const db = {

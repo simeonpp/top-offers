@@ -23,6 +23,13 @@ module.exports = {
         server.route({
             method: 'POST',
             path: productsUrl,
+            config: {
+                payload:{
+                    maxBytes: 209715200,
+                    output:'stream',
+                    parse: false
+                }
+            },
             handler: handler
         });
     },

@@ -16,6 +16,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:id="@+id/temp_btn_orders"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Orders list" />
+
     <TextView
         android:id="@+id/tv_seller_products_list_title"
         android:layout_width="match_parent"

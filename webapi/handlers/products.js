@@ -1,4 +1,9 @@
 'use strict';
+var fs = require('fs');
+var multiparty = require('multiparty');
+const uuidV1 = require('uuid/v1');
+
+var applicationConfig = require('../config.js').application;
 var connection = require('../dataProvider').getConnection();
 var helpers = require('../helpers.js');
 
@@ -44,26 +49,52 @@ module.exports = {
     },
     create: function(request, reply) {
         console.log('creating new product');
-        let headers = helpers.parseRequestHeader(request);
-        let title = request.payload.title;
-        let price = request.payload.price;
-        let quantity = request.payload.quantity;
-        let imageIdentifier = null;
-        let description = request.payload.description;
 
-        let query = 'INSERT INTO products (sellerId, title, price, quantity, imageIdentifier, description) ' +
-                    `VALUES (${headers.id}, '${title}', ${price}, ${quantity}, '${imageIdentifier}', '${description}');`;
-        connection.query(query)
-            .then(function(dataResult) {
-                reply({
-                    success: true,
-                    title,
-                    price,
-                    quantity,
-                    imageIdentifier,
-                    description
+        var imageIdentifier = uuidV1();
+        var form = new multiparty.Form();
+        form.parse(request.payload, function(error, fields, files) {
+            if (error) {
+                return reply(error);
+            } else {
+                fs.readFile(files.image[0].path, function(readFilerError, data) {
+                    var originalFilename = files.image[0].originalFilename;
+                    var imageExtension = originalFilename.split('.').pop();
+                    var imageNameWithExtension = `${imageIdentifier}.${imageExtension}`;
+
+                    // checkFileExist();
+                    fs.writeFile(`${applicationConfig.uploadsFolder}${imageNameWithExtension}`, data, function(writeFileError) {
+                        if (writeFileError) {
+                            return reply(writeFileError);
+                        } else {
+                            var imageToUpload = fs.readFileSync(files.image[0].path);
+                            var uploadedImage = fs.writeFileSync(applicationConfig.uploadsFolde + imageIdentifier)
+                            // Image upload finishe
+
+                            // SQL query
+                            let headers = helpers.parseRequestHeader(request);
+                            let title = fields.title[0];
+                            let price = fields.price[0];
+                            let quantity = fields.quantity[0];
+                            let description = fields.description[0];
+
+                            let query = 'INSERT INTO products (sellerId, title, price, quantity, imageIdentifier, description) ' +
+                                        `VALUES (${headers.id}, '${title}', ${price}, ${quantity}, '${imageNameWithExtension}', '${description}');`;
+                            connection.query(query)
+                                .then(function(dataResult) {
+                                    reply({
+                                        success: true,
+                                        title,
+                                        price,
+                                        quantity,
+                                        imageIdentifier,
+                                        description
+                                    });
+                                });
+                        }
+                    });
                 });
-            });
+            }
+        });
     },
     delete: function(request, reply) {
         console.log('deleting existing product...');
@@ -122,4 +153,21 @@ module.exports = {
                 }
             });
     }
+};
+
+var upload = function(files, reply) {
+    fs.readFile(files.file[0].path, function(err, data) {
+        // checkFileExist();
+        fs.writeFile(applicationConfig.uploadsFolder + files.file[0].originalFilename, data, function(error) {
+            if (error) {
+                return reply(err);
+            } else {
+                console.log('file uploaded');
+                return reply({
+                    success: true,
+                    message: ''
+                });
+            }
+        });
+    });
 };

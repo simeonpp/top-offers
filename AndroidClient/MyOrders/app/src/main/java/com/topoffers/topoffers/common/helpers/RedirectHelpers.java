@@ -15,7 +15,7 @@ public class RedirectHelpers {
         Intent intent;
         if (cookie != null) {
             if (Objects.equals(cookie.getRole(), "seller")) {
-                intent = new Intent(context, SellerOrderHistoryListActivity.class);
+                intent = new Intent(context, SellerProductsListActivity.class);
             } else {
                 intent = new Intent(context, BuyerProductsListActivity.class);
             }

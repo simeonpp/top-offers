@@ -72,5 +72,15 @@ public class SellerProductsListActivity extends BaseAuthenticatedActivity {
                 context.startActivity(intent);
             }
         });
+
+        // Orders list navigation
+        Button btnOrdersList = (Button) this.findViewById(R.id.temp_btn_orders);
+        btnOrdersList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, SellerOrderHistoryListActivity.class);
+                context.startActivity(intent);
+            }
+        });
     }
 }
