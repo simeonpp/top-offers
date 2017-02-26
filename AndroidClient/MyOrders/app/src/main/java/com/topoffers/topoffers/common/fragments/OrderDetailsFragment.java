@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,20 +16,24 @@ import com.topoffers.data.base.IData;
 import com.topoffers.data.models.Headers;
 import com.topoffers.data.services.ImagesHttpData;
 import com.topoffers.topoffers.R;
+import com.topoffers.topoffers.common.contracts.IHandleOrderStatusChange;
 import com.topoffers.topoffers.common.helpers.AuthenticationHelpers;
 import com.topoffers.topoffers.common.helpers.Utils;
 import com.topoffers.topoffers.common.models.AuthenticationCookie;
 import com.topoffers.topoffers.common.models.Order;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 import io.reactivex.functions.Consumer;
 
-public class OrderDetailsFragment extends Fragment {
+public class OrderDetailsFragment extends Fragment implements IHandleOrderStatusChange {
     public static final String INTENT_ORDER_KEY = "intent_order_key";
 
     private View root;
-    private IData<Order> orderIData;
+    private IData<Order> orderData;
     private AuthenticationCookie cookie;
     private final ImagesHttpData imageHttpData;
 
@@ -40,7 +45,7 @@ public class OrderDetailsFragment extends Fragment {
     public static OrderDetailsFragment create(int orderId, IData<Order> orderData, AuthenticationCookie cookie) {
         OrderDetailsFragment orderDetailsFragment = new OrderDetailsFragment();
 
-        orderDetailsFragment.setOrderIData(orderData);
+        orderDetailsFragment.setOrderData(orderData);
         orderDetailsFragment.setCookie(cookie);
 
         Bundle args = new Bundle();
@@ -50,8 +55,8 @@ public class OrderDetailsFragment extends Fragment {
         return orderDetailsFragment;
     }
 
-    public void setOrderIData(IData<Order> orderIData) {
-        this.orderIData = orderIData;
+    public void setOrderData(IData<Order> orderData) {
+        this.orderData = orderData;
     }
 
     public void setCookie(AuthenticationCookie cookie) {
@@ -75,7 +80,7 @@ public class OrderDetailsFragment extends Fragment {
         final LoadingFragment loadingFragment = LoadingFragment.create(this.getContext(), "Preparing order data...");
         loadingFragment.show();
 
-        orderIData.getById(orderId, headers)
+        orderData.getById(orderId, headers)
             .subscribe(new Consumer<Order>() {
                 @Override
                 public void accept(Order order) throws Exception {
@@ -136,6 +141,8 @@ public class OrderDetailsFragment extends Fragment {
                     TextView tvSellerAddress = (TextView) root.findViewById(R.id.tv_order_details_seller_address);
                     tvSellerAddress.setText(Utils.buildDetailsString("Address", order.getProductSellerAddress()));
 
+                    initExtras(order.getStatus());
+
                     // Set image
                     final ImageView ivImage = (ImageView) root.findViewById(R.id.iv_order_details_image);
                     if (order.getProductImageIdentifier() != null) {
@@ -153,4 +160,87 @@ public class OrderDetailsFragment extends Fragment {
             });
     }
 
+    private void initExtras(String status) {
+        Button actionButton1 = (Button) root.findViewById(R.id.btn_order_history_mark_1);
+        Button actionButton2 = (Button) root.findViewById(R.id.btn_order_history_mark_2);
+        ArrayList<Button> actionButtons = new ArrayList<>(Arrays.asList(actionButton1, actionButton2));
+
+        Bundle arguments = this.getArguments();
+        int orderId = (int) arguments.getSerializable(INTENT_ORDER_KEY);
+        Headers headers = AuthenticationHelpers.getAuthenticationHeaders(this.cookie);
+
+        if ((Objects.equals(cookie.getRole(), "seller") && (Objects.equals(status, "pending")))) {
+            actionButton1.setText("Mark as send");
+            actionButton2.setText("Mark as rejected");
+
+            actionButton1.setOnClickListener(new OnActionButtonClickListener(this.getContext(), orderId, headers, "send", this));
+            actionButton2.setOnClickListener(new OnActionButtonClickListener(this.getContext(), orderId, headers, "rejected", this));
+        } else if ((Objects.equals(cookie.getRole(), "buyers")) && (Objects.equals(status, "send"))) {
+            actionButton1.setText("Mark as received");
+            actionButton2.setText("Mark as not received");
+
+            actionButton1.setOnClickListener(new OnActionButtonClickListener(this.getContext(), orderId, headers, "received", this));
+            actionButton2.setOnClickListener(new OnActionButtonClickListener(this.getContext(), orderId, headers, "notReceived", this));
+        } else {
+            hideExtraActionButtons(actionButtons);
+        }
+    }
+
+    private void hideExtraActionButtons(List<Button> actionButtons) {
+        for (Button actionButton : actionButtons) {
+            actionButton.setVisibility(View.GONE);
+        }
+    }
+
+    private class OnActionButtonClickListener implements View.OnClickListener {
+        private Context context;
+        private int orderId;
+        private Headers headers;
+        private String newStatus;
+        IHandleOrderStatusChange changeStatusHandler;
+
+        public OnActionButtonClickListener(Context context, int orderId, Headers headers, String newStatus, IHandleOrderStatusChange changeStatusHandler) {
+            this.context = context;
+            this.orderId = orderId;
+            this.headers = headers;
+            this.newStatus = newStatus;
+            this.changeStatusHandler = changeStatusHandler;
+        }
+
+        @Override
+        public void onClick(View v) {
+            final LoadingFragment loadingFragment = LoadingFragment.create(context, "Updating status information...");
+            loadingFragment.show();
+
+            Order updatedStatusOrder = new Order(newStatus);
+            orderData.edit(orderId, updatedStatusOrder, headers)
+                .subscribe(new Consumer<Order>() {
+                    @Override
+                    public void accept(Order order) throws Exception {
+                        loadingFragment.hide();
+                        String notifyUserMessage = "";
+                        if (order.getId() == orderId) {
+                            notifyUserMessage = "Status changed to " + newStatus;
+                            changeStatusHandler.handleStatusChange(newStatus);
+                        } else {
+                            notifyUserMessage = "Unable to update status";
+                        }
+
+                        ((DialogFragment.create(context, notifyUserMessage, 1))).show();
+                    }
+                });
+        }
+    }
+
+    @Override
+    public void handleStatusChange(String newStatus) {
+        // Remove action buttons
+        ((Button) root.findViewById(R.id.btn_order_history_mark_1)).setVisibility(View.GONE);
+        ((Button) root.findViewById(R.id.btn_order_history_mark_2)).setVisibility(View.GONE);
+
+        // Update status Text view
+        TextView tvOrderStatus = (TextView) root.findViewById(R.id.tv_order_details_status);
+        tvOrderStatus.setText(Utils.buildDetailsString("Status", newStatus.toUpperCase()));
+        tvOrderStatus.setTextColor(Color.parseColor(Utils.getOrderStatusColor(newStatus)));
+    }
 }

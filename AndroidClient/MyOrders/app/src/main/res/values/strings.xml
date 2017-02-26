@@ -57,7 +57,5 @@
     <string name="order_details">Order details</string>
     <string name="buyer_details">Buyer details</string>
     <string name="seller_details">Seller details</string>
-    <string name="mark_as_send">Mark as send</string>
-    <string name="mark_as_rejected">Mark as rejected</string>
 
 </resources>

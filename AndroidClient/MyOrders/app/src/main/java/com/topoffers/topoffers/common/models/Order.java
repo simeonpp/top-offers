@@ -45,6 +45,10 @@ public class Order implements Serializable {
         this.buyerUsername = buyerUsername;
     }
 
+    public Order(String status) {
+        this.setStatus(status);
+    }
+
     public int getId() {
         return id;
     }
