@@ -11,9 +11,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.topoffers.data.base.IData;
 import com.topoffers.data.models.Headers;
+import com.topoffers.data.models.RequestFormBodyKeys;
 import com.topoffers.topoffers.R;
 import com.topoffers.topoffers.common.fragments.DialogFragment;
 import com.topoffers.topoffers.common.fragments.LoadingFragment;
@@ -21,9 +23,17 @@ import com.topoffers.topoffers.common.helpers.AuthenticationHelpers;
 import com.topoffers.topoffers.common.models.AuthenticationCookie;
 import com.topoffers.topoffers.common.models.Product;
 import com.topoffers.topoffers.seller.activities.SellerProductsListActivity;
+import com.topoffers.topoffers.seller.helpers.ImageHandler;
 import com.topoffers.topoffers.seller.types.UpdateProductType;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
 import io.reactivex.functions.Consumer;
+import pl.aprilapps.easyphotopicker.EasyImage;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +45,8 @@ public class UpdateProductFragment extends Fragment {
 
     private UpdateProductType mode;
     private int productId;
+
+    private File imageFile;
 
     public UpdateProductFragment() {
         // Required empty public constructor
@@ -81,15 +93,30 @@ public class UpdateProductFragment extends Fragment {
             this.initEditProduct();
         }
 
+        final UpdateProductFragment fragment = this;
         final Context context = this.getContext();
-        Button btnUpdateProduct = (Button) root.findViewById(R.id.btn_update_product);
 
+        // Upload picture
+        Button btnUploadPicture = (Button) root.findViewById(R.id.btn_update_product_upload_picture);
+        btnUploadPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EasyImage.openCamera(fragment, EasyImage.REQ_SOURCE_CHOOSER);
+            }
+        });
+
+        Button btnUpdateProduct = (Button) root.findViewById(R.id.btn_update_product);
         btnUpdateProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String title = ((EditText) root.findViewById(R.id.et_update_product_title)).getText().toString();
                 String description = ((EditText) root.findViewById(R.id.et_update_product_description)).getText().toString();
-                int quantity = Integer.parseInt(((EditText) root.findViewById(R.id.et_update_product_quantity)).getText().toString());
+
+                int quantity = -1;
+                String quantityAsString = ((EditText) root.findViewById(R.id.et_update_product_quantity)).getText().toString();
+                if (!description.equals("")) {
+                    quantity = Integer.parseInt(quantityAsString);
+                }
 
                 double price = -1;
                 String priceAsDouble = ((EditText) root.findViewById(R.id.et_update_product_price)).getText().toString();
@@ -100,11 +127,10 @@ public class UpdateProductFragment extends Fragment {
                         (DialogFragment.create(context, "Please enter valid price", 1)).show();
                     }
                 }
-
                 if (title.isEmpty() || quantity < 0 || price < 0) {
                     (DialogFragment.create(context, "Invalid input form", 1)).show();
                 } else {
-                    Product product = new Product(title, price, quantity, null, description);
+                    Product product = new Product(title, price, quantity, null, description, imageFile);
                     handleUpdateProduct(product);
                 }
             }
@@ -114,6 +140,7 @@ public class UpdateProductFragment extends Fragment {
     private void handleUpdateProduct(Product product) {
         final Context context = this.getContext();
         Headers headers = AuthenticationHelpers.getAuthenticationHeaders(cookie);
+        List<String> requestFormBodyKeysArrays = new ArrayList<String>(Arrays.asList("title", "price", "quantity", "description"));
 
         if (this.mode ==  UpdateProductType.EDIT) {
             productData.edit(productId, product, headers)
@@ -130,7 +157,8 @@ public class UpdateProductFragment extends Fragment {
                     }
                 });
         } else {
-            productData.add(product, headers)
+            RequestFormBodyKeys requestFormBodyKeys = new RequestFormBodyKeys(requestFormBodyKeysArrays);
+            productData.addMultipartWithImage(product, requestFormBodyKeys, headers)
                 .subscribe(new Consumer<Product>() {
                     @Override
                     public void accept(Product product) throws Exception {
@@ -178,5 +206,13 @@ public class UpdateProductFragment extends Fragment {
             });
     }
 
+    // For camera
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        ImageHandler imageHandler = new ImageHandler(this.getContext());
+        EasyImage.handleActivityResult(requestCode, resultCode, data, this.getActivity(), imageHandler);
+        imageFile = imageHandler.getImageFile();
+    }
 }

@@ -1,26 +1,31 @@
 package com.topoffers.topoffers.common.models;
 
+import com.topoffers.data.base.IHaveImageFile;
+
+import java.io.File;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Product implements Serializable {
+public class Product implements Serializable, IHaveImageFile {
     private int id;
     private String title;
     private double price;
     private int quantity;
     private String imageIdentifier;
     private String description;
+    private File imageFile;
     private Date dateAdded;
     private String sellerUsername;
     private String sellerFirstName;
     private String sellerLastName;
 
-    public Product(String title, double price, int quantity, String imageIdentifier, String description) {
+    public Product(String title, double price, int quantity, String imageIdentifier, String description, File imageFile) {
         this.title = title;
         this.price = price;
         this.quantity = quantity;
         this.imageIdentifier = imageIdentifier;
         this.description = description;
+        this.imageFile = imageFile;
     }
 
     public Product(int id, String title, double price, int quantity, String imageIdentifier, String description, Date dateAdded, String sellerUsername, String sellerFirstName, String sellerLastName) {
@@ -82,6 +87,14 @@ public class Product implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public File getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(File imageFile) {
+        this.imageFile = imageFile;
     }
 
     public Date getDateAdded() {

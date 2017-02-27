@@ -13,6 +13,13 @@
     <string name="submit">Submit</string>
     <string name="login">Login</string>
 
+    <!-- Register -->
+    <string name="register">Register</string>
+    <string name="firstname">FirstName</string>
+    <string name="lastname">LastName</string>
+    <string name="phone">Phone</string>
+    <string name="address">Address</string>
+
     <!-- Seller -->
     <string name="seller_products_list_title">Seller products list</string>
     <string name="seller_orders_list_title">Seller products list</string>
@@ -52,11 +59,7 @@
     <string name="create_product_button_text">Create product</string>
     <string name="create_new_product_button_text">Create new product</string>
     <string name="title_activity_seller_order_history">SellerOrderHistory</string>
-    <string name="register">Register</string>
-    <string name="firstname">FirstName</string>
-    <string name="lastname">LastName</string>
-    <string name="phone">Phone</string>
-    <string name="address">Address</string>
+    <string name="upload_picture">Upload picture</string>
 
     <!-- Order details -->
     <string name="order_details">Order details</string>

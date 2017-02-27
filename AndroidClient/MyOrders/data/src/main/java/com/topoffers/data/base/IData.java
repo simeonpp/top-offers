@@ -1,6 +1,7 @@
 package com.topoffers.data.base;
 
 import com.topoffers.data.models.Headers;
+import com.topoffers.data.models.RequestFormBodyKeys;
 
 import io.reactivex.Observable;
 
@@ -11,4 +12,5 @@ public interface IData<T> {
     Observable<T> edit(Object id, T object, Headers headers);
     Observable<T> delete(Object id, Headers headers);
     Observable<T> custom(RequestWithBodyType requestType, Object object);
+    Observable<T> addMultipartWithImage(IHaveImageFile object, RequestFormBodyKeys requestFormBodyKeys, Headers headers);
 }

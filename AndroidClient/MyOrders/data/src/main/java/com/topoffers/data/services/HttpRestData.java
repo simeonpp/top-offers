@@ -2,10 +2,16 @@ package com.topoffers.data.services;
 
 import com.google.gson.Gson;
 import com.topoffers.data.base.IData;
+import com.topoffers.data.base.IHaveImageFile;
 import com.topoffers.data.base.RequestWithBodyType;
 import com.topoffers.data.models.Header;
 import com.topoffers.data.models.Headers;
+import com.topoffers.data.models.RequestFormBodyKeys;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import io.reactivex.Observable;
@@ -14,12 +20,15 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class HttpRestData<T> implements IData<T> {
+    private final MediaType MEDIA_TYPE_IMAGE = MediaType.parse("image/png");
+
     private final String url;
     private final Class<T> klassSingle;
     private final Class<T[]> klassArray;
@@ -129,6 +138,28 @@ public class HttpRestData<T> implements IData<T> {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    @Override
+    public Observable<T> addMultipartWithImage(final IHaveImageFile object, final RequestFormBodyKeys requestFormBodyKeys, final Headers headers) {
+        return Observable.create(new ObservableOnSubscribe<T>() {
+            @Override
+            public void subscribe(ObservableEmitter<T> e) throws Exception {
+                RequestBody requestBody = buildRequestFormBody(requestFormBodyKeys, object);
+                Request request = buildMultipartRequest(RequestWithBodyType.POST, url, requestBody, headers);
+
+                try {
+                    Response response = httpClient.newCall(request).execute();
+
+                    T responseObject = parseSingle(response.body().string());
+                    e.onNext(responseObject);
+                } catch (IOException error) {
+                    error.printStackTrace();
+                }
+            }
+        })
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread());
+    }
+
     private Request buildGetRequest(String url) {
         return  buildGetRequest(url, new Headers(new ArrayList<Header>()));
     }
@@ -201,6 +232,46 @@ public class HttpRestData<T> implements IData<T> {
 
         Request request = requestBuilder.build();
         return request;
+    }
+
+    private RequestBody buildRequestFormBody(RequestFormBodyKeys requestFormBodyKeys, IHaveImageFile object) {
+        MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("image", "image.png", RequestBody.create(MEDIA_TYPE_IMAGE, object.getImageFile()));
+
+        for (String key : requestFormBodyKeys.getKeys()) {
+            String methodName = String.format("get%s", Character.toUpperCase(key.charAt(0)) + key.substring(1));
+            try {
+                Method method = object.getClass().getMethod(methodName);
+                Object value = method.invoke(object);
+                requestBodyBuilder.addFormDataPart(key, value.toString());
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+        RequestBody requestBody = requestBodyBuilder.build();
+        return requestBody;
+    }
+
+    private Request buildMultipartRequest(RequestWithBodyType type, String url, RequestBody requestBody, Headers headers) {
+        Request.Builder requestBuilder = new Request.Builder()
+            .url(url);
+
+        switch (type) {
+            case POST:
+                requestBuilder = requestBuilder.post(requestBody);
+        }
+
+        for (Header header : headers.getHeaders()) {
+            requestBuilder.addHeader(header.getKey(), header.getValue());
+        }
+
+        return requestBuilder.build();
     }
 
     private T[] parseArray(String string) {
