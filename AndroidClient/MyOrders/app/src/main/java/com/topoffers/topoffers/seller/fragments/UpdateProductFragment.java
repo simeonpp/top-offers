@@ -3,6 +3,8 @@ package com.topoffers.topoffers.seller.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -214,5 +217,13 @@ public class UpdateProductFragment extends Fragment {
         ImageHandler imageHandler = new ImageHandler(this.getContext());
         EasyImage.handleActivityResult(requestCode, resultCode, data, this.getActivity(), imageHandler);
         imageFile = imageHandler.getImageFile();
+        setProductImageView(imageFile);
+    }
+
+    public void setProductImageView(File image) {
+        String path = image.getPath();
+        Bitmap bitmap = BitmapFactory.decodeFile(path);
+        ImageView ivProductImage = (ImageView) root.findViewById(R.id.im_product_image);
+        ivProductImage.setImageBitmap(bitmap);
     }
 }
