@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -16,6 +19,7 @@ import com.topoffers.data.models.Headers;
 import com.topoffers.topoffers.R;
 import com.topoffers.topoffers.common.adapters.OrderListAdapter;
 import com.topoffers.topoffers.common.helpers.AuthenticationHelpers;
+import com.topoffers.topoffers.common.helpers.Utils;
 import com.topoffers.topoffers.common.models.AuthenticationCookie;
 import com.topoffers.topoffers.common.models.Order;
 
@@ -81,6 +85,15 @@ public class OrdersListFragment extends Fragment {
                 Intent intent = new Intent(context, classToNavigateOnItemClick);
                 intent.putExtra(OrderDetailsFragment.INTENT_ORDER_KEY, clickedOrder.getId());
                 context.startActivity(intent);
+            }
+        });
+
+        lvOrders.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Order clickedOrder = mainOrders.get(position);
+                (DialogFragment.create(context, Utils.buildDetailsString("Status", clickedOrder.getStatus()), 1)).show();
+                return true;
             }
         });
 

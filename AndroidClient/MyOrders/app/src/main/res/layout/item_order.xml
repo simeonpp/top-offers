@@ -34,12 +34,9 @@
             style="@style/OrderListTotalPrice"/>
 
         <TextView
-            android:id="@+id/tv_order_status"
+            android:id="@+id/tv_order__list_dateOrdered"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
-
-
 
     </LinearLayout>
 

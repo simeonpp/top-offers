@@ -50,8 +50,9 @@ public class OrderListAdapter extends ArrayAdapter<Order> {
         TextView tvTotalPrice = (TextView) view.findViewById(R.id.tv_order_total_price);
         tvTotalPrice.setText(Utils.convertDoublePriceToStringPriceWithTag(currentOrder.getTotalPrice(), "Total price"));
 
-        TextView tvStatus = (TextView) view.findViewById(R.id.tv_order_status);
-        tvStatus.setText(currentOrder.getStatus());
+        TextView tvOrderedDate = (TextView) view.findViewById(R.id.tv_order__list_dateOrdered);
+        String status = Utils.convertDateToStringWithTime(currentOrder.getDateOrdered());
+        tvOrderedDate.setText(Utils.buildDetailsString("Date ordered", status));
 
         // Set image
         final ImageView ivImage = (ImageView) view.findViewById(R.id.iv_order_image);
