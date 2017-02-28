@@ -21,31 +21,35 @@
             android:id="@+id/et_update_product_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/title"/>
+            android:hint="@string/title"
+            style="@style/Input" />
 
         <EditText
             android:id="@+id/et_update_product_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
-            android:hint="@string/price" />
+            android:hint="@string/price"
+            style="@style/Input" />
 
         <EditText
             android:id="@+id/et_update_product_quantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
-            android:hint="@string/quantity"/>
+            android:hint="@string/quantity"
+            style="@style/Input" />
 
         <EditText
             android:id="@+id/et_update_product_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
-            android:lines="6"
+            android:lines="4"
             android:gravity="top|left"
-            android:maxLines="8"
-            android:hint="@string/description" />
+            android:maxLines="6"
+            android:hint="@string/description"
+            style="@style/Input" />
 
         <Button
             android:id="@+id/btn_update_product_upload_picture"

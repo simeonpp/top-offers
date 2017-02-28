@@ -117,7 +117,7 @@ public class UpdateProductFragment extends Fragment {
 
                 int quantity = -1;
                 String quantityAsString = ((EditText) root.findViewById(R.id.et_update_product_quantity)).getText().toString();
-                if (!description.equals("")) {
+                if (!quantityAsString.equals("")) {
                     quantity = Integer.parseInt(quantityAsString);
                 }
 
@@ -130,11 +130,23 @@ public class UpdateProductFragment extends Fragment {
                         (DialogFragment.create(context, "Please enter valid price", 1)).show();
                     }
                 }
-                if (title.isEmpty() || quantity < 0 || price < 0) {
-                    (DialogFragment.create(context, "Invalid input form", 1)).show();
+
+                String errorMessage = "";
+                if (title.isEmpty()) {
+                    errorMessage = "Please enter product title";
+                } else if (price < 0) {
+                    errorMessage = "Please enter product price";
+                } else if (quantity < 0) {
+                    errorMessage = "Please enter product quantity";
+                } else if (imageFile == null) {
+                    errorMessage = "Please take/upload product picture";
                 } else {
                     Product product = new Product(title, price, quantity, null, description, imageFile);
                     handleUpdateProduct(product);
+                }
+
+                if (!errorMessage.isEmpty()) {
+                    (DialogFragment.create(context, errorMessage, 1)).show();
                 }
             }
         });
@@ -221,9 +233,11 @@ public class UpdateProductFragment extends Fragment {
     }
 
     public void setProductImageView(File image) {
-        String path = image.getPath();
-        Bitmap bitmap = BitmapFactory.decodeFile(path);
-        ImageView ivProductImage = (ImageView) root.findViewById(R.id.im_product_image);
-        ivProductImage.setImageBitmap(bitmap);
+        if (image != null) {
+            String path = image.getPath();
+            Bitmap bitmap = BitmapFactory.decodeFile(path);
+            ImageView ivProductImage = (ImageView) root.findViewById(R.id.im_product_image);
+            ivProductImage.setImageBitmap(bitmap);
+        }
     }
 }

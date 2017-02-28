@@ -25,7 +25,11 @@ public class ImageHandler implements EasyImage.Callbacks {
 
     @Override
     public void onImagePickerError(Exception e, EasyImage.ImageSource source, int type) {
-
+        try {
+            throw e;
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
     }
 
     @Override
@@ -35,6 +39,6 @@ public class ImageHandler implements EasyImage.Callbacks {
 
     @Override
     public void onCanceled(EasyImage.ImageSource source, int type) {
-
+        this.imageFile = null;
     }
 }
