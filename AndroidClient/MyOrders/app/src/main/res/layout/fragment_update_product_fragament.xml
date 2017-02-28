@@ -51,16 +51,31 @@
             android:hint="@string/description"
             style="@style/Input" />
 
-        <Button
-            android:id="@+id/btn_update_product_upload_picture"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/upload_picture"/>
+        <LinearLayout
+            android:id="@+id/action_image_buttons_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_update_product_upload_picture_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/take_picture"/>
+
+            <Button
+                android:id="@+id/btn_update_product_upload_picture_gallery"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/upload_picture"/>
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/im_product_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:layout_gravity="center" />
 
         <Button
             android:id="@+id/btn_update_product"

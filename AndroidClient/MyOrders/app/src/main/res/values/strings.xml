@@ -59,6 +59,7 @@
     <string name="create_product_button_text">Create product</string>
     <string name="create_new_product_button_text">Create new product</string>
     <string name="title_activity_seller_order_history">SellerOrderHistory</string>
+    <string name="take_picture">Take picture</string>
     <string name="upload_picture">Upload picture</string>
 
     <!-- Order details -->

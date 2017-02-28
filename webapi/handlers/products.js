@@ -2,6 +2,7 @@
 var fs = require('fs');
 var multiparty = require('multiparty');
 const uuidV1 = require('uuid/v1');
+var Jimp = require("jimp");
 
 var applicationConfig = require('../config.js').application;
 var connection = require('../dataProvider').getConnection();
@@ -70,33 +71,39 @@ module.exports = {
                     var imageNameWithExtension = `${imageIdentifier}.${imageExtension}`;
 
                     // checkFileExist();
-                    fs.writeFile(`${applicationConfig.uploadsFolder}${imageNameWithExtension}`, data, function(writeFileError) {
-                        if (writeFileError) {
-                            return reply(writeFileError);
-                        } else {
-                            // Image upload finished
-
-                            // SQL query
-                            let headers = helpers.parseRequestHeader(request);
-                            let title = fields.title[0];
-                            let price = fields.price[0];
-                            let quantity = fields.quantity[0];
-                            let description = fields.description[0];
-
-                            let query = 'INSERT INTO products (sellerId, title, price, quantity, imageIdentifier, description) ' +
-                                        `VALUES (${headers.id}, '${title}', ${price}, ${quantity}, '${imageNameWithExtension}', '${description}');`;
-                            connection.query(query)
-                                .then(function(dataResult) {
-                                    reply({
-                                        success: true,
-                                        title,
-                                        price,
-                                        quantity,
-                                        imageIdentifier,
-                                        description
-                                    });
-                                });
+                    Jimp.read(files.image[0].path, function (jimpError, uploadImage) {
+                        console.log('here');
+                        if (jimpError) {
+                            reply(jimpError);
                         }
+                        console.log('here2');
+                        uploadImage
+                            .cover(256, 256)             // scale the image to the given width and height
+                            .quality(60)                 // set JPEG quality
+                            .write(`${applicationConfig.uploadsFolder}${imageNameWithExtension}`); // save
+
+                        // SQL query
+                        let headers = helpers.parseRequestHeader(request);
+                        let title = fields.title[0];
+                        let price = fields.price[0];
+                        let quantity = fields.quantity[0];
+                        let description = fields.description[0];
+
+                        let query = 'INSERT INTO products (sellerId, title, price, quantity, imageIdentifier, description) ' +
+                                    `VALUES (${headers.id}, '${title}', ${price}, ${quantity}, '${imageNameWithExtension}', '${description}');`;
+                        connection.query(query)
+                            .then(function(dataResult) {
+                                reply({
+                                    success: true,
+                                    title,
+                                    price,
+                                    quantity,
+                                    imageIdentifier,
+                                    description
+                                });
+                            });
+                    }).catch(function (err) {
+                        reply(jimpError);
                     });
                 });
             }
@@ -132,11 +139,10 @@ module.exports = {
         let title = request.payload.title;
         let price = request.payload.price;
         let quantity = request.payload.quantity;
-        let imageIdentifier = null;
         let description = request.payload.description;
 
         let query = 'UPDATE products ' +
-                    `SET title='${title}', price = ${price}, quantity = ${quantity}, imageIdentifier = '${imageIdentifier}', description = '${description}' ` +
+                    `SET title='${title}', price = ${price}, quantity = ${quantity}, description = '${description}' ` +
                     `WHERE id = ${productId} AND sellerId = ${headers.id}`;
         connection.query(query)
             .then(function(dataResult) {
@@ -146,7 +152,6 @@ module.exports = {
                         title,
                         price,
                         quantity,
-                        imageIdentifier,
                         description
                     });
                 } else {

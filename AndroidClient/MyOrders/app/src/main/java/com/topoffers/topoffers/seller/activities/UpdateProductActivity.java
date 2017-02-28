@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.topoffers.data.base.IData;
+import com.topoffers.data.base.IImageData;
 import com.topoffers.topoffers.R;
 import com.topoffers.topoffers.TopOffersApplication;
 import com.topoffers.topoffers.common.activities.BaseAuthenticatedActivity;
@@ -17,6 +18,10 @@ public class UpdateProductActivity extends BaseAuthenticatedActivity {
 
     @Inject
     public IData<Product> productData;
+
+    @Inject
+    public IImageData imageData;
+
     private int productId;
 
     @Override
@@ -37,7 +42,7 @@ public class UpdateProductActivity extends BaseAuthenticatedActivity {
     }
 
     private void setProductFragment() {
-        UpdateProductFragment updateProductFragment = UpdateProductFragment.create(this.productData, this.authenticationCookie, productId);
+        UpdateProductFragment updateProductFragment = UpdateProductFragment.create(this.productData, this.imageData, this.authenticationCookie, productId);
         this.getSupportFragmentManager()
             .beginTransaction()
             .replace(R.id.fragment_update_product, updateProductFragment)

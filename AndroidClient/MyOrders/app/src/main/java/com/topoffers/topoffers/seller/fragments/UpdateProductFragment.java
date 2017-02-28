@@ -13,10 +13,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.topoffers.data.base.IData;
+import com.topoffers.data.base.IImageData;
 import com.topoffers.data.models.Headers;
 import com.topoffers.data.models.RequestFormBodyKeys;
 import com.topoffers.topoffers.R;
@@ -44,6 +46,7 @@ import pl.aprilapps.easyphotopicker.EasyImage;
 public class UpdateProductFragment extends Fragment {
     private View root;
     private IData<Product> productData;
+    private IImageData imageData;
     private AuthenticationCookie cookie;
 
     private UpdateProductType mode;
@@ -55,9 +58,10 @@ public class UpdateProductFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static UpdateProductFragment create(IData<Product> productData, AuthenticationCookie cookie, int productId) {
+    public static UpdateProductFragment create(IData<Product> productData, IImageData imageData, AuthenticationCookie cookie, int productId) {
         UpdateProductFragment updateProductFragment = new UpdateProductFragment();
         updateProductFragment.setProductData(productData);
+        updateProductFragment.setImageData(imageData);
         updateProductFragment.setCookie(cookie);
         updateProductFragment.setProductId(productId);
         if (productId == 0) {
@@ -70,6 +74,10 @@ public class UpdateProductFragment extends Fragment {
 
     public void setProductData(IData<Product> productData) {
         this.productData = productData;
+    }
+
+    public void setImageData(IImageData imageData) {
+        this.imageData = imageData;
     }
 
     public void setCookie(AuthenticationCookie cookie) {
@@ -99,12 +107,21 @@ public class UpdateProductFragment extends Fragment {
         final UpdateProductFragment fragment = this;
         final Context context = this.getContext();
 
-        // Upload picture
-        Button btnUploadPicture = (Button) root.findViewById(R.id.btn_update_product_upload_picture);
-        btnUploadPicture.setOnClickListener(new View.OnClickListener() {
+        // Upload picture camera
+        Button btnUploadPictureCamera = (Button) root.findViewById(R.id.btn_update_product_upload_picture_camera);
+        btnUploadPictureCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EasyImage.openCamera(fragment, EasyImage.REQ_SOURCE_CHOOSER);
+            }
+        });
+
+        // Upload picture camera
+        Button btnUploadPictureGallery = (Button) root.findViewById(R.id.btn_update_product_upload_picture_gallery);
+        btnUploadPictureGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EasyImage.openGallery(fragment, EasyImage.REQ_PICK_PICTURE_FROM_GALLERY);
             }
         });
 
@@ -138,7 +155,7 @@ public class UpdateProductFragment extends Fragment {
                     errorMessage = "Please enter product price";
                 } else if (quantity < 0) {
                     errorMessage = "Please enter product quantity";
-                } else if (imageFile == null) {
+                } else if (imageFile == null && mode == UpdateProductType.CREATE) {
                     errorMessage = "Please take/upload product picture";
                 } else {
                     Product product = new Product(title, price, quantity, null, description, imageFile);
@@ -192,6 +209,10 @@ public class UpdateProductFragment extends Fragment {
         Button btnUpdateProduct = (Button) root.findViewById(R.id.btn_update_product);
         btnUpdateProduct.setText("Update Product");
 
+        // Hide upload image action buttons
+        LinearLayout actionButtonsLayout = (LinearLayout) root.findViewById(R.id.action_image_buttons_layout);
+        actionButtonsLayout.setVisibility(View.GONE);
+
         final LoadingFragment loadingFragment = LoadingFragment.create(this.getContext(), "Getting product data...");
         loadingFragment.show();
 
@@ -215,6 +236,21 @@ public class UpdateProductFragment extends Fragment {
 
                     EditText etDescription = (EditText) root.findViewById(R.id.et_update_product_description);
                     etDescription.setText(product.getDescription());
+
+                    // Set image
+                    final ImageView ivImage = (ImageView) root.findViewById(R.id.im_product_image);
+                    ivImage.getLayoutParams().width = 300;
+                    ivImage.getLayoutParams().height = 300;
+                    ivImage.requestLayout();
+                    if (product.getImageIdentifier() != null) {
+                        imageData.getImage(product.getImageIdentifier())
+                                .subscribe(new Consumer<Bitmap>() {
+                                    @Override
+                                    public void accept(Bitmap bitmap) throws Exception {
+                                        ivImage.setImageBitmap(bitmap);
+                                    }
+                                });
+                    }
 
                     loadingFragment.hide();
                 }
