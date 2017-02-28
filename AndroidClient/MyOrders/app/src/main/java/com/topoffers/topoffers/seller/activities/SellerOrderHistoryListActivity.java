@@ -1,5 +1,6 @@
 package com.topoffers.topoffers.seller.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -22,10 +23,15 @@ public class SellerOrderHistoryListActivity extends BaseAuthenticatedActivity {
     @Inject
     public IImageData imageData;
 
+    private int queryProductId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seller_order_history);
+
+        Intent intent = this.getIntent();
+        queryProductId = intent.getIntExtra(INTENT_ORDER_PRODUCT_ID, 0);
 
         this.initTitle();
         this.initOrdersListFragment();
@@ -39,12 +45,17 @@ public class SellerOrderHistoryListActivity extends BaseAuthenticatedActivity {
 
     private void initTitle() {
         TextView tvTitle = (TextView) this.findViewById(R.id.tv_seller_orders_list_title);
-        String title = String.format("%s's orders history", this.loginResult.getFirstName());
+        String title = "";
+        if (this.queryProductId > 0) {
+            title = String.format("Product orders history", this.loginResult.getFirstName());
+        } else {
+            title = String.format("%s's orders history", this.loginResult.getFirstName());
+        }
         tvTitle.setText(title);
     }
 
     private void initOrdersListFragment() {
-        OrdersListFragment ordersListFragment = OrdersListFragment.create(this.orderData, this.imageData, this.authenticationCookie, SellerOrderHistoryDetailsActivity.class);
+        OrdersListFragment ordersListFragment = OrdersListFragment.create(this.queryProductId, this.orderData, this.imageData, this.authenticationCookie, SellerOrderHistoryDetailsActivity.class);
         this.getSupportFragmentManager()
             .beginTransaction()
             .replace(R.id.fragment_seller_orders_list, ordersListFragment)

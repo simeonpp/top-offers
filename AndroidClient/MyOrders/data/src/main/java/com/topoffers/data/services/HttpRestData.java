@@ -6,6 +6,8 @@ import com.topoffers.data.base.IHaveImageFile;
 import com.topoffers.data.base.RequestWithBodyType;
 import com.topoffers.data.models.Header;
 import com.topoffers.data.models.Headers;
+import com.topoffers.data.models.QueryParam;
+import com.topoffers.data.models.QueryParams;
 import com.topoffers.data.models.RequestFormBodyKeys;
 
 import java.io.File;
@@ -44,14 +46,31 @@ public class HttpRestData<T> implements IData<T> {
 
     public Observable<T[]> getAll(final Headers headers) {
         return Observable
-                .create(new ObservableOnSubscribe<T[]>() {
-                    @Override
-                    public void subscribe(ObservableEmitter<T[]> e) throws Exception {
-                        Request request = buildGetRequest(url, headers);
-                        Response response = httpClient.newCall(request).execute();
+            .create(new ObservableOnSubscribe<T[]>() {
+                @Override
+                public void subscribe(ObservableEmitter<T[]> e) throws Exception {
+                    Request request = buildGetRequest(url, headers);
+                    Response response = httpClient.newCall(request).execute();
 
-                        T[] objects = parseArray(response.body().string());
-                        e.onNext(objects);
+                    T[] objects = parseArray(response.body().string());
+                    e.onNext(objects);
+                }
+            })
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<T[]> getAllWithQueryParams(final QueryParams queryParams, final Headers headers) {
+        return Observable
+            .create(new ObservableOnSubscribe<T[]>() {
+                @Override
+                public void subscribe(ObservableEmitter<T[]> e) throws Exception {
+                    String urlWithQueries = buildUrlWithQueryParams(url ,queryParams);
+                    Request request = buildGetRequest(urlWithQueries, headers);
+                    Response response = httpClient.newCall(request).execute();
+
+                    T[] objects = parseArray(response.body().string());
+                    e.onNext(objects);
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -158,6 +177,22 @@ public class HttpRestData<T> implements IData<T> {
         })
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    private String buildUrlWithQueryParams(String url, QueryParams queryParams) {
+        StringBuilder urlWithQueries = new StringBuilder();
+        urlWithQueries.append(url);
+        if (queryParams.getQueryParams().size() > 0) {
+            urlWithQueries.append("?");
+        }
+        for (QueryParam queryParam : queryParams.getQueryParams()) {
+            urlWithQueries.append(queryParam.getKey());
+            urlWithQueries.append("=");
+            urlWithQueries.append(queryParam.getValue());
+            urlWithQueries.append("&");
+        }
+
+        return urlWithQueries.toString();
     }
 
     private Request buildGetRequest(String url) {

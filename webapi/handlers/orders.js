@@ -15,12 +15,21 @@ module.exports = {
                     `INNER JOIN products p ON p.id = o.productId ` +
                     `INNER JOIN users u on u.id = p.sellerId `;
 
+        var productIdQueryParam = request.query.productId;
         if (headers.role === 'seller') {
-            query += `WHERE p.sellerId = ${headers.id} `+
-                     'ORDER BY id DESC';
+            if (productIdQueryParam) {
+                query += `WHERE p.sellerId = ${headers.id} AND p.id = ${productIdQueryParam} `;
+            } else {
+                query += `WHERE p.sellerId = ${headers.id} `;
+            }
+            query += 'ORDER BY id DESC';
         } else {
-            query += `WHERE o.buyerId = ${headers.id} `+
-                     'ORDER BY id DESC';
+            if (productIdQueryParam) {
+                query += `WHERE o.buyerId = ${headers.id} AND p.id = ${productIdQueryParam} `;
+            } else {
+                query += `WHERE o.buyerId = ${headers.id} `;
+            }
+            query += 'ORDER BY id DESC';
         }
 
         connection.query(query)

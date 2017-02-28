@@ -17,6 +17,8 @@ import android.widget.ListView;
 import com.topoffers.data.base.IData;
 import com.topoffers.data.base.IImageData;
 import com.topoffers.data.models.Headers;
+import com.topoffers.data.models.QueryParam;
+import com.topoffers.data.models.QueryParams;
 import com.topoffers.topoffers.R;
 import com.topoffers.topoffers.common.adapters.OrderListAdapter;
 import com.topoffers.topoffers.common.helpers.AuthenticationHelpers;
@@ -34,6 +36,7 @@ import io.reactivex.functions.Consumer;
  */
 public class OrdersListFragment extends Fragment {
     private View root;
+    private int queryProductId;
     private IData<Order> orderData;
     private IImageData imageData;
     private AuthenticationCookie cookie;
@@ -45,14 +48,19 @@ public class OrdersListFragment extends Fragment {
         mainOrders = new ArrayList<>();
     }
 
-    public static OrdersListFragment create(IData<Order> orderData, IImageData imageData, AuthenticationCookie cookie, Class classToNavigateOnItemClick) {
+    public static OrdersListFragment create(int queryProductId, IData<Order> orderData, IImageData imageData, AuthenticationCookie cookie, Class classToNavigateOnItemClick) {
         OrdersListFragment ordersListFragment = new OrdersListFragment();
+        ordersListFragment.setQueryProductId(queryProductId);
         ordersListFragment.setOrderData(orderData);
         ordersListFragment.setImageData(imageData);
         ordersListFragment.setCookie(cookie);
         ordersListFragment.setClassToNavigateOnItemClick(classToNavigateOnItemClick);
         return ordersListFragment;
     };
+
+    public void setQueryProductId(int queryProductId) {
+        this.queryProductId = queryProductId;
+    }
 
     public void setOrderData(IData<Order> orderData) {
         this.orderData = orderData;
@@ -113,18 +121,28 @@ public class OrdersListFragment extends Fragment {
         loadingFragment.show();
 
         Headers headers = AuthenticationHelpers.getAuthenticationHeaders(this.cookie);
-        orderData.getAll(headers)
-            .subscribe(new Consumer<Order[]>() {
-                @Override
-                public void accept(Order[] orders) throws Exception {
-                    mainOrders = new ArrayList<Order>(Arrays.asList(orders));
+        Consumer<Order[]> orderDataCallback = new Consumer<Order[]>() {
+            @Override
+            public void accept(Order[] orders) throws Exception {
+                mainOrders = new ArrayList<Order>(Arrays.asList(orders));
 
-                    ordersAdapter.clear();
-                    ordersAdapter.addAll(orders);
+                ordersAdapter.clear();
+                ordersAdapter.addAll(orders);
 
-                    loadingFragment.hide();
-                }
-            });
+                loadingFragment.hide();
+            }
+        };
+
+        if (this.queryProductId > 0) {
+            QueryParam queryParam = new QueryParam("productId", String.valueOf(this.queryProductId));
+            QueryParams queryParams = new QueryParams(new ArrayList<>(Arrays.asList(queryParam)));
+
+            orderData.getAllWithQueryParams(queryParams, headers)
+                    .subscribe(orderDataCallback);
+        } else {
+            orderData.getAll(headers)
+                .subscribe(orderDataCallback);
+        }
     }
 
 }
