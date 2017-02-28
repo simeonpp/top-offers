@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.topoffers.data.base.IData;
+import com.topoffers.data.base.IImageData;
 import com.topoffers.topoffers.R;
 import com.topoffers.topoffers.TopOffersApplication;
 import com.topoffers.topoffers.common.activities.BaseAuthenticatedActivity;
@@ -15,6 +16,10 @@ import javax.inject.Inject;
 public class SellerOrderHistoryDetailsActivity extends BaseAuthenticatedActivity {
     @Inject
     public IData<Order> orderData;
+
+    @Inject
+    public IImageData imageData;
+
     private int orderId;
 
     @Override
@@ -35,7 +40,7 @@ public class SellerOrderHistoryDetailsActivity extends BaseAuthenticatedActivity
     }
 
     private void initProductDetailsFragment() {
-        OrderDetailsFragment orderDetailsFragment = OrderDetailsFragment.create(orderId, this.orderData, this.authenticationCookie);
+        OrderDetailsFragment orderDetailsFragment = OrderDetailsFragment.create(orderId, this.orderData, this.imageData, this.authenticationCookie);
         this.getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_seller_order_details, orderDetailsFragment)

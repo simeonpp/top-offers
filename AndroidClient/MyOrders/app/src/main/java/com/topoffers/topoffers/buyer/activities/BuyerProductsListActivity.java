@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.topoffers.data.base.IData;
+import com.topoffers.data.base.IImageData;
 import com.topoffers.topoffers.R;
 import com.topoffers.topoffers.TopOffersApplication;
 import com.topoffers.topoffers.common.activities.BaseAuthenticatedActivity;
@@ -20,6 +21,9 @@ public class BuyerProductsListActivity extends BaseAuthenticatedActivity {
 
     @Inject
     public IData<Product> productData;
+
+    @Inject
+    public IImageData imageHttpData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +41,7 @@ public class BuyerProductsListActivity extends BaseAuthenticatedActivity {
     }
 
     private void initProductsListFragment() {
-        ProductsListFragment productListFragment = ProductsListFragment.create(this.productData, this.authenticationCookie, BuyerProductDetailsActivity.class);
+        ProductsListFragment productListFragment = ProductsListFragment.create(this.productData, this.imageHttpData, this.authenticationCookie, BuyerProductDetailsActivity.class);
         this.getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_seller_products_list, productListFragment)

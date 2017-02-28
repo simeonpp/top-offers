@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.topoffers.data.base.IImageData;
 import com.topoffers.data.services.ImagesHttpData;
 import com.topoffers.topoffers.R;
 import com.topoffers.topoffers.common.helpers.Utils;
@@ -17,14 +18,16 @@ import com.topoffers.topoffers.common.models.Order;
 
 import java.text.DecimalFormat;
 
+import javax.inject.Inject;
+
 import io.reactivex.functions.Consumer;
 
 public class OrderListAdapter extends ArrayAdapter<Order> {
-    private final ImagesHttpData imageHttpData;
+    private IImageData imageData;
 
-    public OrderListAdapter(Context context) {
+    public OrderListAdapter(Context context, IImageData imageData) {
         super(context, -1);
-        this.imageHttpData = new ImagesHttpData();
+        this.imageData = imageData;
     }
 
     @NonNull
@@ -57,9 +60,7 @@ public class OrderListAdapter extends ArrayAdapter<Order> {
         // Set image
         final ImageView ivImage = (ImageView) view.findViewById(R.id.iv_order_image);
         if (currentOrder.getProductImageIdentifier() != null) {
-//            String imageUrl = "https://unsplash.com/photos/" + currentProduct.getImageIdentifier(); // temp until server is ready
-            String imageUrl = "https://s24.postimg.org/khsw9pbyt/image.png";
-            imageHttpData.getImage(imageUrl)
+            imageData.getImage(currentOrder.getProductImageIdentifier())
                     .subscribe(new Consumer<Bitmap>() {
                         @Override
                         public void accept(Bitmap bitmap) throws Exception {

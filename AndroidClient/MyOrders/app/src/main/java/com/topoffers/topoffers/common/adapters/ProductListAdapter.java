@@ -11,19 +11,22 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.topoffers.data.base.IImageData;
 import com.topoffers.data.services.ImagesHttpData;
 import com.topoffers.topoffers.R;
 import com.topoffers.topoffers.common.helpers.Utils;
 import com.topoffers.topoffers.common.models.Product;
 
+import javax.inject.Inject;
+
 import io.reactivex.functions.Consumer;
 
 public class ProductListAdapter extends ArrayAdapter<Product> {
-    private final ImagesHttpData imageHttpData;
+    private IImageData imageData;
 
-    public ProductListAdapter(Context context) {
+    public ProductListAdapter(Context context, IImageData imageData) {
         super(context, -1);
-        this.imageHttpData = new ImagesHttpData();
+        this.imageData = imageData;
     }
 
     @NonNull
@@ -56,9 +59,7 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
         // Set image
         final ImageView ivImage = (ImageView) view.findViewById(R.id.iv_product_image);
         if (currentProduct.getImageIdentifier() != null) {
-//            String imageUrl = "https://unsplash.com/photos/" + currentProduct.getImageIdentifier(); // temp until server is ready
-            String imageUrl = "https://s24.postimg.org/khsw9pbyt/image.png";
-            imageHttpData.getImage(imageUrl)
+            imageData.getImage(currentProduct.getImageIdentifier())
                     .subscribe(new Consumer<Bitmap>() {
                         @Override
                         public void accept(Bitmap bitmap) throws Exception {

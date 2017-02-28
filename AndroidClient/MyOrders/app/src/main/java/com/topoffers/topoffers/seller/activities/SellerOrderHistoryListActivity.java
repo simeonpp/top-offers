@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.topoffers.data.base.IData;
+import com.topoffers.data.base.IImageData;
 import com.topoffers.topoffers.R;
 import com.topoffers.topoffers.TopOffersApplication;
 import com.topoffers.topoffers.common.activities.BaseAuthenticatedActivity;
@@ -17,6 +18,9 @@ public class SellerOrderHistoryListActivity extends BaseAuthenticatedActivity {
 
     @Inject
     public IData<Order> orderData;
+
+    @Inject
+    public IImageData imageData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +44,7 @@ public class SellerOrderHistoryListActivity extends BaseAuthenticatedActivity {
     }
 
     private void initOrdersListFragment() {
-        OrdersListFragment ordersListFragment = OrdersListFragment.create(this.orderData, this.authenticationCookie, SellerOrderHistoryDetailsActivity.class);
+        OrdersListFragment ordersListFragment = OrdersListFragment.create(this.orderData, this.imageData, this.authenticationCookie, SellerOrderHistoryDetailsActivity.class);
         this.getSupportFragmentManager()
             .beginTransaction()
             .replace(R.id.fragment_seller_orders_list, ordersListFragment)

@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.topoffers.data.base.IData;
+import com.topoffers.data.base.IImageData;
 import com.topoffers.data.models.Headers;
 import com.topoffers.topoffers.R;
 import com.topoffers.topoffers.common.adapters.ProductListAdapter;
@@ -37,6 +38,7 @@ import io.reactivex.functions.Consumer;
 public class ProductsListFragment extends Fragment {
     private View root;
     private IData<Product> productData;
+    private IImageData imageHttpData;
     private AuthenticationCookie cookie;
     private Class classToNavigateOnItemClick;
     private ArrayList<Product> mainProducts;
@@ -46,9 +48,10 @@ public class ProductsListFragment extends Fragment {
         mainProducts = new ArrayList<>();
     }
 
-    public static ProductsListFragment create(IData<Product> productData, AuthenticationCookie cookie, Class classToNavigateOnItemClick) {
+    public static ProductsListFragment create(IData<Product> productData, IImageData imageHttpData, AuthenticationCookie cookie, Class classToNavigateOnItemClick) {
         ProductsListFragment productsListFragment = new ProductsListFragment();
         productsListFragment.setProductData(productData);
+        productsListFragment.setImageHttpData(imageHttpData);
         productsListFragment.setCookie(cookie);
         productsListFragment.setClassToNavigateOnItemClick(classToNavigateOnItemClick);
         return productsListFragment;
@@ -56,6 +59,10 @@ public class ProductsListFragment extends Fragment {
 
     public void setProductData(IData<Product> productData) {
         this.productData = productData;
+    }
+
+    public void setImageHttpData(IImageData imageHttpData) {
+        this.imageHttpData = imageHttpData;
     }
 
     public void setCookie(AuthenticationCookie cookie) {
@@ -75,7 +82,7 @@ public class ProductsListFragment extends Fragment {
 
     private void initProductsList() {
         ListView lvProducts = (ListView) root.findViewById(R.id.lv_products);
-        ArrayAdapter<Product> productsAdapter = new ProductListAdapter(this.getContext());
+        ArrayAdapter<Product> productsAdapter = new ProductListAdapter(this.getContext(), this.imageHttpData);
 
         lvProducts.setAdapter(productsAdapter);
 

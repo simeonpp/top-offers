@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.topoffers.data.base.IData;
+import com.topoffers.data.base.IImageData;
 import com.topoffers.data.models.Headers;
 import com.topoffers.topoffers.R;
 import com.topoffers.topoffers.common.adapters.OrderListAdapter;
@@ -34,6 +35,7 @@ import io.reactivex.functions.Consumer;
 public class OrdersListFragment extends Fragment {
     private View root;
     private IData<Order> orderData;
+    private IImageData imageData;
     private AuthenticationCookie cookie;
     private Class classToNavigateOnItemClick;
     private ArrayList<Order> mainOrders;
@@ -43,9 +45,10 @@ public class OrdersListFragment extends Fragment {
         mainOrders = new ArrayList<>();
     }
 
-    public static OrdersListFragment create(IData<Order> orderData, AuthenticationCookie cookie, Class classToNavigateOnItemClick) {
+    public static OrdersListFragment create(IData<Order> orderData, IImageData imageData, AuthenticationCookie cookie, Class classToNavigateOnItemClick) {
         OrdersListFragment ordersListFragment = new OrdersListFragment();
         ordersListFragment.setOrderData(orderData);
+        ordersListFragment.setImageData(imageData);
         ordersListFragment.setCookie(cookie);
         ordersListFragment.setClassToNavigateOnItemClick(classToNavigateOnItemClick);
         return ordersListFragment;
@@ -53,6 +56,10 @@ public class OrdersListFragment extends Fragment {
 
     public void setOrderData(IData<Order> orderData) {
         this.orderData = orderData;
+    }
+
+    public void setImageData(IImageData imageData) {
+        this.imageData = imageData;
     }
 
     public void setCookie(AuthenticationCookie cookie) {
@@ -72,7 +79,7 @@ public class OrdersListFragment extends Fragment {
 
     private void initOrdersList() {
         ListView lvOrders = (ListView) root.findViewById(R.id.lv_orders);
-        ArrayAdapter<Order> ordersAdapter = new OrderListAdapter(this.getContext());
+        ArrayAdapter<Order> ordersAdapter = new OrderListAdapter(this.getContext(), this.imageData);
 
         lvOrders.setAdapter(ordersAdapter);
 

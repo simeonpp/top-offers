@@ -1,7 +1,9 @@
 package com.topoffers.topoffers.config;
 
 import com.topoffers.data.base.IData;
+import com.topoffers.data.base.IImageData;
 import com.topoffers.data.services.HttpRestData;
+import com.topoffers.data.services.ImagesHttpData;
 import com.topoffers.topoffers.common.models.ApiUrl;
 import com.topoffers.topoffers.common.models.LoginRequest;
 import com.topoffers.topoffers.common.models.LoginResult;
@@ -42,7 +44,7 @@ public class DataModule {
     @Provides
     @Inject
     IData<RegisterResult> provideIDataRegisterResult(ApiUrl<RegisterRequest> apiUrlRegister) {
-        return  new HttpRestData<RegisterResult>(apiUrlRegister.getUrl(), RegisterResult.class, RegisterResult[].class);
+        return new HttpRestData<RegisterResult>(apiUrlRegister.getUrl(), RegisterResult.class, RegisterResult[].class);
     }
 
     @Provides
@@ -67,5 +69,10 @@ public class DataModule {
     @Inject
     IData<Order> provideOrder(ApiUrl<Order> apiUrlOrder) {
         return new HttpRestData<Order>(apiUrlOrder.getUrl(), Order.class, Order[].class);
+    }
+
+    @Provides
+    IImageData provideImageData() {
+        return new ImagesHttpData("http://192.168.0.103:8000/images/");
     }
 }

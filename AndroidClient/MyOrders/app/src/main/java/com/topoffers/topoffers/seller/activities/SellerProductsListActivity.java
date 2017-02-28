@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.topoffers.data.base.IData;
+import com.topoffers.data.base.IImageData;
 import com.topoffers.topoffers.R;
 import com.topoffers.topoffers.TopOffersApplication;
 import com.topoffers.topoffers.common.activities.BaseAuthenticatedActivity;
@@ -21,6 +22,9 @@ public class SellerProductsListActivity extends BaseAuthenticatedActivity {
 
     @Inject
     public IData<Product> productData;
+
+    @Inject
+    public IImageData imageData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +50,7 @@ public class SellerProductsListActivity extends BaseAuthenticatedActivity {
     }
 
     private void initProductsListFragment() {
-        ProductsListFragment productListFragment = ProductsListFragment.create(this.productData, this.authenticationCookie, SellerProductDetailsActivity.class);
+        ProductsListFragment productListFragment = ProductsListFragment.create(this.productData, this.imageData, this.authenticationCookie, SellerProductDetailsActivity.class);
         this.getSupportFragmentManager()
             .beginTransaction()
             .replace(R.id.fragment_seller_products_list, productListFragment)

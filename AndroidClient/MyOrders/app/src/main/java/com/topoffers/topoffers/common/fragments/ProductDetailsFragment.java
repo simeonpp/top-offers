@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.topoffers.data.base.IData;
+import com.topoffers.data.base.IImageData;
 import com.topoffers.data.models.Headers;
 import com.topoffers.data.services.ImagesHttpData;
 import com.topoffers.topoffers.R;
@@ -20,6 +21,8 @@ import com.topoffers.topoffers.common.helpers.Utils;
 import com.topoffers.topoffers.common.models.AuthenticationCookie;
 import com.topoffers.topoffers.common.models.Product;
 
+import javax.inject.Inject;
+
 import io.reactivex.functions.Consumer;
 
 public class ProductDetailsFragment extends Fragment {
@@ -27,19 +30,19 @@ public class ProductDetailsFragment extends Fragment {
 
     private View root;
     private IData<Product> productData;
+    private IImageData imageData;
     private AuthenticationCookie cookie;
     private Product mainProduct;
-    private final ImagesHttpData imageHttpData;
 
     public ProductDetailsFragment() {
         // Required empty public constructor
-        this.imageHttpData = new ImagesHttpData();
     }
 
-    public static ProductDetailsFragment create(int productId, IData<Product> productData, AuthenticationCookie cookie) {
+    public static ProductDetailsFragment create(int productId, IData<Product> productData, IImageData imageData, AuthenticationCookie cookie) {
         ProductDetailsFragment productDetailsFragment = new ProductDetailsFragment();
 
         productDetailsFragment.setProductData(productData);
+        productDetailsFragment.setImageData(imageData);
         productDetailsFragment.setCookie(cookie);
 
         Bundle args = new Bundle();
@@ -51,6 +54,10 @@ public class ProductDetailsFragment extends Fragment {
 
     public void setProductData(IData<Product> productData) {
         this.productData = productData;
+    }
+
+    public void setImageData(IImageData imageData) {
+        this.imageData = imageData;
     }
 
     public void setCookie(AuthenticationCookie cookie) {
@@ -111,8 +118,7 @@ public class ProductDetailsFragment extends Fragment {
                     // Set image
                     final ImageView ivImage = (ImageView) root.findViewById(R.id.iv_product_details_image);
                     if (product.getImageIdentifier() != null) {
-                        String imageUrl = "https://s24.postimg.org/khsw9pbyt/image.png"; // temp solution unitl server is ready
-                        imageHttpData.getImage(imageUrl)
+                        imageData.getImage(product.getImageIdentifier())
                             .subscribe(new Consumer<Bitmap>() {
                                 @Override
                                 public void accept(Bitmap bitmap) throws Exception {
