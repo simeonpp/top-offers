@@ -7,6 +7,9 @@ import com.topoffers.topoffers.buyer.activities.BuyerProductsListActivity;
 import com.topoffers.topoffers.config.ConfigModule;
 import com.topoffers.topoffers.config.DataModule;
 import com.topoffers.topoffers.login.LoginActivity;
+import com.topoffers.topoffers.profile.BaseProfileActivity;
+import com.topoffers.topoffers.profile.EditMyProfileActivity;
+import com.topoffers.topoffers.profile.MyProfileActivity;
 import com.topoffers.topoffers.register.RegisterActivity;
 import com.topoffers.topoffers.seller.activities.SellerOrderHistoryListActivity;
 import com.topoffers.topoffers.seller.activities.SellerOrderHistoryDetailsActivity;
@@ -34,6 +37,7 @@ public class TopOffersApplication extends Application {
     public interface ApplicationComponent {
         void inject(LoginActivity loginActivity);
         void inject(RegisterActivity registerActivity);
+        void inject(BaseProfileActivity myProfileActivity);
 
         void inject(SellerProductsListActivity sellerProductsListActivity);
         void inject(SellerProductDetailsActivity sellerProductDetailsActivity);

@@ -34,7 +34,14 @@
             android:id="@+id/temp_btn_orders"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Order List"
+            android:text="Orders"
+            style="@style/Widget.AppCompat.Button"/>
+
+        <Button
+            android:id="@+id/temp_btn_my_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="P"
             style="@style/Widget.AppCompat.Button"/>
 
         <FrameLayout

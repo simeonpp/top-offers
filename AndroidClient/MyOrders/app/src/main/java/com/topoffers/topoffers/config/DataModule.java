@@ -9,6 +9,7 @@ import com.topoffers.topoffers.common.models.LoginRequest;
 import com.topoffers.topoffers.common.models.LoginResult;
 import com.topoffers.topoffers.common.models.Order;
 import com.topoffers.topoffers.common.models.Product;
+import com.topoffers.topoffers.common.models.Profile;
 import com.topoffers.topoffers.common.models.RegisterRequest;
 import com.topoffers.topoffers.common.models.RegisterResult;
 
@@ -74,5 +75,17 @@ public class DataModule {
     @Provides
     IImageData provideImageData() {
         return new ImagesHttpData("http://192.168.0.103:8000/images/");
+    }
+
+    @Provides
+    ApiUrl<Profile> provideProfileApiUrl(@Named("apiBaseUrl") String apiBaseUrl) {
+        ApiUrl<Profile> apiUrlProfile = new ApiUrl<>(apiBaseUrl, "profile");
+        return apiUrlProfile;
+    }
+
+    @Provides
+    @Inject
+    IData<Profile> provideProfile(ApiUrl<Profile> apiUrlProfile) {
+        return new HttpRestData<Profile>(apiUrlProfile.getUrl(), Profile.class, Profile[].class);
     }
 }

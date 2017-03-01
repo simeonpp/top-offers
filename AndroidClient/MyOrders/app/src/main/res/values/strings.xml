@@ -44,8 +44,22 @@
         completions."
     </string>
 
-    <!-- Logout fragment -->
+    <!-- My profile -->
     <string name="logout">Logout</string>
+    <string name="edit_profile_btn">Edit profile</string>
+
+    <!-- Edit my profile -->
+    <string name="myprofile_edit_title">Edit my profile</string>
+    <string name="hint_first_name">First name</string>
+    <string name="hint_last_name">Last name</string>
+    <string name="hint_address">Address</string>
+    <string name="hint_phone">Phone</string>
+    <string name="hint_password">Password</string>
+    <string name="back_to_profile">Back to profile</string>
+    <string name="save">Save</string>
+
+    <!-- Logout fragment -->
+    <string name="myprofile_title">My profile</string>
 
     <!-- List products -->
     <string name="no_add_products_text">You have not add any products yet.</string>

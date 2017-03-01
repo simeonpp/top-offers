@@ -61,6 +61,11 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <!-- My profile -->
+    <style name="MyProfileText">
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
     <!-- Product List -->
     <style name="ProductListWrap">
         <item name="android:layout_marginBottom">20dp</item>

@@ -15,6 +15,7 @@ import com.topoffers.topoffers.common.activities.BaseAuthenticatedActivity;
 import com.topoffers.topoffers.common.fragments.LogoutFragment;
 import com.topoffers.topoffers.common.fragments.ProductsListFragment;
 import com.topoffers.topoffers.common.models.Product;
+import com.topoffers.topoffers.profile.MyProfileActivity;
 
 import javax.inject.Inject;
 
@@ -83,6 +84,16 @@ public class SellerProductsListActivity extends BaseAuthenticatedActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, SellerOrderHistoryListActivity.class);
+                context.startActivity(intent);
+            }
+        });
+
+        // My profile navigation
+        Button btnMyProfile = (Button) this.findViewById(R.id.temp_btn_my_profile);
+        btnMyProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MyProfileActivity.class);
                 context.startActivity(intent);
             }
         });
