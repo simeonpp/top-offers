@@ -39,6 +39,12 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="NoListRecordsText">
+        <item name="android:textStyle">italic</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_marginTop">15dp</item>
+    </style>
+
     <!-- Login -->
     <style name="LoginPageTitle">
         <item name="android:layout_marginTop">10dp</item>

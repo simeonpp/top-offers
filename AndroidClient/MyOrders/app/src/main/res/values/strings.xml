@@ -47,6 +47,9 @@
     <!-- Logout fragment -->
     <string name="logout">Logout</string>
 
+    <!-- List products -->
+    <string name="no_add_products_text">You have not add any products yet.</string>
+
     <!-- Product Details -->
     <string name="product_details">Product details</string>
     <string name="edit_product_btn_text">Edit product</string>
@@ -65,6 +68,9 @@
     <string name="take_picture">Take picture</string>
     <string name="upload_picture">Upload picture</string>
     <string name="please_take_upload_image">Please take/uploade image</string>
+
+    <!-- Orders list -->
+    <string name="no_orders_made">You have not any orders yet.</string>
 
     <!-- Order details -->
     <string name="order_details">Order details</string>
