@@ -20,6 +20,8 @@
     <string name="phone">Phone</string>
     <string name="address">Address</string>
     <string name="back_to_login">Back to login</string>
+    <string name="seller">Seller</string>
+    <string name="buyer">Buyer</string>
 
     <!-- Seller -->
     <string name="seller_products_list_title">Seller products list</string>
@@ -58,7 +60,7 @@
     <string name="quantity">Quantity</string>
     <string name="description">Description</string>
     <string name="create_product_button_text">Create product</string>
-    <string name="create_new_product_button_text">Create new product</string>
+    <string name="create_new_product_button_text">Add product</string>
     <string name="title_activity_seller_order_history">SellerOrderHistory</string>
     <string name="take_picture">Take picture</string>
     <string name="upload_picture">Upload picture</string>

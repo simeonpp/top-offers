@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 
 import com.orm.SugarRecord;
 import com.topoffers.data.base.IData;
@@ -66,13 +68,21 @@ public class RegisterActivity extends BaseActivity {
             public void onClick(View v) {
                 String username = ((EditText) findViewById(R.id.et_register_username)).getText().toString();
                 String password = ((EditText) findViewById(R.id.et_register_password)).getText().toString();
-                String role = ((CheckBox) findViewById(R.id.cb_is_seller)).isChecked() ? "seller" : "buyer";
                 String firstname = ((EditText) findViewById(R.id.et_firstname)).getText().toString();
                 String lastname = ((EditText) findViewById(R.id.et_lastname)).getText().toString();
                 String address = ((EditText) findViewById(R.id.et_address)).getText().toString();
                 String phone = ((EditText) findViewById(R.id.et_phone)).getText().toString();
-                RegisterRequest registerRequest = new RegisterRequest(username, password, role, firstname, lastname, address, phone);
 
+                RadioGroup rgRole = (RadioGroup) findViewById(R.id.rg_role);
+                int checkedRadioButtonId = rgRole.getCheckedRadioButtonId();
+                View radioButton = rgRole.findViewById(checkedRadioButtonId);
+                int indexOfSelectedRole = rgRole.indexOfChild(radioButton);
+                String role = "buyer";
+                if (indexOfSelectedRole == 1) {
+                    role = "seller";
+                }
+
+                RegisterRequest registerRequest = new RegisterRequest(username, password, role, firstname, lastname, address, phone);
                 registerData.custom(RequestWithBodyType.POST, registerRequest)
                         .subscribe(new Consumer<RegisterResult>() {
                             DialogFragment dialogFragment;
