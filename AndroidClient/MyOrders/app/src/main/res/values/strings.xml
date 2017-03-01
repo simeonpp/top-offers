@@ -7,7 +7,7 @@
     <string name="action_settings">Settings</string>
 
     <!-- Login -->
-    <string name="tv_login_page_title">Welcome to Top Offers.</string>
+    <string name="tv_login_page_title">Welcome to Top Offers</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="submit">Submit</string>
@@ -19,6 +19,7 @@
     <string name="lastname">LastName</string>
     <string name="phone">Phone</string>
     <string name="address">Address</string>
+    <string name="back_to_login">Back to login</string>
 
     <!-- Seller -->
     <string name="seller_products_list_title">Seller products list</string>
@@ -61,6 +62,7 @@
     <string name="title_activity_seller_order_history">SellerOrderHistory</string>
     <string name="take_picture">Take picture</string>
     <string name="upload_picture">Upload picture</string>
+    <string name="please_take_upload_image">Please take/uploade image</string>
 
     <!-- Order details -->
     <string name="order_details">Order details</string>

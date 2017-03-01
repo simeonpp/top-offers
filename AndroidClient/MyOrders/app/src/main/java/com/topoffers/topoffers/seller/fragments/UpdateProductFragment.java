@@ -107,6 +107,10 @@ public class UpdateProductFragment extends Fragment {
         final UpdateProductFragment fragment = this;
         final Context context = this.getContext();
 
+        // Hide initial Image view
+        ImageView imProductImage = (ImageView) root.findViewById(R.id.im_product_image);
+        imProductImage.setVisibility(View.GONE);
+
         // Upload picture camera
         Button btnUploadPictureCamera = (Button) root.findViewById(R.id.btn_update_product_upload_picture_camera);
         btnUploadPictureCamera.setOnClickListener(new View.OnClickListener() {
@@ -174,6 +178,9 @@ public class UpdateProductFragment extends Fragment {
         Headers headers = AuthenticationHelpers.getAuthenticationHeaders(cookie);
         List<String> requestFormBodyKeysArrays = new ArrayList<String>(Arrays.asList("title", "price", "quantity", "description"));
 
+        final LoadingFragment loadingFragment = LoadingFragment.create(this.getContext(), "Creating product...");
+        loadingFragment.show();
+
         if (this.mode ==  UpdateProductType.EDIT) {
             productData.edit(productId, product, headers)
                 .subscribe(new Consumer<Product>() {
@@ -182,6 +189,8 @@ public class UpdateProductFragment extends Fragment {
                         // Notify user
                         String notifyMessage = String.format("%s was successfully edited.", product.getTitle());
                         (DialogFragment.create(context, notifyMessage, 1)).show();
+
+                        loadingFragment.hide();
 
                         // Redirects to products list
                         Intent intent = new Intent(context, SellerProductsListActivity.class);
@@ -197,6 +206,8 @@ public class UpdateProductFragment extends Fragment {
                         String notifyMessage = String.format("%s was successfully added.", product.getTitle());
                         (DialogFragment.create(context, notifyMessage, 1)).show();
 
+                        loadingFragment.hide();
+
                         // Redirects to products list
                         Intent intent = new Intent(context, SellerProductsListActivity.class);
                         context.startActivity(intent);
@@ -208,6 +219,10 @@ public class UpdateProductFragment extends Fragment {
     private void initEditProduct() {
         Button btnUpdateProduct = (Button) root.findViewById(R.id.btn_update_product);
         btnUpdateProduct.setText("Update Product");
+
+        // Hide upload image text
+        TextView tvUploadCreateImage = (TextView) root.findViewById(R.id.tv_upload_create_image);
+        tvUploadCreateImage.setVisibility(View.GONE);
 
         // Hide upload image action buttons
         LinearLayout actionButtonsLayout = (LinearLayout) root.findViewById(R.id.action_image_buttons_layout);
@@ -273,7 +288,12 @@ public class UpdateProductFragment extends Fragment {
             String path = image.getPath();
             Bitmap bitmap = BitmapFactory.decodeFile(path);
             ImageView ivProductImage = (ImageView) root.findViewById(R.id.im_product_image);
+            ivProductImage.setVisibility(View.VISIBLE);
             ivProductImage.setImageBitmap(bitmap);
+
+            // Hide upload image text
+            TextView tvUploadCreateImage = (TextView) root.findViewById(R.id.tv_upload_create_image);
+            tvUploadCreateImage.setVisibility(View.GONE);
         }
     }
 }

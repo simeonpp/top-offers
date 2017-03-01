@@ -22,6 +22,14 @@
     </style>
 
     <!-- Common -->
+    <style name="BigPageTitle">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
     <style name="Input">
         <item name="android:textSize">15sp</item>
     </style>
@@ -33,9 +41,12 @@
 
     <!-- Login -->
     <style name="LoginPageTitle">
-        <item name="android:layout_marginBottom">30dp</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:textSize">22sp</item>
         <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorAccent</item>
     </style>
 
     <style name="LoginPageLogin">
@@ -74,6 +85,11 @@
 
     <style name="ProductDetailsActionButtonWrap">
         <item name="android:layout_marginTop">20dp</item>
+    </style>
+
+    <style name="UploadImageText">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
     </style>
 
     <style name="TempRED">

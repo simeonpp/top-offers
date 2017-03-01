@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/seller_orders_list_title"
-        style="@style/Title" />
+        style="@style/BigPageTitle" />
 
     <FrameLayout
         android:id="@+id/fragment_seller_orders_list"

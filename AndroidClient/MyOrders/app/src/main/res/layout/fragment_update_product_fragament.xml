@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/create_new_product"
-            style="@style/Title" />
+            style="@style/BigPageTitle" />
 
         <EditText
             android:id="@+id/et_update_product_title"
@@ -61,12 +61,14 @@
                 android:id="@+id/btn_update_product_upload_picture_camera"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                style="@style/Widget.AppCompat.Button"
                 android:text="@string/take_picture"/>
 
             <Button
                 android:id="@+id/btn_update_product_upload_picture_gallery"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                style="@style/Widget.AppCompat.Button"
                 android:text="@string/upload_picture"/>
 
         </LinearLayout>
@@ -77,10 +79,18 @@
             android:layout_height="300dp"
             android:layout_gravity="center" />
 
+        <TextView
+            android:id="@+id/tv_upload_create_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/UploadImageText"
+            android:text="@string/please_take_upload_image"/>
+
         <Button
             android:id="@+id/btn_update_product"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:text="@string/create_product_button_text"/>
     </LinearLayout>
 

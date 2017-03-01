@@ -18,6 +18,7 @@ import com.topoffers.topoffers.TopOffersApplication;
 import com.topoffers.topoffers.buyer.activities.BuyerProductsListActivity;
 import com.topoffers.topoffers.common.activities.BaseActivity;
 import com.topoffers.topoffers.common.fragments.DialogFragment;
+import com.topoffers.topoffers.common.fragments.LoadingFragment;
 import com.topoffers.topoffers.common.helpers.RedirectHelpers;
 import com.topoffers.topoffers.common.models.AuthenticationCookie;
 import com.topoffers.topoffers.common.models.LoginRequest;
@@ -73,6 +74,9 @@ public class LoginActivity extends BaseActivity {
                 String password = ((EditText) findViewById(R.id.et_login_password)).getText().toString();
                 LoginRequest loginRequest = new LoginRequest(username, password);
 
+                final LoadingFragment loadingFragment = LoadingFragment.create(context, "Logging...");
+                loadingFragment.show();
+
                 loginData.custom(RequestWithBodyType.POST, loginRequest)
                     .subscribe(new Consumer<LoginResult>() {
                         @Override
@@ -93,10 +97,12 @@ public class LoginActivity extends BaseActivity {
                                 SugarRecord.deleteAll(LoginResult.class); // delete any current records
                                 SugarRecord.save(loginResult);
 
+                                loadingFragment.hide();
                                 // Redirect to corresponding page
                                 Intent intent = RedirectHelpers.baseRedirect(context, authenticationCookie);
                                 startActivity(intent);
                             } else {
+                                loadingFragment.hide();
                                 dialogFragment = DialogFragment.create(context, loginResult.getError().getMessage(), 1);
                                 dialogFragment.show();
                             }

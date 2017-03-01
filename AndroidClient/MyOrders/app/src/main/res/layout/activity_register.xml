@@ -78,13 +78,15 @@
         android:id="@+id/btn_register_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/submit" />
+        android:text="@string/register"
+        style="@style/Widget.AppCompat.Button.Colored"/>
 
     <Button
-        android:text="Login"
+        android:text="@string/back_to_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/login_button"
+        style="@style/Widget.AppCompat.Button"
         />
 
 </LinearLayout>

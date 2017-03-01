@@ -9,7 +9,7 @@
         android:id="@+id/tv_order_details_product_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Title"/>
+        style="@style/BigPageTitle"/>
 
     <ImageView
         android:id="@+id/iv_order_details_image"
@@ -121,12 +121,14 @@
             <Button
                 android:id="@+id/btn_order_history_mark_1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.Button" />
 
             <Button
                 android:id="@+id/btn_order_history_mark_2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.Button" />
     </LinearLayout>
 
     <TextView
