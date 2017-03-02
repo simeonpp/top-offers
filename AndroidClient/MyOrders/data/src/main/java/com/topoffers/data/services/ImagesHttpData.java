@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import com.topoffers.data.base.IImageData;
 
 import java.io.InputStream;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -23,6 +24,8 @@ public class ImagesHttpData implements IImageData {
     public ImagesHttpData(String url) {
         this.url = url;
         this.httpClient = new OkHttpClient();
+        int seconds = 1500;
+        httpClient.connectTimeoutMillis();
     }
 
     public Observable<Bitmap> getImage(final String imageFilename) {

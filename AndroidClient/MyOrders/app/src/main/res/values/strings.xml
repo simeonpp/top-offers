@@ -67,4 +67,7 @@
     <string name="buyer_details">Buyer details</string>
     <string name="seller_details">Seller details</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
