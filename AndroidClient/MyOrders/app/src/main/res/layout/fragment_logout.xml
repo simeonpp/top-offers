@@ -8,6 +8,7 @@
         android:id="@+id/btn_logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/logout" />
+        android:text="@string/logout"
+        style="@style/Widget.AppCompat.Button"/>
 
 </FrameLayout>

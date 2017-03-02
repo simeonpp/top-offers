@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.topoffers.data.base.IData;
 import com.topoffers.data.base.IImageData;
@@ -125,6 +126,11 @@ public class OrdersListFragment extends Fragment {
             @Override
             public void accept(Order[] orders) throws Exception {
                 mainOrders = new ArrayList<Order>(Arrays.asList(orders));
+
+                if (orders.length > 0) {
+                    TextView tvNoOrders = (TextView) root.findViewById(R.id.tv_no_products_added);
+                    tvNoOrders.setVisibility(View.GONE);
+                }
 
                 ordersAdapter.clear();
                 ordersAdapter.addAll(orders);

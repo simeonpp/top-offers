@@ -60,6 +60,22 @@ public class HttpRestData<T> implements IData<T> {
             .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public Observable<T> getSingle(final Headers headers) {
+        return Observable
+                .create(new ObservableOnSubscribe<T>() {
+                    @Override
+                    public void subscribe(ObservableEmitter<T> e) throws Exception {
+                        Request request = buildGetRequest(url, headers);
+                        Response response = httpClient.newCall(request).execute();
+
+                        T object = parseSingle(response.body().string());
+                        e.onNext(object);
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
     public Observable<T[]> getAllWithQueryParams(final QueryParams queryParams, final Headers headers) {
         return Observable
             .create(new ObservableOnSubscribe<T[]>() {
@@ -99,6 +115,22 @@ public class HttpRestData<T> implements IData<T> {
             @Override
             public void subscribe(ObservableEmitter<T> e) throws Exception {
                 Request request = buildRequestWithBody(object, url, headers);
+                Response response = httpClient.newCall(request).execute();
+
+                T resultObject = parseSingle(response.body().string());
+                e.onNext(resultObject);
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<T> edit(final T object, final Headers headers) {
+        return Observable.create(new ObservableOnSubscribe<T>() {
+            @Override
+            public void subscribe(ObservableEmitter<T> e) throws Exception {
+                Request request = buildRequestWithBody(RequestWithBodyType.PUT, object, url, headers);
                 Response response = httpClient.newCall(request).execute();
 
                 T resultObject = parseSingle(response.body().string());

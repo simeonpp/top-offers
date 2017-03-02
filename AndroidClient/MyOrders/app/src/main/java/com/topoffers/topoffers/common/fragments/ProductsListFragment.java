@@ -143,6 +143,11 @@ public class ProductsListFragment extends Fragment {
                 public void accept(Product[] products) throws Exception {
                     mainProducts = new ArrayList<Product>(Arrays.asList(products));
 
+                    if (products.length > 0) {
+                        TextView tvNoProductsAdded = (TextView) root.findViewById(R.id.tv_no_products_added);
+                        tvNoProductsAdded.setVisibility(View.GONE);
+                    }
+
                     productsAdapter.clear();
                     productsAdapter.addAll(products);
 

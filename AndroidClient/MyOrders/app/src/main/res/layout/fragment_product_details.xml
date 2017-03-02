@@ -9,7 +9,7 @@
         android:id="@+id/tv_product_details_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Title"/>
+        style="@style/BigPageTitle"/>
 
     <ImageView
         android:id="@+id/iv_product_details_image"

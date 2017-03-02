@@ -73,23 +73,35 @@
         android:hint="@string/address"
         style="@style/Input" />
 
-    <CheckBox
-        android:text="Is Seller"
-        android:layout_width="match_parent"
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/cb_is_seller" />
+        android:orientation="horizontal"
+        android:checkedButton="@+id/rb_role_buyer"
+        android:id="@+id/rg_role">
+        <RadioButton android:id="@+id/rb_role_buyer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/buyer"/>
+        <RadioButton android:id="@+id/rb_role_seller"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/seller"/>
+    </RadioGroup>
 
     <Button
         android:id="@+id/btn_register_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/submit" />
+        android:text="@string/register"
+        style="@style/Widget.AppCompat.Button.Colored"/>
 
     <Button
-        android:text="Login"
+        android:text="@string/back_to_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/login_button"
+        style="@style/Widget.AppCompat.Button"
         />
 
 </LinearLayout>

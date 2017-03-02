@@ -9,18 +9,21 @@
         android:id="@+id/btn_edit_product"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button"
         android:text="@string/edit_product_btn_text" />
 
     <Button
         android:id="@+id/btn_order_history_product"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button"
         android:text="@string/order_history_btn_text" />
 
     <Button
         android:id="@+id/btn_delete_product"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button"
         android:text="@string/delete_product_btn_text" />
 
 </LinearLayout>

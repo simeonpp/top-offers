@@ -5,9 +5,16 @@
     android:orientation="vertical"
     tools:context="com.topoffers.topoffers.common.fragments.ProductsListFragment">
 
+    <TextView
+        android:id="@+id/tv_no_products_added"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/NoListRecordsText"
+        android:text="@string/no_add_products_text"/>
+
     <ListView
         android:id="@+id/lv_products"
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="600dp" />
 
 </LinearLayout>
