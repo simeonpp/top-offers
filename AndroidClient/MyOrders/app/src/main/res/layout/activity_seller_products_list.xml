@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_products_list"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -18,14 +19,17 @@
         android:text="@string/seller_products_list_title"
         style="@style/BigPageTitle" />
 
+    <FrameLayout
+        android:id="@+id/container_drawer"
+        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <FrameLayout
-            android:id="@+id/container_drawer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+
         <Button
             android:id="@+id/btn_temp_add_new_product"
             android:layout_width="wrap_content"

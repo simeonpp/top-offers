@@ -3,13 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.topoffers.topoffers.common.fragments.DrawerFragment">
-    <TextView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:text="Hello"/>
     <android.support.v7.widget.Toolbar
         android:id="@+id/drawer_toolbar"
-        android:layout_width="30dp"
-        android:layout_height="30dp" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </FrameLayout>

@@ -3,19 +3,26 @@ package com.topoffers.topoffers.seller.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.topoffers.data.base.IData;
 import com.topoffers.data.base.IImageData;
 import com.topoffers.topoffers.R;
 import com.topoffers.topoffers.TopOffersApplication;
 import com.topoffers.topoffers.common.activities.BaseAuthenticatedActivity;
+import com.topoffers.topoffers.common.fragments.DrawerFragment;
 import com.topoffers.topoffers.common.fragments.LogoutFragment;
 import com.topoffers.topoffers.common.fragments.ProductsListFragment;
+import com.topoffers.topoffers.common.models.DrawerItemInfo;
 import com.topoffers.topoffers.common.models.Product;
 import com.topoffers.topoffers.profile.MyProfileActivity;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -36,6 +43,7 @@ public class SellerProductsListActivity extends BaseAuthenticatedActivity {
         this.initProductsListFragment();
         this.initLogoutFragment();
         this.addTempButtonListener();
+        this.setupDrawer();
     }
 
     @Override
@@ -64,6 +72,38 @@ public class SellerProductsListActivity extends BaseAuthenticatedActivity {
             .beginTransaction()
             .add(R.id.logout_container_fragment, logoutFragment)
             .commit();
+    }
+
+    protected void setupDrawer() {
+        View drawerContainer = this.findViewById(R.id.container_drawer);
+        if (drawerContainer != null) {
+            ArrayList<DrawerItemInfo> items = new ArrayList<>();
+
+            items.add(new DrawerItemInfo(1, "Books"));
+            items.add(new DrawerItemInfo(2, "Tabs"));
+            items.add(new DrawerItemInfo(3, "Another"));
+            items.add(new DrawerItemInfo(4, "Another 2"));
+
+            Fragment drawerFragment =
+                    DrawerFragment.createFragment(items, new Drawer.OnDrawerItemClickListener() {
+                        @Override
+                        public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                            switch ((int) drawerItem.getIdentifier()) {
+                                case 1:
+                                    Intent intent = new Intent(SellerProductsListActivity.this, SellerProductsListActivity.class);
+                                    startActivity(intent);
+                                    break;
+                            }
+
+                            return true;
+                        }
+                    });
+
+            this.getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.container_drawer, drawerFragment)
+                    .commit();
+        }
     }
 
     private void addTempButtonListener() {
