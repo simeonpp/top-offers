@@ -79,18 +79,31 @@ public class SellerProductsListActivity extends BaseAuthenticatedActivity {
         if (drawerContainer != null) {
             ArrayList<DrawerItemInfo> items = new ArrayList<>();
 
-            items.add(new DrawerItemInfo(1, "Books"));
-            items.add(new DrawerItemInfo(2, "Tabs"));
-            items.add(new DrawerItemInfo(3, "Another"));
-            items.add(new DrawerItemInfo(4, "Another 2"));
+            items.add(new DrawerItemInfo(1, "My Products"));
+            items.add(new DrawerItemInfo(2, "My Profile"));
+            items.add(new DrawerItemInfo(3, "Add Product"));
+            items.add(new DrawerItemInfo(4, "Orders"));
 
             Fragment drawerFragment =
-                    DrawerFragment.createFragment(items, new Drawer.OnDrawerItemClickListener() {
+                    DrawerFragment.createFragment(items, super.loginResult, new Drawer.OnDrawerItemClickListener() {
                         @Override
                         public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                            Intent intent;
                             switch ((int) drawerItem.getIdentifier()) {
                                 case 1:
-                                    Intent intent = new Intent(SellerProductsListActivity.this, SellerProductsListActivity.class);
+                                    intent = new Intent(SellerProductsListActivity.this, SellerProductsListActivity.class);
+                                    startActivity(intent);
+                                    break;
+                                case 2:
+                                    intent = new Intent(SellerProductsListActivity.this, MyProfileActivity.class);
+                                    startActivity(intent);
+                                    break;
+                                case 3:
+                                    intent = new Intent(SellerProductsListActivity.this, UpdateProductActivity.class);
+                                    startActivity(intent);
+                                    break;
+                                case 4:
+                                    intent = new Intent(SellerProductsListActivity.this, SellerOrderHistoryListActivity.class);
                                     startActivity(intent);
                                     break;
                             }
