@@ -47,6 +47,7 @@ public class MyProfileActivity extends BaseProfileActivity {
         setContentView(R.layout.activity_my_profile);
 
         this.initEditProfileButton();
+        this.setupDrawer();
     }
 
     @Override
@@ -76,7 +77,7 @@ public class MyProfileActivity extends BaseProfileActivity {
             ArrayList<DrawerItemInfo> items = new ArrayList<>();
             Fragment drawerFragment;
 
-            if(super.loginResult.getRole() == "seller") {
+            if(super.loginResult.getRole().equals("seller")) {
                 items.add(new DrawerItemInfo(1, "My Products"));
                 items.add(new DrawerItemInfo(2, "My Profile"));
                 items.add(new DrawerItemInfo(3, "Add Product"));
