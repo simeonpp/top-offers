@@ -2,6 +2,7 @@ package com.topoffers.data.services;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import com.topoffers.data.base.IImageData;
 
@@ -33,6 +34,8 @@ public class ImagesHttpData implements IImageData {
             .create(new ObservableOnSubscribe<Bitmap>() {
                 @Override
                 public void subscribe(ObservableEmitter<Bitmap> e) throws Exception {
+                    String text = url + imageFilename;
+                    Log.d("ImageGet", text);
                     Request request = new Request.Builder()
                             .url(url + imageFilename)
                             .build();

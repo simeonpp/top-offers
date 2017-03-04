@@ -17,6 +17,6 @@ public class ConfigModule {
     @Provides
     @Named("apiBaseImageUrl")
     String provideBaseImageUrl() {
-        return "http://192.168.43.178:8000/api/images/";
+        return "http://192.168.43.178:8000/images/";
     }
 }

@@ -123,12 +123,17 @@ public class DrawerFragment extends Fragment {
                 } else {
 
                 }
-
                 return super.onFling(e1, e2, velocityX, velocityY);
             }
-
+            @Override
+            public void onLongPress(MotionEvent e) {
+                if (!drawer.isDrawerOpen()) {
+                    drawer.openDrawer();
+                } else {
+                    drawer.closeDrawer();
+                }
+            }
         });
-
     }
 
     public void setOnDrawerItemClickListener(Drawer.OnDrawerItemClickListener onDrawerItemClickListener) {

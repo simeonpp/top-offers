@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.orm.SugarContext;
+import com.orm.SugarRecord;
 import com.topoffers.topoffers.R;
 import com.topoffers.topoffers.common.fragments.DrawerFragment;
 import com.topoffers.topoffers.common.models.DrawerItemInfo;
