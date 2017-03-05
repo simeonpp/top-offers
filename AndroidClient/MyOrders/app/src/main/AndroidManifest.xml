@@ -55,7 +55,9 @@
         <activity android:name=".register.RegisterActivity" />
         <activity android:name=".profile.MyProfileActivity" />
         <activity android:name=".profile.EditMyProfileActivity" />
-        <activity android:name=".buyer.activities.BuyerProductsCart"></activity>
+        <activity android:name=".buyer.activities.BuyerProductsCart" />
+        <activity android:name=".buyer.activities.BuyerOrderHistoryListActivity" />
+        <activity android:name=".buyer.activities.BuyerOrderHistoryDetailsActivity"></activity>
 
         <service android:name=".common.services.GetApplicationDescriptionFileService" />
     </application>

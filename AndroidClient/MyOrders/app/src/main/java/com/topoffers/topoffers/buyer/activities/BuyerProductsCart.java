@@ -73,7 +73,6 @@ public class BuyerProductsCart extends BaseAuthenticatedActivity {
         setContentView(R.layout.activity_buyer_products_cart);
         this.setupDrawer();
         this.initProductsList();
-        this.setupOrder();
     }
 
     protected void setupDrawer() {
@@ -84,6 +83,7 @@ public class BuyerProductsCart extends BaseAuthenticatedActivity {
             items.add(new DrawerItemInfo(1, "Products"));
             items.add(new DrawerItemInfo(2, "My Profile"));
             items.add(new DrawerItemInfo(3, "Cart"));
+            items.add(new DrawerItemInfo(4, "My Orders"));
 
             Fragment drawerFragment =
                     DrawerFragment.createFragment(items, super.loginResult, new Drawer.OnDrawerItemClickListener() {
@@ -101,6 +101,10 @@ public class BuyerProductsCart extends BaseAuthenticatedActivity {
                                     break;
                                 case 3:
                                     intent = new Intent(BuyerProductsCart.this, BuyerProductsCart.class);
+                                    startActivity(intent);
+                                    break;
+                                case 4:
+                                    intent = new Intent(BuyerProductsCart.this, BuyerOrderHistoryListActivity.class);
                                     startActivity(intent);
                                     break;
                             }
@@ -159,6 +163,7 @@ public class BuyerProductsCart extends BaseAuthenticatedActivity {
         // Perform HTTP Request
         this.loadProducts(productsAdapter);
         this.setupRestoreButton(productsAdapter);
+        this.setupOrder(productsAdapter);
     }
 
     private void setupRestoreButton(final ArrayAdapter<Product> productsAdapter){
@@ -181,11 +186,16 @@ public class BuyerProductsCart extends BaseAuthenticatedActivity {
         });
     }
 
-    private void setupOrder(){
+    private void setupOrder(final ArrayAdapter<Product> productsAdapter){
         Button order = (Button) this.findViewById(R.id.order_btn);
         final AuthenticationCookie cookie = this.authenticationCookie;
         final Headers headers = AuthenticationHelpers.getAuthenticationHeaders(cookie);
         final LoginResult loginResult = super.loginResult;
+
+        final Button btn = (Button) this.findViewById(R.id.restore_btn);
+        final TextView vi = (TextView) this.findViewById(R.id.tv_products_cart_price);
+        final TextView vi2 = (TextView) this.findViewById(R.id.tv_no_products_added_cart);
+        final Button btn2 = (Button) this.findViewById(R.id.order_btn);
 
         order.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -225,10 +235,18 @@ public class BuyerProductsCart extends BaseAuthenticatedActivity {
                     orderData.add(sendOrder, headers).subscribe(new Consumer<Order>() {
                         @Override
                         public void accept(Order o) throws Exception {
-                            Log.d("Send", o.toString());
+
                         }
                     });
                 }
+                productsAdapter.clear();
+                cart.RestoreCart();
+                btn.setVisibility(View.INVISIBLE);
+                vi.setVisibility(View.INVISIBLE);
+                vi2.setVisibility(View.VISIBLE);
+                btn2.setVisibility(View.INVISIBLE);
+                Toast.makeText(v.getContext(), "Successfully ordered products!",
+                        Toast.LENGTH_LONG).show();
             }
         });
     }
