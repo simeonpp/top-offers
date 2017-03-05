@@ -79,8 +79,8 @@ public class DataModule {
     }
 
     @Provides
-    IImageData provideImageData() {
-        return new ImagesHttpData("http://192.168.43.178:8000/images/");
+    IImageData provideImageData(@Named("apiBaseImageUrl") String apiImageUrl) {
+        return new ImagesHttpData(apiImageUrl);
     }
 
     @Provides
