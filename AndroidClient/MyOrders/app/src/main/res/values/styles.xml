@@ -23,7 +23,7 @@
 
     <!-- Common -->
     <style name="BigPageTitle">
-        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginTop">0dp</item>
         <item name="android:layout_marginBottom">20dp</item>
         <item name="android:textSize">25sp</item>
         <item name="android:textStyle">bold</item>

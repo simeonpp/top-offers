@@ -18,6 +18,7 @@ import com.topoffers.topoffers.common.fragments.OrdersListFragment;
 import com.topoffers.topoffers.common.models.DrawerItemInfo;
 import com.topoffers.topoffers.common.models.Order;
 import com.topoffers.topoffers.profile.MyProfileActivity;
+import com.topoffers.topoffers.seller.helpers.DrawerFactory;
 
 import java.util.ArrayList;
 
@@ -42,9 +43,9 @@ public class SellerOrderHistoryListActivity extends BaseAuthenticatedActivity {
         Intent intent = this.getIntent();
         queryProductId = intent.getIntExtra(INTENT_ORDER_PRODUCT_ID, 0);
 
+        this.setupDrawer();
         this.initTitle();
         this.initOrdersListFragment();
-        this.setupDrawer();
     }
 
     @Override
@@ -55,47 +56,14 @@ public class SellerOrderHistoryListActivity extends BaseAuthenticatedActivity {
 
     protected void setupDrawer() {
         View drawerContainer = this.findViewById(R.id.container_drawer);
-        if (drawerContainer != null) {
-            ArrayList<DrawerItemInfo> items = new ArrayList<>();
 
-            items.add(new DrawerItemInfo(1, "My Products"));
-            items.add(new DrawerItemInfo(2, "My Profile"));
-            items.add(new DrawerItemInfo(3, "Add Product"));
-            items.add(new DrawerItemInfo(4, "Orders"));
+        DrawerFactory drawerFactory = new DrawerFactory(this, drawerContainer, super.loginResult);
+        Fragment drawerFragment = drawerFactory.getFragment();
 
-            Fragment drawerFragment =
-                    DrawerFragment.createFragment(items, super.loginResult, new Drawer.OnDrawerItemClickListener() {
-                        @Override
-                        public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                            Intent intent;
-                            switch ((int) drawerItem.getIdentifier()) {
-                                case 1:
-                                    intent = new Intent(SellerOrderHistoryListActivity.this, SellerProductsListActivity.class);
-                                    startActivity(intent);
-                                    break;
-                                case 2:
-                                    intent = new Intent(SellerOrderHistoryListActivity.this, MyProfileActivity.class);
-                                    startActivity(intent);
-                                    break;
-                                case 3:
-                                    intent = new Intent(SellerOrderHistoryListActivity.this, UpdateProductActivity.class);
-                                    startActivity(intent);
-                                    break;
-                                case 4:
-                                    intent = new Intent(SellerOrderHistoryListActivity.this, SellerOrderHistoryListActivity.class);
-                                    startActivity(intent);
-                                    break;
-                            }
-
-                            return true;
-                        }
-                    });
-
-            this.getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.container_drawer, drawerFragment)
-                    .commit();
-        }
+        this.getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.container_drawer, drawerFragment)
+                .commit();
     }
 
     private void initTitle() {

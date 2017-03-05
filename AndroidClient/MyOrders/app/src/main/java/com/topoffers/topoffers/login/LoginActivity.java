@@ -117,6 +117,7 @@ public class LoginActivity extends BaseActivity {
                                     ActivityCompat.requestPermissions((Activity) context, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);
                                 }
 
+                                permission = ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
                                 if (permission == PackageManager.PERMISSION_GRANTED) {
                                     // Start background service
                                     Intent serviceIntent = new Intent(context, GetApplicationDescriptionFileService.class);
