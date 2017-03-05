@@ -20,15 +20,15 @@ public class Utils {
     }
 
     public static String getOrderStatusColor(String status) {
-        if (Objects.equals(status, "pending")) {
+        if (status.equals("pending")) {
             return "#FF6A00";
-        } else if (Objects.equals(status, "send")) {
+        } else if (status.equals("send")) {
             return "#0094FF";
-        } else if (Objects.equals(status, "rejected")) {
+        } else if (status.equals("rejected")) {
             return "#A50000";
-        } else if (Objects.equals(status, "received")) {
+        } else if (status.equals("received")) {
             return "#1D7C2F";
-        } else if (Objects.equals(status, "notReceived")) {
+        } else if (status.equals("notReceived")) {
             return "#A50000";
         } else {
             return "#A50000";

@@ -48,6 +48,28 @@ public class Order implements Serializable {
         this.buyerUsername = buyerUsername;
     }
 
+    public Order(int quantity, double singlePrice, double totalPrice, String deliveryAddress, Date dateOrdered, String status, String productTitle, String productImageIdentifier, String productDescription, String productSellerFirstName, String productSellerLastName, String productSellerAddress, String productSellerPhone, String productSellerUsername, String buyerFirstName, String buyerLastName, String buyerAddress, String buyerPhone, String buyerUsername) {
+        this.quantity = quantity;
+        this.singlePrice = singlePrice;
+        this.totalPrice = totalPrice;
+        this.deliveryAddress = deliveryAddress;
+        this.dateOrdered = dateOrdered;
+        this.status = status;
+        this.productTitle = productTitle;
+        this.productImageIdentifier = productImageIdentifier;
+        this.productDescription = productDescription;
+        this.productSellerFirstName = productSellerFirstName;
+        this.productSellerLastName = productSellerLastName;
+        this.productSellerAddress = productSellerAddress;
+        this.productSellerPhone = productSellerPhone;
+        this.productSellerUsername = productSellerUsername;
+        this.buyerFirstName = buyerFirstName;
+        this.buyerLastName = buyerLastName;
+        this.buyerAddress = buyerAddress;
+        this.buyerPhone = buyerPhone;
+        this.buyerUsername = buyerUsername;
+    }
+
     public Order(String status) {
         this.setStatus(status);
     }

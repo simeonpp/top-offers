@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,15 +29,20 @@ import com.topoffers.topoffers.common.fragments.ConfirmDialogFragment;
 import com.topoffers.topoffers.common.fragments.DrawerFragment;
 import com.topoffers.topoffers.common.fragments.LoadingFragment;
 import com.topoffers.topoffers.common.fragments.ProductDetailsFragment;
+import com.topoffers.topoffers.common.helpers.AuthenticationHelpers;
 import com.topoffers.topoffers.common.helpers.OnSwipeTouchListener;
 import com.topoffers.topoffers.common.models.AuthenticationCookie;
 import com.topoffers.topoffers.common.models.DrawerItemInfo;
+import com.topoffers.topoffers.common.models.LoginResult;
+import com.topoffers.topoffers.common.models.Order;
 import com.topoffers.topoffers.common.models.Product;
 import com.topoffers.topoffers.common.models.ProductsCart;
 import com.topoffers.topoffers.profile.MyProfileActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
 
 import javax.inject.Inject;
 
@@ -46,12 +53,14 @@ public class BuyerProductsCart extends BaseAuthenticatedActivity {
     public ProductsCart cart;
 
     @Inject
+    public IData<Order> orderData;
+
+    @Inject
     public IData<Product> productData;
 
     @Inject
     public IImageData imageHttpData;
 
-    private AuthenticationCookie cookie;
     private ArrayList<Product> mainProducts;
     Headers headers;
 
@@ -61,6 +70,7 @@ public class BuyerProductsCart extends BaseAuthenticatedActivity {
         setContentView(R.layout.activity_buyer_products_cart);
         this.setupDrawer();
         this.initProductsList();
+        this.setupOrder();
     }
 
     protected void setupDrawer() {
@@ -162,6 +172,47 @@ public class BuyerProductsCart extends BaseAuthenticatedActivity {
                 noItems.setVisibility(View.VISIBLE);
                 Toast.makeText(v.getContext(), "Successfully restored products!",
                         Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void setupOrder(){
+        Button order = (Button) this.findViewById(R.id.order_btn);
+        final AuthenticationCookie cookie = this.authenticationCookie;
+        final Headers headers = AuthenticationHelpers.getAuthenticationHeaders(cookie);
+        final LoginResult loginResult = super.loginResult;
+
+        order.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                ArrayList<Product> products = cart.getProducts();
+
+                HashMap<Integer, Order> idToProduct = new HashMap<Integer, Order>();
+
+                for(int i = 0; i < products.size(); i++){
+                    if(!idToProduct.containsKey(products.get(i).getId())){
+                        Product product = products.get(i);
+                        Order order = new Order(1, product.getPrice(), product.getPrice(), loginResult.getAddress(), new Date(), "pending", product.getTitle(), product.getImageIdentifier(),
+                                product.getDescription(), product.getSellerFirstName(), product.getSellerLastName(), "N/A", "N/A",
+                                product.getSellerUsername(), loginResult.getFirstName(), loginResult.getLastName(), loginResult.getAddress(), loginResult.getPhone(),
+                                loginResult.getUsername());
+                        idToProduct.put(products.get(i).getId(), order);
+                    }
+                    else {
+                        Order order = idToProduct.get(products.get(i).getId());
+                        order.setQuantity(order.getQuantity() + 1);
+                    }
+                }
+
+                for(int i = 0; i < idToProduct.size(); i++){
+                    Order sendOrder = (Order) idToProduct.values().toArray()[i];
+                    orderData.add(sendOrder, headers).subscribe(new Consumer<Order>() {
+                        @Override
+                        public void accept(Order o) throws Exception {
+                            Log.d("Send", o.toString());
+                        }
+                    });
+                }
             }
         });
     }
