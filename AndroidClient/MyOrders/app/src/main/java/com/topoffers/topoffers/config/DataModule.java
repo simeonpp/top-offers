@@ -9,6 +9,7 @@ import com.topoffers.topoffers.common.models.LoginRequest;
 import com.topoffers.topoffers.common.models.LoginResult;
 import com.topoffers.topoffers.common.models.Order;
 import com.topoffers.topoffers.common.models.Product;
+import com.topoffers.topoffers.common.models.ProductsCart;
 import com.topoffers.topoffers.common.models.Profile;
 import com.topoffers.topoffers.common.models.RegisterRequest;
 import com.topoffers.topoffers.common.models.RegisterResult;
@@ -21,7 +22,7 @@ import dagger.Provides;
 
 @Module
 public class DataModule {
-
+    private ProductsCart cart = new ProductsCart();
     @Provides
     ApiUrl<LoginRequest> provideBookApiUrl(@Named("apiBaseUrl") String apiBaseUrl) {
         ApiUrl<LoginRequest> apiUrlLogin = new ApiUrl<>(apiBaseUrl, "login");
@@ -70,6 +71,11 @@ public class DataModule {
     @Inject
     IData<Order> provideOrder(ApiUrl<Order> apiUrlOrder) {
         return new HttpRestData<Order>(apiUrlOrder.getUrl(), Order.class, Order[].class);
+    }
+
+    @Provides
+    ProductsCart provideProductsCart(){
+        return cart;
     }
 
     @Provides

@@ -70,6 +70,7 @@ public class BuyerProductsListActivity extends BaseAuthenticatedActivity {
 
             items.add(new DrawerItemInfo(1, "Products"));
             items.add(new DrawerItemInfo(2, "My Profile"));
+            items.add(new DrawerItemInfo(3, "Cart"));
 
             Fragment drawerFragment =
                     DrawerFragment.createFragment(items, super.loginResult, new Drawer.OnDrawerItemClickListener() {
@@ -83,6 +84,10 @@ public class BuyerProductsListActivity extends BaseAuthenticatedActivity {
                                     break;
                                 case 2:
                                     intent = new Intent(BuyerProductsListActivity.this, MyProfileActivity.class);
+                                    startActivity(intent);
+                                    break;
+                                case 3:
+                                    intent = new Intent(BuyerProductsListActivity.this, BuyerProductsCart.class);
                                     startActivity(intent);
                                     break;
                             }

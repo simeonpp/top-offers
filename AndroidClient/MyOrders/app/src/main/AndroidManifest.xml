@@ -50,7 +50,8 @@
         <activity android:name=".seller.activities.SellerOrderHistoryDetailsActivity" />
         <activity android:name=".register.RegisterActivity" />
         <activity android:name=".profile.MyProfileActivity" />
-        <activity android:name=".profile.EditMyProfileActivity"></activity>
+        <activity android:name=".profile.EditMyProfileActivity" />
+        <activity android:name=".buyer.activities.BuyerProductsCart"></activity>
     </application>
 
 </manifest>

@@ -3,6 +3,7 @@ package com.topoffers.topoffers;
 import android.app.Application;
 
 import com.topoffers.topoffers.buyer.activities.BuyerProductDetailsActivity;
+import com.topoffers.topoffers.buyer.activities.BuyerProductsCart;
 import com.topoffers.topoffers.buyer.activities.BuyerProductsListActivity;
 import com.topoffers.topoffers.config.ConfigModule;
 import com.topoffers.topoffers.config.DataModule;
@@ -37,6 +38,7 @@ public class TopOffersApplication extends Application {
     public interface ApplicationComponent {
         void inject(LoginActivity loginActivity);
         void inject(RegisterActivity registerActivity);
+        void inject(BuyerProductsCart buyerProductsCart);
         void inject(BaseProfileActivity myProfileActivity);
 
         void inject(SellerProductsListActivity sellerProductsListActivity);

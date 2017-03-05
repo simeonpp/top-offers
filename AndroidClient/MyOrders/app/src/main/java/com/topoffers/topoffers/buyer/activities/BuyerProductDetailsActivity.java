@@ -18,6 +18,7 @@ import com.topoffers.topoffers.common.fragments.DrawerFragment;
 import com.topoffers.topoffers.common.fragments.ProductDetailsFragment;
 import com.topoffers.topoffers.common.models.DrawerItemInfo;
 import com.topoffers.topoffers.common.models.Product;
+import com.topoffers.topoffers.common.models.ProductsCart;
 import com.topoffers.topoffers.profile.MyProfileActivity;
 import com.topoffers.topoffers.seller.fragments.SellerProductDetailsExtraFragment;
 
@@ -26,6 +27,9 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 public class BuyerProductDetailsActivity extends BaseAuthenticatedActivity {
+    @Inject
+    public ProductsCart cart;
+
     @Inject
     public IData<Product> productData;
 
@@ -60,6 +64,7 @@ public class BuyerProductDetailsActivity extends BaseAuthenticatedActivity {
 
             items.add(new DrawerItemInfo(1, "Products"));
             items.add(new DrawerItemInfo(2, "My Profile"));
+            items.add(new DrawerItemInfo(3, "Cart"));
 
             Fragment drawerFragment =
                     DrawerFragment.createFragment(items, super.loginResult, new Drawer.OnDrawerItemClickListener() {
@@ -73,6 +78,10 @@ public class BuyerProductDetailsActivity extends BaseAuthenticatedActivity {
                                     break;
                                 case 2:
                                     intent = new Intent(BuyerProductDetailsActivity.this, MyProfileActivity.class);
+                                    startActivity(intent);
+                                    break;
+                                case 3:
+                                    intent = new Intent(BuyerProductDetailsActivity.this, BuyerProductsCart.class);
                                     startActivity(intent);
                                     break;
                             }
@@ -97,7 +106,7 @@ public class BuyerProductDetailsActivity extends BaseAuthenticatedActivity {
     }
 
     private void initProductDetailsExtras() {
-        BuyerProductDetailsExtraFragment fragment = new BuyerProductDetailsExtraFragment();
+        BuyerProductDetailsExtraFragment fragment = BuyerProductDetailsExtraFragment.createFragment(cart, productId, this.productData, this.authenticationCookie);
         this.getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_buyer_product_extras, fragment)
