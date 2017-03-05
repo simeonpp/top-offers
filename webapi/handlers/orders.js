@@ -4,7 +4,7 @@ var helpers = require('../helpers.js');
 
 module.exports = {
     getAllMy: function(request, reply) {
-        console.log('featching my orders...');
+        console.log('fetching my orders...');
         let headers = helpers.parseRequestHeader(request);
 
         let query = `SELECT o.id, o.quantity, o.singlePrice, o.totalPrice, o.deliveryAddress, o.dateOrdered, o.status, p.title as productTitle, p.imageIdentifier as productImageIdentifier, p.description as productDescription` +

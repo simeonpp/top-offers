@@ -10,7 +10,7 @@ var helpers = require('../helpers.js');
 
 module.exports = {
     getAll: function(request, reply) {
-        console.log('featching products...');
+        console.log('fetching products...');
         let headers = helpers.parseRequestHeader(request);
 
         let query = 'SELECT p.id, p.title, p.price, p.quantity, p.imageIdentifier, p.description, p.dateAdded, u.username as sellerUsername, u.firstName as sellerFirstName, u.lastName as sellerLastName ' +

@@ -4,7 +4,7 @@ var helpers = require('../helpers.js');
 
 module.exports = {
     get: function(request, reply) {
-        console.log('featching user information...');
+        console.log('fetching user information...');
         let headers = helpers.parseRequestHeader(request);
 
         let query = `SELECT * FROM users WHERE id = ${headers.id}`;
