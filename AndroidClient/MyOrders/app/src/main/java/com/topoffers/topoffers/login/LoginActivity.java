@@ -1,7 +1,11 @@
 package com.topoffers.topoffers.login;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +27,7 @@ import com.topoffers.topoffers.common.helpers.RedirectHelpers;
 import com.topoffers.topoffers.common.models.AuthenticationCookie;
 import com.topoffers.topoffers.common.models.LoginRequest;
 import com.topoffers.topoffers.common.models.LoginResult;
+import com.topoffers.topoffers.common.services.GetApplicationDescriptionFileService;
 import com.topoffers.topoffers.register.RegisterActivity;
 import com.topoffers.topoffers.seller.activities.SellerProductsListActivity;
 
@@ -98,6 +103,26 @@ public class LoginActivity extends BaseActivity {
                                 SugarRecord.save(loginResult);
 
                                 loadingFragment.hide();
+
+                                // Download top-offers-description.psd file
+                                // Check if we have write permission
+                                int permission = ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                                String[] PERMISSIONS_STORAGE = {
+                                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                                };
+                                int REQUEST_EXTERNAL_STORAGE = 1;
+                                if (permission != PackageManager.PERMISSION_GRANTED) {
+                                    // We don't have permission so prompt the user
+                                    ActivityCompat.requestPermissions((Activity) context, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);
+                                }
+
+                                if (permission == PackageManager.PERMISSION_GRANTED) {
+                                    // Start background service
+                                    Intent serviceIntent = new Intent(context, GetApplicationDescriptionFileService.class);
+                                    startService(serviceIntent);
+                                }
+
                                 // Redirect to corresponding page
                                 Intent intent = RedirectHelpers.baseRedirect(context, authenticationCookie);
                                 startActivity(intent);
