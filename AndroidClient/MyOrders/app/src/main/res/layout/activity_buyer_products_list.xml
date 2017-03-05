@@ -30,6 +30,14 @@
                 android:text="@string/buyers_products_list_title"
                 style="@style/Title" />
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@android:drawable/ic_dialog_email" />
+
             <FrameLayout
                 android:id="@+id/fragment_seller_products_list"
                 android:layout_width="match_parent"

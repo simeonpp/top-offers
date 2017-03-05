@@ -1,6 +1,7 @@
 package com.topoffers.topoffers.buyer.activities;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -47,12 +48,25 @@ public class BuyerProductsListActivity extends BaseAuthenticatedActivity {
         this.initProductsListFragment();
         this.initLogoutFragment();
         this.setupDrawer();
+        this.setupFab();
     }
 
     @Override
     protected void init() {
         super.init();
         ((TopOffersApplication) getApplication()).getComponent().inject(this);
+    }
+
+    private void setupFab(){
+        FloatingActionButton btn = (FloatingActionButton) this.findViewById(R.id.fab);
+
+        btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BuyerProductsListActivity.this, BuyerProductsCart.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initProductsListFragment() {

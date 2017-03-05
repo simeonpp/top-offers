@@ -165,6 +165,7 @@ public class BuyerProductsCart extends BaseAuthenticatedActivity {
         final Button restore = (Button) this.findViewById(R.id.restore_btn);
         final TextView price = (TextView) this.findViewById(R.id.tv_products_cart_price);
         final TextView noItems = (TextView) this.findViewById(R.id.tv_no_products_added_cart);
+        final Button order = (Button) this.findViewById(R.id.order_btn);
         restore.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -173,6 +174,7 @@ public class BuyerProductsCart extends BaseAuthenticatedActivity {
                 restore.setVisibility(View.INVISIBLE);
                 price.setVisibility(View.INVISIBLE);
                 noItems.setVisibility(View.VISIBLE);
+                order.setVisibility(View.INVISIBLE);
                 Toast.makeText(v.getContext(), "Successfully restored products!",
                         Toast.LENGTH_LONG).show();
             }
@@ -242,6 +244,8 @@ public class BuyerProductsCart extends BaseAuthenticatedActivity {
             view.setVisibility(View.INVISIBLE);
             Button restore = (Button) this.findViewById(R.id.restore_btn);
             restore.setVisibility(View.INVISIBLE);
+            Button order = (Button) this.findViewById(R.id.order_btn);
+            order.setVisibility(View.INVISIBLE);
         }
         productsAdapter.addAll(cart.getProducts());
     }
