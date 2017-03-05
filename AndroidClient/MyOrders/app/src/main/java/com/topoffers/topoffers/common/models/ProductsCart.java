@@ -22,4 +22,16 @@ public class ProductsCart implements Serializable{
     public ArrayList<Product> getProducts(){
         return this.products;
     }
+
+    public double getAllPrice(){
+        double price = 0;
+        for(int i = 0; i < this.products.size(); i++){
+            price = price + this.products.get(i).getPrice();
+        }
+        return price;
+    }
+
+    public void RestoreCart(){
+        this.products = new ArrayList<>();
+    }
 }

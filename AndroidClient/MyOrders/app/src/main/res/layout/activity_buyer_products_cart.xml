@@ -14,15 +14,29 @@
         android:id="@+id/container_drawer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
     <TextView
-        android:id="@+id/tv_no_products_added"
+        android:id="@+id/tv_products_cart_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/RegisterText"
+        android:text=""/>
+
+    <TextView
+        android:id="@+id/tv_no_products_added_cart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/NoListRecordsText"
         android:text="@string/no_add_products_text"/>
 
     <ListView
-        android:id="@+id/lv_cart_products"
+            android:id="@+id/lv_cart_products"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+
+    <Button
+        android:id="@+id/restore_btn"
         android:layout_width="match_parent"
-        android:layout_height="600dp" />
+        android:layout_height="wrap_content"
+        android:text="Restore"/>
 </LinearLayout>

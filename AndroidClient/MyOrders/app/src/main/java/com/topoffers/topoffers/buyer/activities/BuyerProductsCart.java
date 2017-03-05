@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
@@ -143,9 +145,39 @@ public class BuyerProductsCart extends BaseAuthenticatedActivity {
 
         // Perform HTTP Request
         this.loadProducts(productsAdapter);
+        this.setupRestoreButton(productsAdapter);
+    }
+
+    private void setupRestoreButton(final ArrayAdapter<Product> productsAdapter){
+        final Button restore = (Button) this.findViewById(R.id.restore_btn);
+        final TextView price = (TextView) this.findViewById(R.id.tv_products_cart_price);
+        final TextView noItems = (TextView) this.findViewById(R.id.tv_no_products_added_cart);
+        restore.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                productsAdapter.clear();
+                cart.RestoreCart();
+                restore.setVisibility(View.INVISIBLE);
+                price.setVisibility(View.INVISIBLE);
+                noItems.setVisibility(View.VISIBLE);
+                Toast.makeText(v.getContext(), "Successfully restored products!",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void loadProducts(final ArrayAdapter<Product> productsAdapter) {
+        if(cart.getProducts().size() > 0){
+            TextView view = (TextView) this.findViewById(R.id.tv_no_products_added_cart);
+            view.setVisibility(View.INVISIBLE);
+            TextView allPrice = (TextView) this.findViewById(R.id.tv_products_cart_price);
+            allPrice.setText("Summary price: " + Double.toString(cart.getAllPrice()));
+        }else {
+            TextView view = (TextView) this.findViewById(R.id.tv_products_cart_price);
+            view.setVisibility(View.INVISIBLE);
+            Button restore = (Button) this.findViewById(R.id.restore_btn);
+            restore.setVisibility(View.INVISIBLE);
+        }
         productsAdapter.addAll(cart.getProducts());
     }
 }

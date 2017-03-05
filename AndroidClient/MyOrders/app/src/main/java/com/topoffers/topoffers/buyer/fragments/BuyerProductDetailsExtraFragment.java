@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.topoffers.data.base.IData;
 import com.topoffers.data.models.Headers;
@@ -79,6 +80,8 @@ public class BuyerProductDetailsExtraFragment extends Fragment {
                             @Override
                             public void accept(Product product) throws Exception {
                                 cart.AddProduct(product);
+                                Toast.makeText(getActivity(), "Successfully added to cart!",
+                                        Toast.LENGTH_LONG).show();
                             }
                         });
             }
