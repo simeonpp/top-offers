@@ -15,12 +15,17 @@ import com.topoffers.data.base.IData;
 import com.topoffers.data.models.Headers;
 import com.topoffers.topoffers.R;
 import com.topoffers.topoffers.TopOffersApplication;
+import com.topoffers.topoffers.buyer.activities.BuyerOrderHistoryListActivity;
+import com.topoffers.topoffers.buyer.activities.BuyerProductsCart;
 import com.topoffers.topoffers.buyer.activities.BuyerProductsListActivity;
 import com.topoffers.topoffers.common.activities.BaseAuthenticatedActivity;
 import com.topoffers.topoffers.common.fragments.DrawerFragment;
 import com.topoffers.topoffers.common.fragments.LoadingFragment;
 import com.topoffers.topoffers.common.helpers.AuthenticationHelpers;
+import com.topoffers.topoffers.common.helpers.DrawerCommonFactory;
 import com.topoffers.topoffers.common.helpers.Utils;
+import com.topoffers.topoffers.common.models.DrawerFactoryModel;
+import com.topoffers.topoffers.common.models.DrawerFactorySingleItemModel;
 import com.topoffers.topoffers.common.models.DrawerItemInfo;
 import com.topoffers.topoffers.common.models.Profile;
 import com.topoffers.topoffers.seller.activities.SellerOrderHistoryDetailsActivity;
@@ -31,6 +36,8 @@ import com.topoffers.topoffers.seller.activities.UpdateProductActivity;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -46,8 +53,8 @@ public class MyProfileActivity extends BaseProfileActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
 
-        this.initEditProfileButton();
         this.setupDrawer();
+        this.initEditProfileButton();
     }
 
     @Override
@@ -73,73 +80,18 @@ public class MyProfileActivity extends BaseProfileActivity {
 
     protected void setupDrawer() {
         View drawerContainer = this.findViewById(R.id.container_drawer);
-        if (drawerContainer != null) {
-            ArrayList<DrawerItemInfo> items = new ArrayList<>();
-            Fragment drawerFragment;
 
-            if(super.loginResult.getRole().equals("seller")) {
-                items.add(new DrawerItemInfo(1, "My Products"));
-                items.add(new DrawerItemInfo(2, "My Profile"));
-                items.add(new DrawerItemInfo(3, "Add Product"));
-                items.add(new DrawerItemInfo(4, "Orders"));
+        DrawerCommonFactory drawerCommonFactory;
+        String role = super.authenticationCookie.getRole();
 
-                drawerFragment =
-                        DrawerFragment.createFragment(items, super.loginResult, new Drawer.OnDrawerItemClickListener() {
-                            @Override
-                            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                                Intent intent;
-                                switch ((int) drawerItem.getIdentifier()) {
-                                    case 1:
-                                        intent = new Intent(MyProfileActivity.this, SellerProductsListActivity.class);
-                                        startActivity(intent);
-                                        break;
-                                    case 2:
-                                        intent = new Intent(MyProfileActivity.this, MyProfileActivity.class);
-                                        startActivity(intent);
-                                        break;
-                                    case 3:
-                                        intent = new Intent(MyProfileActivity.this, UpdateProductActivity.class);
-                                        startActivity(intent);
-                                        break;
-                                    case 4:
-                                        intent = new Intent(MyProfileActivity.this, SellerOrderHistoryListActivity.class);
-                                        startActivity(intent);
-                                        break;
-                                }
+        DrawerFactoryModel drawerFactoryModel = super.getDrawerFactoryModel();
+        drawerCommonFactory = new DrawerCommonFactory(this, drawerContainer, super.loginResult, drawerFactoryModel);
 
-                                return true;
-                            }
-                        });
-            }else {
-                items.add(new DrawerItemInfo(1, "Products"));
-                items.add(new DrawerItemInfo(2, "My Profile"));
-
-                drawerFragment =
-                        DrawerFragment.createFragment(items, super.loginResult, new Drawer.OnDrawerItemClickListener() {
-                            @Override
-                            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                                Intent intent;
-                                switch ((int) drawerItem.getIdentifier()) {
-                                    case 1:
-                                        intent = new Intent(MyProfileActivity.this, BuyerProductsListActivity.class);
-                                        startActivity(intent);
-                                        break;
-                                    case 2:
-                                        intent = new Intent(MyProfileActivity.this, MyProfileActivity.class);
-                                        startActivity(intent);
-                                        break;
-                                }
-
-                                return true;
-                            }
-                        });
-            }
-
-            this.getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.container_drawer, drawerFragment)
-                    .commit();
-        }
+        Fragment drawerFragment = drawerCommonFactory.getFragment();
+        this.getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.container_drawer, drawerFragment)
+                .commit();
     }
 
     private void initEditProfileButton() {

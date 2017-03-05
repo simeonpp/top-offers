@@ -2,6 +2,7 @@ package com.topoffers.topoffers.profile;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,8 @@ import com.topoffers.topoffers.common.activities.BaseAuthenticatedActivity;
 import com.topoffers.topoffers.common.fragments.DialogFragment;
 import com.topoffers.topoffers.common.fragments.LoadingFragment;
 import com.topoffers.topoffers.common.helpers.AuthenticationHelpers;
+import com.topoffers.topoffers.common.helpers.DrawerCommonFactory;
+import com.topoffers.topoffers.common.models.DrawerFactoryModel;
 import com.topoffers.topoffers.common.models.Profile;
 import com.topoffers.topoffers.login.LoginActivity;
 
@@ -30,7 +33,24 @@ public class EditMyProfileActivity extends BaseProfileActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_my_profile);
 
+        this.setupDrawer();
         this.intiActionButtons();
+    }
+
+    protected void setupDrawer() {
+        View drawerContainer = this.findViewById(R.id.container_drawer);
+
+        DrawerCommonFactory drawerCommonFactory;
+        String role = super.authenticationCookie.getRole();
+
+        DrawerFactoryModel drawerFactoryModel = super.getDrawerFactoryModel();
+        drawerCommonFactory = new DrawerCommonFactory(this, drawerContainer, super.loginResult, drawerFactoryModel);
+
+        Fragment drawerFragment = drawerCommonFactory.getFragment();
+        this.getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.container_drawer, drawerFragment)
+                .commit();
     }
 
     @Override
