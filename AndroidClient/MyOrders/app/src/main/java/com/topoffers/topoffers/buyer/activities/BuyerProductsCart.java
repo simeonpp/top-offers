@@ -3,6 +3,8 @@ package com.topoffers.topoffers.buyer.activities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,6 +32,7 @@ import com.topoffers.topoffers.common.fragments.DrawerFragment;
 import com.topoffers.topoffers.common.fragments.LoadingFragment;
 import com.topoffers.topoffers.common.fragments.ProductDetailsFragment;
 import com.topoffers.topoffers.common.helpers.AuthenticationHelpers;
+import com.topoffers.topoffers.common.helpers.GPSTracker;
 import com.topoffers.topoffers.common.helpers.OnSwipeTouchListener;
 import com.topoffers.topoffers.common.models.AuthenticationCookie;
 import com.topoffers.topoffers.common.models.DrawerItemInfo;
@@ -188,11 +191,22 @@ public class BuyerProductsCart extends BaseAuthenticatedActivity {
                 ArrayList<Product> products = cart.getProducts();
 
                 HashMap<Integer, Order> idToProduct = new HashMap<Integer, Order>();
+                GPSTracker gps = new GPSTracker(BuyerProductsCart.this);
+
+                if(gps.canGetLocation()) {
+
+                    double latitude = gps.getLatitude();
+                    double longitude = gps.getLongitude();
+
+                    Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+                } else {
+                    gps.showSettingsAlert();
+                }
 
                 for(int i = 0; i < products.size(); i++){
                     if(!idToProduct.containsKey(products.get(i).getId())){
                         Product product = products.get(i);
-                        Order order = new Order(1, product.getPrice(), product.getPrice(), loginResult.getAddress(), new Date(), "pending", product.getTitle(), product.getImageIdentifier(),
+                        Order order = new Order(0, product.getId(), 1, product.getPrice(), product.getPrice(), gps.getLatitude() + ";" + gps.getLongitude(), new Date(), "pending", product.getTitle(), product.getImageIdentifier(),
                                 product.getDescription(), product.getSellerFirstName(), product.getSellerLastName(), "N/A", "N/A",
                                 product.getSellerUsername(), loginResult.getFirstName(), loginResult.getLastName(), loginResult.getAddress(), loginResult.getPhone(),
                                 loginResult.getUsername());

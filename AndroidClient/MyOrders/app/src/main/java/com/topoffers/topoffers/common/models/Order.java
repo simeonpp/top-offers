@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class Order implements Serializable {
     private int id;
+    private int productId;
     private int quantity;
     private double singlePrice;
     private double totalPrice;
@@ -48,7 +49,8 @@ public class Order implements Serializable {
         this.buyerUsername = buyerUsername;
     }
 
-    public Order(int quantity, double singlePrice, double totalPrice, String deliveryAddress, Date dateOrdered, String status, String productTitle, String productImageIdentifier, String productDescription, String productSellerFirstName, String productSellerLastName, String productSellerAddress, String productSellerPhone, String productSellerUsername, String buyerFirstName, String buyerLastName, String buyerAddress, String buyerPhone, String buyerUsername) {
+    public Order(int id, int productId, int quantity, double singlePrice, double totalPrice, String deliveryAddress, Date dateOrdered, String status, String productTitle, String productImageIdentifier, String productDescription, String productSellerFirstName, String productSellerLastName, String productSellerAddress, String productSellerPhone, String productSellerUsername, String buyerFirstName, String buyerLastName, String buyerAddress, String buyerPhone, String buyerUsername) {
+        this.productId = productId;
         this.quantity = quantity;
         this.singlePrice = singlePrice;
         this.totalPrice = totalPrice;
@@ -232,5 +234,13 @@ public class Order implements Serializable {
 
     public void setBuyerUsername(String buyerUsername) {
         this.buyerUsername = buyerUsername;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 }

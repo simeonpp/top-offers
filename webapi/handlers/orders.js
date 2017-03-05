@@ -77,6 +77,7 @@ module.exports = {
         let headers = helpers.parseRequestHeader(request);
 
         if (headers.role === 'buyer') {
+            console.log(request.payload);
             let productId = request.payload.productId;
             let quantity = request.payload.quantity;
             let deliveryAddress = request.payload.deliveryAddress;
