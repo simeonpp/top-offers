@@ -21,8 +21,9 @@ dataProvider.init
                 // Login & register routes
             routes.login(server, handlers.login);
             routes.register(server, handlers.register);
-                // static images
+                // static images/files
             routes.static.images(server, handlers.static.images);
+            routes.static.files(server, handlers.static.files);
                 // products
             routes.products.getAll(server, handlers.products.getAll);
             routes.products.getById(server, handlers.products.getById);

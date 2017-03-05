@@ -17,5 +17,17 @@ module.exports = {
 
             return reply.file(path);
         });
+    },
+    files: function(request, reply) {
+        console.log('getting static file...');
+        var file = request.params.filename;
+        var path = applicationConfig.staticFolder + file;
+        fs.readFile(path, function(error, content) {
+            if (error) {
+                return reply("file not found");
+            }
+
+            return reply.file(path);
+        });
     }
 };
