@@ -30,7 +30,6 @@ import com.topoffers.topoffers.common.models.Profile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class DrawerFragment extends Fragment {
 
