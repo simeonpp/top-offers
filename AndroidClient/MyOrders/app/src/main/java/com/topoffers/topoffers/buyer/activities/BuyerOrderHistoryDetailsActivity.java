@@ -70,7 +70,7 @@ public class BuyerOrderHistoryDetailsActivity extends BaseAuthenticatedActivity 
                             Intent intent;
                             switch ((int) drawerItem.getIdentifier()) {
                                 case 1:
-                                    intent = new Intent(BuyerOrderHistoryDetailsActivity.this, SellerProductsListActivity.class);
+                                    intent = new Intent(BuyerOrderHistoryDetailsActivity.this, BuyerProductsListActivity.class);
                                     startActivity(intent);
                                     break;
                                 case 2:
@@ -78,11 +78,11 @@ public class BuyerOrderHistoryDetailsActivity extends BaseAuthenticatedActivity 
                                     startActivity(intent);
                                     break;
                                 case 3:
-                                    intent = new Intent(BuyerOrderHistoryDetailsActivity.this, UpdateProductActivity.class);
+                                    intent = new Intent(BuyerOrderHistoryDetailsActivity.this, BuyerProductsCart.class);
                                     startActivity(intent);
                                     break;
                                 case 4:
-                                    intent = new Intent(BuyerOrderHistoryDetailsActivity.this, SellerOrderHistoryListActivity.class);
+                                    intent = new Intent(BuyerOrderHistoryDetailsActivity.this, BuyerOrderHistoryListActivity.class);
                                     startActivity(intent);
                                     break;
                             }
