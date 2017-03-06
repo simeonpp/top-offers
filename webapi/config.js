@@ -3,8 +3,10 @@ const application = {
     port: '8000',
     env: 'prod', // [dev, prod],
     apiUrl: '/api/',
+    filesUrl: '/static/',
     imagesUrl: '/images/',
-    uploadsFolder: './public/uploads/'
+    staticFolder: './public/static/',
+    uploadsFolder: './public/uploads/',
 };
 
 const db = {
