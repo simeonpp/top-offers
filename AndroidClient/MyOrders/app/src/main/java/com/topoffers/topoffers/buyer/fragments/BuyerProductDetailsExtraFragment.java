@@ -81,7 +81,7 @@ public class BuyerProductDetailsExtraFragment extends Fragment {
                             public void accept(Product product) throws Exception {
                                 cart.AddProduct(product);
                                 Toast.makeText(getActivity(), "Successfully added to cart!",
-                                        Toast.LENGTH_LONG).show();
+                                        Toast.LENGTH_SHORT).show();
                             }
                         });
             }
