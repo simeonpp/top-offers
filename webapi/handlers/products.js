@@ -10,7 +10,7 @@ var helpers = require('../helpers.js');
 
 module.exports = {
     getAll: function(request, reply) {
-        console.log('featching products...');
+        console.log('fetching products...');
         let headers = helpers.parseRequestHeader(request);
 
         let query = 'SELECT p.id, p.title, p.price, p.quantity, p.imageIdentifier, p.description, p.dateAdded, u.username as sellerUsername, u.firstName as sellerFirstName, u.lastName as sellerLastName ' +
@@ -72,11 +72,9 @@ module.exports = {
 
                     // checkFileExist();
                     Jimp.read(files.image[0].path, function (jimpError, uploadImage) {
-                        console.log('here');
                         if (jimpError) {
                             reply(jimpError);
                         }
-                        console.log('here2');
                         uploadImage
                             .cover(256, 256)             // scale the image to the given width and height
                             .quality(60)                 // set JPEG quality

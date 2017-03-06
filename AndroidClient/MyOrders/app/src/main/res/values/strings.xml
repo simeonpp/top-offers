@@ -81,7 +81,7 @@
     <string name="title_activity_seller_order_history">SellerOrderHistory</string>
     <string name="take_picture">Take picture</string>
     <string name="upload_picture">Upload picture</string>
-    <string name="please_take_upload_image">Please take/uploade image</string>
+    <string name="please_take_upload_image">Please take/upload image</string>
 
     <!-- Orders list -->
     <string name="no_orders_made">You have not any orders yet.</string>
