@@ -182,13 +182,13 @@ public class OrderDetailsFragment extends Fragment implements IHandleOrderStatus
         int orderId = (int) arguments.getSerializable(INTENT_ORDER_KEY);
         Headers headers = AuthenticationHelpers.getAuthenticationHeaders(this.cookie);
 
-        if ((Objects.equals(cookie.getRole(), "seller") && (Objects.equals(status, "pending")))) {
+        if (((cookie.getRole()).equals("seller")) && (status.equals("pending"))) {
             actionButton1.setText("Mark as send");
             actionButton2.setText("Mark as rejected");
 
             actionButton1.setOnClickListener(new OnActionButtonClickListener(this.getContext(), orderId, headers, "send", this));
             actionButton2.setOnClickListener(new OnActionButtonClickListener(this.getContext(), orderId, headers, "rejected", this));
-        } else if ((Objects.equals(cookie.getRole(), "buyers")) && (Objects.equals(status, "send"))) {
+        } else if ((cookie.getRole().equals("buyers")) && (status.equals("send"))) {
             actionButton1.setText("Mark as received");
             actionButton2.setText("Mark as not received");
 

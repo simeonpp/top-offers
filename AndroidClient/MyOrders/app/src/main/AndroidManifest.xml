@@ -3,8 +3,8 @@
     package="com.topoffers.topoffers">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <meta-data
         android:name="DATABASE"
@@ -53,7 +53,9 @@
         <activity android:name=".register.RegisterActivity" />
         <activity android:name=".profile.MyProfileActivity" />
         <activity android:name=".profile.EditMyProfileActivity" />
-        <activity android:name=".buyer.activities.BuyerProductsCart"></activity>
+        <activity android:name=".buyer.activities.BuyerProductsCart" />
+        <activity android:name=".buyer.activities.BuyerOrderHistoryListActivity" />
+        <activity android:name=".buyer.activities.BuyerOrderHistoryDetailsActivity"></activity>
     </application>
 
 </manifest>

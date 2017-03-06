@@ -1,11 +1,11 @@
 package com.topoffers.topoffers.buyer.activities;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
@@ -13,62 +13,48 @@ import com.topoffers.data.base.IData;
 import com.topoffers.data.base.IImageData;
 import com.topoffers.topoffers.R;
 import com.topoffers.topoffers.TopOffersApplication;
-import com.topoffers.topoffers.buyer.fragments.BuyerProductDetailsExtraFragment;
 import com.topoffers.topoffers.common.activities.BaseAuthenticatedActivity;
 import com.topoffers.topoffers.common.fragments.DrawerFragment;
-import com.topoffers.topoffers.common.fragments.ProductDetailsFragment;
+import com.topoffers.topoffers.common.fragments.OrdersListFragment;
 import com.topoffers.topoffers.common.models.DrawerItemInfo;
-import com.topoffers.topoffers.common.models.Product;
-import com.topoffers.topoffers.common.models.ProductsCart;
+import com.topoffers.topoffers.common.models.Order;
 import com.topoffers.topoffers.profile.MyProfileActivity;
-import com.topoffers.topoffers.seller.fragments.SellerProductDetailsExtraFragment;
+import com.topoffers.topoffers.seller.activities.SellerOrderHistoryDetailsActivity;
+import com.topoffers.topoffers.seller.activities.SellerOrderHistoryListActivity;
+import com.topoffers.topoffers.seller.activities.SellerProductsListActivity;
+import com.topoffers.topoffers.seller.activities.UpdateProductActivity;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-public class BuyerProductDetailsActivity extends BaseAuthenticatedActivity {
-    @Inject
-    public ProductsCart cart;
+public class BuyerOrderHistoryListActivity extends BaseAuthenticatedActivity {
+    public static final String INTENT_ORDER_PRODUCT_ID = "intent_order_product_id";
 
     @Inject
-    public IData<Product> productData;
+    public IData<Order> orderData;
 
     @Inject
     public IImageData imageData;
 
-    private int productId;
-
+    private int queryProductId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_buyer_product_details);
+        setContentView(R.layout.activity_buyer_order_history_list);
 
         Intent intent = this.getIntent();
-        productId = intent.getIntExtra(ProductDetailsFragment.INTENT_PRODUCT_KEY, 0);
+        queryProductId = intent.getIntExtra(INTENT_ORDER_PRODUCT_ID, 0);
 
-        this.initProductDetailsFragment();
-        this.initProductDetailsExtras();
+        this.initTitle();
+        this.initOrdersListFragment();
         this.setupDrawer();
-        this.setupFab();
     }
 
     @Override
     protected void init() {
         super.init();
         ((TopOffersApplication) getApplication()).getComponent().inject(this);
-    }
-
-    private void setupFab(){
-        FloatingActionButton btn = (FloatingActionButton) this.findViewById(R.id.fab_detail);
-
-        btn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(BuyerProductDetailsActivity.this, BuyerProductsCart.class);
-                startActivity(intent);
-            }
-        });
     }
 
     protected void setupDrawer() {
@@ -88,19 +74,19 @@ public class BuyerProductDetailsActivity extends BaseAuthenticatedActivity {
                             Intent intent;
                             switch ((int) drawerItem.getIdentifier()) {
                                 case 1:
-                                    intent = new Intent(BuyerProductDetailsActivity.this, BuyerProductsListActivity.class);
+                                    intent = new Intent(BuyerOrderHistoryListActivity.this, SellerProductsListActivity.class);
                                     startActivity(intent);
                                     break;
                                 case 2:
-                                    intent = new Intent(BuyerProductDetailsActivity.this, MyProfileActivity.class);
+                                    intent = new Intent(BuyerOrderHistoryListActivity.this, MyProfileActivity.class);
                                     startActivity(intent);
                                     break;
                                 case 3:
-                                    intent = new Intent(BuyerProductDetailsActivity.this, BuyerProductsCart.class);
+                                    intent = new Intent(BuyerOrderHistoryListActivity.this, UpdateProductActivity.class);
                                     startActivity(intent);
                                     break;
                                 case 4:
-                                    intent = new Intent(BuyerProductDetailsActivity.this, BuyerOrderHistoryListActivity.class);
+                                    intent = new Intent(BuyerOrderHistoryListActivity.this, SellerOrderHistoryListActivity.class);
                                     startActivity(intent);
                                     break;
                             }
@@ -116,19 +102,23 @@ public class BuyerProductDetailsActivity extends BaseAuthenticatedActivity {
         }
     }
 
-    private void initProductDetailsFragment() {
-        ProductDetailsFragment productDetailsFragment = ProductDetailsFragment.create(productId, this.productData, this.imageData, this.authenticationCookie);
-        this.getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_buyer_product_details, productDetailsFragment)
-                .commit();
+    private void initTitle() {
+        TextView tvTitle = (TextView) this.findViewById(R.id.tv_seller_orders_list_title);
+        String title = "";
+        if (this.queryProductId > 0) {
+            title = String.format("Product orders history", this.loginResult.getFirstName());
+        } else {
+            title = String.format("%s's orders history", this.loginResult.getFirstName());
+        }
+        tvTitle.setText(title);
     }
 
-    private void initProductDetailsExtras() {
-        BuyerProductDetailsExtraFragment fragment = BuyerProductDetailsExtraFragment.createFragment(cart, productId, this.productData, this.authenticationCookie);
+    private void initOrdersListFragment() {
+        OrdersListFragment ordersListFragment = OrdersListFragment.create(this.queryProductId, this.orderData, this.imageData, this.authenticationCookie, BuyerOrderHistoryDetailsActivity.class);
         this.getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_buyer_product_extras, fragment)
+                .replace(R.id.fragment_seller_orders_list, ordersListFragment)
                 .commit();
+
     }
 }

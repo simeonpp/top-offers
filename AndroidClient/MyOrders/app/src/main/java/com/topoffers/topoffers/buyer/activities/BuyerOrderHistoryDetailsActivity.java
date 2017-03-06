@@ -1,7 +1,6 @@
 package com.topoffers.topoffers.buyer.activities;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,62 +12,45 @@ import com.topoffers.data.base.IData;
 import com.topoffers.data.base.IImageData;
 import com.topoffers.topoffers.R;
 import com.topoffers.topoffers.TopOffersApplication;
-import com.topoffers.topoffers.buyer.fragments.BuyerProductDetailsExtraFragment;
 import com.topoffers.topoffers.common.activities.BaseAuthenticatedActivity;
 import com.topoffers.topoffers.common.fragments.DrawerFragment;
-import com.topoffers.topoffers.common.fragments.ProductDetailsFragment;
+import com.topoffers.topoffers.common.fragments.OrderDetailsFragment;
 import com.topoffers.topoffers.common.models.DrawerItemInfo;
-import com.topoffers.topoffers.common.models.Product;
-import com.topoffers.topoffers.common.models.ProductsCart;
+import com.topoffers.topoffers.common.models.Order;
 import com.topoffers.topoffers.profile.MyProfileActivity;
-import com.topoffers.topoffers.seller.fragments.SellerProductDetailsExtraFragment;
+import com.topoffers.topoffers.seller.activities.SellerOrderHistoryListActivity;
+import com.topoffers.topoffers.seller.activities.SellerProductsListActivity;
+import com.topoffers.topoffers.seller.activities.UpdateProductActivity;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-public class BuyerProductDetailsActivity extends BaseAuthenticatedActivity {
+public class BuyerOrderHistoryDetailsActivity extends BaseAuthenticatedActivity {
     @Inject
-    public ProductsCart cart;
-
-    @Inject
-    public IData<Product> productData;
+    public IData<Order> orderData;
 
     @Inject
     public IImageData imageData;
 
-    private int productId;
+    private int orderId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_buyer_product_details);
+        setContentView(R.layout.activity_buyer_order_history_details);
 
         Intent intent = this.getIntent();
-        productId = intent.getIntExtra(ProductDetailsFragment.INTENT_PRODUCT_KEY, 0);
+        orderId = intent.getIntExtra(OrderDetailsFragment.INTENT_ORDER_KEY, 0);
 
         this.initProductDetailsFragment();
-        this.initProductDetailsExtras();
         this.setupDrawer();
-        this.setupFab();
     }
 
     @Override
     protected void init() {
         super.init();
         ((TopOffersApplication) getApplication()).getComponent().inject(this);
-    }
-
-    private void setupFab(){
-        FloatingActionButton btn = (FloatingActionButton) this.findViewById(R.id.fab_detail);
-
-        btn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(BuyerProductDetailsActivity.this, BuyerProductsCart.class);
-                startActivity(intent);
-            }
-        });
     }
 
     protected void setupDrawer() {
@@ -88,19 +70,19 @@ public class BuyerProductDetailsActivity extends BaseAuthenticatedActivity {
                             Intent intent;
                             switch ((int) drawerItem.getIdentifier()) {
                                 case 1:
-                                    intent = new Intent(BuyerProductDetailsActivity.this, BuyerProductsListActivity.class);
+                                    intent = new Intent(BuyerOrderHistoryDetailsActivity.this, SellerProductsListActivity.class);
                                     startActivity(intent);
                                     break;
                                 case 2:
-                                    intent = new Intent(BuyerProductDetailsActivity.this, MyProfileActivity.class);
+                                    intent = new Intent(BuyerOrderHistoryDetailsActivity.this, MyProfileActivity.class);
                                     startActivity(intent);
                                     break;
                                 case 3:
-                                    intent = new Intent(BuyerProductDetailsActivity.this, BuyerProductsCart.class);
+                                    intent = new Intent(BuyerOrderHistoryDetailsActivity.this, UpdateProductActivity.class);
                                     startActivity(intent);
                                     break;
                                 case 4:
-                                    intent = new Intent(BuyerProductDetailsActivity.this, BuyerOrderHistoryListActivity.class);
+                                    intent = new Intent(BuyerOrderHistoryDetailsActivity.this, SellerOrderHistoryListActivity.class);
                                     startActivity(intent);
                                     break;
                             }
@@ -117,18 +99,10 @@ public class BuyerProductDetailsActivity extends BaseAuthenticatedActivity {
     }
 
     private void initProductDetailsFragment() {
-        ProductDetailsFragment productDetailsFragment = ProductDetailsFragment.create(productId, this.productData, this.imageData, this.authenticationCookie);
+        OrderDetailsFragment orderDetailsFragment = OrderDetailsFragment.create(orderId, this.orderData, this.imageData, this.authenticationCookie);
         this.getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_buyer_product_details, productDetailsFragment)
-                .commit();
-    }
-
-    private void initProductDetailsExtras() {
-        BuyerProductDetailsExtraFragment fragment = BuyerProductDetailsExtraFragment.createFragment(cart, productId, this.productData, this.authenticationCookie);
-        this.getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_buyer_product_extras, fragment)
+                .replace(R.id.fragment_seller_order_details, orderDetailsFragment)
                 .commit();
     }
 }
